@@ -1,1487 +1,5086 @@
 {
-  "_help": "Codeshire question bank. Edit or replace this file to change questions. 'lang' must be one of the language ids below, or 'any' (shown for every language). 'a' is the index of the correct option, counting from 0. See QUESTIONS-GUIDE.md for every field.",
-  "languages": [
-    {
-      "id": "javascript",
-      "name": "JavaScript"
-    },
-    {
-      "id": "python",
-      "name": "Python"
-    },
-    {
-      "id": "java",
-      "name": "Java"
-    },
-    {
-      "id": "c",
-      "name": "C"
-    }
-  ],
-  "questions": {
-    "output": [
-      {
-        "lang": "javascript",
-        "code": "const a = [1, 2, 3];\na[10] = 4;\nconsole.log(a.length);",
-        "opts": [
-          "4",
-          "11",
-          "10",
-          "RangeError"
-        ],
-        "a": 1,
-        "why": "Assigning index 10 makes the length 11; the gap is empty slots."
-      },
-      {
-        "lang": "javascript",
-        "code": "console.log(0.1 + 0.2 === 0.3);",
-        "opts": [
-          "true",
-          "false",
-          "undefined",
-          "NaN"
-        ],
-        "a": 1,
-        "why": "Floating point: 0.1 + 0.2 is 0.30000000000000004."
-      },
-      {
-        "lang": "javascript",
-        "code": "console.log(typeof null);",
-        "opts": [
-          "\"null\"",
-          "\"object\"",
-          "\"undefined\"",
-          "\"number\""
-        ],
-        "a": 1,
-        "why": "A legacy quirk: typeof null is \"object\"."
-      },
-      {
-        "lang": "javascript",
-        "code": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i));\n}",
-        "opts": [
-          "0 1 2",
-          "3 3 3",
-          "2 2 2",
-          "undefined ×3"
-        ],
-        "a": 1,
-        "why": "var is function-scoped, so every callback sees i = 3. let would print 0 1 2."
-      },
-      {
-        "lang": "javascript",
-        "code": "console.log([10, 1, 2].sort());",
-        "opts": [
-          "[1, 2, 10]",
-          "[1, 10, 2]",
-          "[10, 2, 1]",
-          "[2, 1, 10]"
-        ],
-        "a": 1,
-        "why": "Default sort compares strings: \"1\" < \"10\" < \"2\"."
-      },
-      {
-        "lang": "javascript",
-        "code": "console.log(\"5\" - 2, \"5\" + 2);",
-        "opts": [
-          "3 52",
-          "3 7",
-          "NaN 52",
-          "52 3"
-        ],
-        "a": 0,
-        "why": "Minus converts to numbers; plus with a string concatenates."
-      },
-      {
-        "lang": "python",
-        "code": "print(3 * \"ab\")",
-        "opts": [
-          "ababab",
-          "3ab",
-          "TypeError",
-          "ab ab ab"
-        ],
-        "a": 0,
-        "why": "Multiplying a string repeats it."
-      },
-      {
-        "lang": "python",
-        "code": "print(bool([]), bool([0]))",
-        "opts": [
-          "False True",
-          "False False",
-          "True True",
-          "True False"
-        ],
-        "a": 0,
-        "why": "An empty list is falsy; any non-empty list is truthy, even [0]."
-      },
-      {
-        "lang": "javascript",
-        "code": "console.log(1 < 2 < 3, 3 > 2 > 1);",
-        "opts": [
-          "true true",
-          "true false",
-          "false true",
-          "false false"
-        ],
-        "a": 1,
-        "why": "3 > 2 is true, and true > 1 is 1 > 1, which is false."
-      },
-      {
-        "lang": "python",
-        "code": "print(0.1 + 0.2 == 0.3, round(2.5))",
-        "opts": [
-          "False 2",
-          "False 3",
-          "True 3",
-          "True 2"
-        ],
-        "a": 0,
-        "why": "Float error again, and Python rounds halves to the nearest even number."
-      },
-      {
-        "lang": "javascript",
-        "code": "const x = { hp: 1 };\nconst y = x;\ny.hp = 2;\nconsole.log(x.hp);",
-        "opts": [
-          "1",
-          "2",
-          "undefined",
-          "ReferenceError"
-        ],
-        "a": 1,
-        "why": "Objects are shared by reference: x and y are the same object."
-      },
-      {
-        "lang": "javascript",
-        "code": "console.log(typeof NaN);",
-        "opts": [
-          "\"NaN\"",
-          "\"undefined\"",
-          "\"number\"",
-          "\"object\""
-        ],
-        "a": 2,
-        "why": "NaN is a special value of the number type."
-      },
-      {
-        "lang": "python",
-        "code": "print(\"10\" + \"5\", int(\"10\") + 5)",
-        "opts": [
-          "105 15",
-          "15 15",
-          "105 105",
-          "TypeError"
-        ],
-        "a": 0,
-        "why": "Strings concatenate; once converted to int, they add."
-      },
-      {
-        "lang": "javascript",
-        "code": "console.log([\"1\", \"2\", \"3\"].map(parseInt));",
-        "opts": [
-          "[1, 2, 3]",
-          "[1, NaN, NaN]",
-          "[NaN, NaN, NaN]",
-          "[1, 2, NaN]"
-        ],
-        "a": 1,
-        "why": "map passes the index as parseInt's radix: parseInt(\"2\", 1) and parseInt(\"3\", 2) are NaN."
-      },
-      {
-        "lang": "javascript",
-        "code": "console.log(!!\"false\", !!\"\");",
-        "opts": [
-          "false false",
-          "true false",
-          "false true",
-          "true true"
-        ],
-        "a": 1,
-        "why": "Any non-empty string is truthy, including \"false\"."
-      },
-      {
-        "lang": "python",
-        "code": "print(10 // 3, -7 // 2)",
-        "opts": [
-          "3 -4",
-          "3 -3",
-          "3.33 -3.5",
-          "3 -3.5"
-        ],
-        "a": 0,
-        "why": "// is floor division: it rounds down, so -3.5 becomes -4."
-      },
-      {
-        "lang": "python",
-        "code": "a = [1, 2, 3]\nb = a\nb.append(4)\nprint(len(a))",
-        "opts": [
-          "3",
-          "4",
-          "TypeError",
-          "None"
-        ],
-        "a": 1,
-        "why": "b = a copies the reference, not the list. Both names point to the same list."
-      },
-      {
-        "lang": "python",
-        "code": "print(\"abc\"[::-1])",
-        "opts": [
-          "abc",
-          "cba",
-          "a",
-          "IndexError"
-        ],
-        "a": 1,
-        "why": "A slice step of -1 walks the string backwards."
-      },
-      {
-        "lang": "python",
-        "code": "print([i * i for i in range(4)])",
-        "opts": [
-          "[1, 4, 9, 16]",
-          "[0, 1, 4, 9]",
-          "[0, 1, 2, 3]",
-          "[0, 2, 4, 6]"
-        ],
-        "a": 1,
-        "why": "range(4) is 0, 1, 2, 3; squared that is 0, 1, 4, 9."
-      },
-      {
-        "lang": "python",
-        "code": "print(type(1 / 2).__name__)",
-        "opts": [
-          "int",
-          "float",
-          "Fraction",
-          "decimal"
-        ],
-        "a": 1,
-        "why": "In Python 3, / always returns a float (0.5)."
-      },
-      {
-        "lang": "java",
-        "code": "String a = \"hi\";\nString b = \"hi\";\nSystem.out.println(a == b);",
-        "opts": [
-          "true",
-          "false",
-          "Compile error",
-          "NullPointerException"
-        ],
-        "a": 0,
-        "why": "Identical string literals are interned, so both point to the same object. With new String(\"hi\") it would be false; compare with equals()."
-      },
-      {
-        "lang": "java",
-        "code": "System.out.println(10 / 4);",
-        "opts": [
-          "2.5",
-          "2",
-          "3",
-          "2.0"
-        ],
-        "a": 1,
-        "why": "int / int is integer division; the fraction is dropped."
-      },
-      {
-        "lang": "java",
-        "code": "int x = 5;\nSystem.out.println(x++ + ++x);",
-        "opts": [
-          "11",
-          "12",
-          "13",
-          "10"
-        ],
-        "a": 1,
-        "why": "x++ gives 5 (x becomes 6), then ++x makes it 7: 5 + 7 = 12."
-      },
-      {
-        "lang": "java",
-        "code": "System.out.println(1 + 2 + \"3\" + 4 + 5);",
-        "opts": [
-          "15",
-          "3345",
-          "12345",
-          "339"
-        ],
-        "a": 1,
-        "why": "Left to right: 1 + 2 = 3, then everything after the string is concatenated: \"3\" + \"3\" + \"4\" + \"5\"."
-      },
-      {
-        "lang": "java",
-        "code": "Integer a = 127, b = 127;\nInteger c = 128, d = 128;\nSystem.out.println((a == b) + \" \" + (c == d));",
-        "opts": [
-          "true true",
-          "true false",
-          "false false",
-          "false true"
-        ],
-        "a": 1,
-        "why": "Integers from -128 to 127 are cached, so == compares the same object; 128 creates new objects. Use equals()."
-      },
-      {
-        "lang": "java",
-        "code": "char c = 'A';\nSystem.out.println(c + 1);",
-        "opts": [
-          "B",
-          "66",
-          "A1",
-          "65"
-        ],
-        "a": 1,
-        "why": "char + int is int arithmetic: 'A' is 65, so it prints 66. Cast to (char) to get B."
-      },
-      {
-        "lang": "java",
-        "code": "System.out.println(0.1 + 0.2 == 0.3);",
-        "opts": [
-          "true",
-          "false",
-          "Compile error",
-          "0.3"
-        ],
-        "a": 1,
-        "why": "double uses binary floating point: 0.1 + 0.2 is 0.30000000000000004."
-      },
-      {
-        "lang": "java",
-        "code": "int[] arr = new int[3];\nSystem.out.println(arr[1]);",
-        "opts": [
-          "null",
-          "0",
-          "undefined",
-          "ArrayIndexOutOfBoundsException"
-        ],
-        "a": 1,
-        "why": "New int arrays are filled with 0."
-      },
-      {
-        "lang": "c",
-        "code": "printf(\"%d\\n\", 7 / 2);",
-        "opts": [
-          "3.5",
-          "3",
-          "4",
-          "3.0"
-        ],
-        "a": 1,
-        "why": "int / int is integer division; the fraction is dropped."
-      },
-      {
-        "lang": "c",
-        "code": "int a[5] = {1, 2};\nprintf(\"%d\\n\", a[3]);",
-        "opts": [
-          "0",
-          "A garbage value",
-          "2",
-          "Compile error"
-        ],
-        "a": 0,
-        "why": "With an initializer list, the remaining elements are set to 0."
-      },
-      {
-        "lang": "c",
-        "code": "printf(\"%zu\\n\", sizeof(char));",
-        "opts": [
-          "1",
-          "2",
-          "4",
-          "8"
-        ],
-        "a": 0,
-        "why": "sizeof(char) is 1 by definition, on every platform."
-      },
-      {
-        "lang": "c",
-        "code": "char s[] = \"hello\";\nprintf(\"%zu\\n\", sizeof(s));",
-        "opts": [
-          "5",
-          "6",
-          "8",
-          "4"
-        ],
-        "a": 1,
-        "why": "The array holds the 5 letters plus the terminating '\\0'."
-      },
-      {
-        "lang": "c",
-        "code": "int x = 5;\nint *p = &x;\n*p = 10;\nprintf(\"%d\\n\", x);",
-        "opts": [
-          "5",
-          "10",
-          "An address",
-          "Segmentation fault"
-        ],
-        "a": 1,
-        "why": "p points at x, so writing through *p changes x."
-      },
-      {
-        "lang": "c",
-        "code": "printf(\"%d\\n\", -7 / 2);",
-        "opts": [
-          "-4",
-          "-3",
-          "-3.5",
-          "3"
-        ],
-        "a": 1,
-        "why": "Since C99, integer division truncates toward zero."
-      },
-      {
-        "lang": "c",
-        "code": "printf(\"%d\\n\", 'A' + 1);",
-        "opts": [
-          "B",
-          "66",
-          "A1",
-          "65"
-        ],
-        "a": 1,
-        "why": "'A' is the int 65, and %d prints the number 66. Use %c to print B."
-      },
-      {
-        "lang": "c",
-        "code": "printf(\"%d\\n\", 5 > 3 > 1);",
-        "opts": [
-          "1",
-          "0",
-          "true",
-          "Compile error"
-        ],
-        "a": 1,
-        "why": "5 > 3 is 1, and 1 > 1 is 0."
-      },
-      {
-        "lang": "c",
-        "code": "int a = 10, b = 3;\nprintf(\"%d %d\\n\", a % b, -a % b);",
-        "opts": [
-          "1 1",
-          "1 -1",
-          "1 2",
-          "-1 1"
-        ],
-        "a": 1,
-        "why": "Since C99, the result of % takes the sign of the left operand."
-      }
-    ],
-    "bug": [
-      {
-        "lang": "javascript",
-        "file": "airlock.js",
-        "lines": [
-          "function cycleAirlock(door, pressure) {",
-          "  const SAFE = 101.3;",
-          "  door.close();",
-          "  if (pressure = SAFE) {",
-          "    door.unlock(\"inner\");",
-          "  }",
-          "}"
-        ],
-        "a": 3,
-        "why": "= assigns instead of comparing, so it always unlocks. Use ===."
-      },
-      {
-        "lang": "javascript",
-        "file": "sum.js",
-        "lines": [
-          "function sum(arr) {",
-          "  let total = 0;",
-          "  for (let i = 0; i <= arr.length; i++) {",
-          "    total += arr[i];",
-          "  }",
-          "  return total;",
-          "}"
-        ],
-        "a": 2,
-        "why": "<= reads one past the end (undefined), so total becomes NaN. Use <."
-      },
-      {
-        "lang": "javascript",
-        "file": "user.js",
-        "lines": [
-          "async function loadUser(id) {",
-          "  const res = fetch(`/api/users/${id}`);",
-          "  if (!res.ok) throw new Error(\"fail\");",
-          "  return res.json();",
-          "}"
-        ],
-        "a": 1,
-        "why": "Missing await: res is a Promise, so res.ok is undefined."
-      },
-      {
-        "lang": "python",
-        "file": "bag.py",
-        "lines": [
-          "def add_item(item, bag=[]):",
-          "    bag.append(item)",
-          "    return bag",
-          "",
-          "add_item(\"sword\")",
-          "add_item(\"shield\")  # bag has both!"
-        ],
-        "a": 0,
-        "why": "Mutable default arguments are shared across calls. Use bag=None."
-      },
-      {
-        "lang": "javascript",
-        "file": "last.js",
-        "lines": [
-          "function getLast(arr) {",
-          "  if (arr.length === 0) return null;",
-          "  return arr[arr.length];",
-          "}"
-        ],
-        "a": 2,
-        "why": "Zero-indexed: the last item is arr[arr.length - 1]."
-      },
-      {
-        "lang": "python",
-        "file": "parity.py",
-        "lines": [
-          "def is_even(n):",
-          "    return n % 2 == 1",
-          "",
-          "print(is_even(4))  # False?!"
-        ],
-        "a": 1,
-        "why": "Even numbers have remainder 0, not 1."
-      },
-      {
-        "lang": "javascript",
-        "file": "age.js",
-        "lines": [
-          "function isAdult(age) {",
-          "  if (age > 18) return true;",
-          "  return false;",
-          "}",
-          "isAdult(18); // should be true"
-        ],
-        "a": 1,
-        "why": "18 should count: use >= 18."
-      },
-      {
-        "lang": "javascript",
-        "file": "greet.js",
-        "lines": [
-          "function greet(user) {",
-          "  if (user.name == undefined) return \"Hi stranger\";",
-          "  return \"Hi \" + user.Name;",
-          "}"
-        ],
-        "a": 2,
-        "why": "Property names are case-sensitive: user.Name is undefined."
-      },
-      {
-        "lang": "python",
-        "file": "fact.py",
-        "lines": [
-          "def factorial(n):",
-          "    if n == 0:",
-          "        return 1",
-          "    return n * factorial(n)"
-        ],
-        "a": 3,
-        "why": "It never shrinks: call factorial(n - 1) or it recurses forever."
-      },
-      {
-        "lang": "javascript",
-        "file": "access.js",
-        "lines": [
-          "const user = await getUser();",
-          "if (user.role === \"admin\" || \"owner\") {",
-          "  grantAccess();",
-          "}"
-        ],
-        "a": 1,
-        "why": "\"owner\" alone is always truthy, so everyone gets access."
-      },
-      {
-        "lang": "any",
-        "file": "report.sql",
-        "lines": [
-          "SELECT name, COUNT(*)",
-          "FROM orders",
-          "WHERE COUNT(*) > 5",
-          "GROUP BY name;"
-        ],
-        "a": 2,
-        "why": "You cannot filter on an aggregate in WHERE; use HAVING after GROUP BY."
-      },
-      {
-        "lang": "python",
-        "file": "sort.py",
-        "lines": [
-          "nums = [3, 1, 2]",
-          "sorted_nums = nums.sort()",
-          "print(sorted_nums[0])"
-        ],
-        "a": 1,
-        "why": "list.sort() sorts in place and returns None. Use sorted(nums)."
-      },
-      {
-        "lang": "python",
-        "file": "score.py",
-        "lines": [
-          "count = 0",
-          "def add_point():",
-          "    count += 1",
-          "",
-          "add_point()  # UnboundLocalError"
-        ],
-        "a": 2,
-        "why": "Assigning to count inside the function makes it local. Declare global count (or pass it in)."
-      },
-      {
-        "lang": "python",
-        "file": "reader.py",
-        "lines": [
-          "with open(\"data.txt\") as f:",
-          "    lines = f.readlines()",
-          "for line in lines:",
-          "    if line == \"END\":",
-          "        break"
-        ],
-        "a": 3,
-        "why": "readlines() keeps the trailing \"\\n\", so line is \"END\\n\". Compare line.strip()."
-      },
-      {
-        "lang": "java",
-        "file": "Menu.java",
-        "lines": [
-          "String input = scanner.nextLine();",
-          "if (input == \"yes\") {",
-          "    startGame();",
-          "}"
-        ],
-        "a": 1,
-        "why": "== compares object references; strings read from input are new objects. Use \"yes\".equals(input)."
-      },
-      {
-        "lang": "java",
-        "file": "Scores.java",
-        "lines": [
-          "int[] scores = {90, 85, 70};",
-          "for (int i = 0; i <= scores.length; i++) {",
-          "    System.out.println(scores[i]);",
-          "}"
-        ],
-        "a": 1,
-        "why": "<= runs one past the last index and throws ArrayIndexOutOfBoundsException. Use <."
-      },
-      {
-        "lang": "java",
-        "file": "Names.java",
-        "lines": [
-          "List<String> names = List.of(\"Ana\", \"Bo\");",
-          "for (String n : names) {",
-          "    if (n.startsWith(\"B\")) names.remove(n);",
-          "}"
-        ],
-        "a": 2,
-        "why": "List.of is immutable (and removing while iterating breaks anyway). Use removeIf on a mutable list."
-      },
-      {
-        "lang": "java",
-        "file": "Counter.java",
-        "lines": [
-          "public class Counter {",
-          "    private int count;",
-          "    public void increment() {",
-          "        int count = this.count + 1;",
-          "    }",
-          "}"
-        ],
-        "a": 3,
-        "why": "This declares a new local variable that shadows the field, so the field never changes. Write this.count++."
-      },
-      {
-        "lang": "java",
-        "file": "Auth.java",
-        "lines": [
-          "String role = user.getRole(); // may be null",
-          "if (role.equals(\"admin\")) {",
-          "    grantAccess();",
-          "}"
-        ],
-        "a": 1,
-        "why": "Calling equals on a null throws NullPointerException. Write \"admin\".equals(role)."
-      },
-      {
-        "lang": "java",
-        "file": "Budget.java",
-        "lines": [
-          "long total = 0;",
-          "int big = 2_000_000_000;",
-          "int doubled = big * 2;",
-          "total += doubled;"
-        ],
-        "a": 2,
-        "why": "big * 2 overflows int before it ever reaches the long. Use long doubled = big * 2L."
-      },
-      {
-        "lang": "c",
-        "file": "fill.c",
-        "lines": [
-          "int arr[5];",
-          "for (int i = 0; i <= 5; i++) {",
-          "    arr[i] = i * 2;",
-          "}"
-        ],
-        "a": 1,
-        "why": "i <= 5 writes arr[5], one past the end: undefined behaviour. Use i < 5."
-      },
-      {
-        "lang": "c",
-        "file": "input.c",
-        "lines": [
-          "char line[256];",
-          "char buf[8];",
-          "fgets(line, sizeof line, stdin);",
-          "strcpy(buf, line);",
-          "puts(buf);"
-        ],
-        "a": 3,
-        "why": "A long line overflows the 8-byte buf. Use snprintf(buf, sizeof buf, \"%s\", line)."
-      },
-      {
-        "lang": "c",
-        "file": "check.c",
-        "lines": [
-          "int x = 5;",
-          "if (x = 0) {",
-          "    puts(\"zero\");",
-          "}"
-        ],
-        "a": 1,
-        "why": "= assigns 0, so the condition is always false. Use ==."
-      },
-      {
-        "lang": "c",
-        "file": "heap.c",
-        "lines": [
-          "int *p = malloc(sizeof(int) * 10);",
-          "p[0] = 42;",
-          "free(p);",
-          "printf(\"%d\\n\", p[0]);"
-        ],
-        "a": 3,
-        "why": "Reading p after free() is a use-after-free: undefined behaviour."
-      },
-      {
-        "lang": "c",
-        "file": "greet.c",
-        "lines": [
-          "char *greet(void) {",
-          "    char msg[] = \"hello\";",
-          "    return msg;",
-          "}"
-        ],
-        "a": 2,
-        "why": "msg lives on the stack and dies when the function returns, so the pointer dangles."
-      },
-      {
-        "lang": "c",
-        "file": "ratio.c",
-        "lines": [
-          "int a = 3, b = 0;",
-          "if (b != 0 && a / b > 1) puts(\"ok\");",
-          "if (a / b > 1 && b != 0) puts(\"ok\");"
-        ],
-        "a": 2,
-        "why": "The division runs before the zero check. && short-circuits left to right, so check b first."
-      },
-      {
-        "lang": "c",
-        "file": "compare.c",
-        "lines": [
-          "char s1[] = \"yes\";",
-          "char s2[] = \"yes\";",
-          "if (s1 == s2) {",
-          "    puts(\"same\");",
-          "}"
-        ],
-        "a": 2,
-        "why": "== compares the arrays' addresses. Use strcmp(s1, s2) == 0."
-      },
-      {
-        "lang": "c",
-        "file": "price.c",
-        "lines": [
-          "double price = 9.99;",
-          "printf(\"%d\\n\", price);"
-        ],
-        "a": 1,
-        "why": "%d expects an int; passing a double is undefined behaviour. Use %f or %.2f."
-      }
-    ],
-    "regex": [
-      {
-        "lang": "any",
-        "rule": "Match only stable release tags",
-        "yes": [
-          "v1.2.3",
-          "v10.0.1"
-        ],
-        "no": [
-          "v1.2",
-          "v2.0.0-beta",
-          "1.2.3"
-        ],
-        "answer": "^v\\d+\\.\\d+\\.\\d+$"
-      },
-      {
-        "lang": "any",
-        "rule": "Match Indian PIN codes (6 digits, no leading 0)",
-        "yes": [
-          "560001",
-          "110011"
-        ],
-        "no": [
-          "012345",
-          "56001",
-          "5600011"
-        ],
-        "answer": "^[1-9]\\d{5}$"
-      },
-      {
-        "lang": "any",
-        "rule": "Match hex colours like #fff or #A1B2C3",
-        "yes": [
-          "#fff",
-          "#A1B2C3"
-        ],
-        "no": [
-          "#ggg",
-          "fff",
-          "#12345"
-        ],
-        "answer": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
-      },
-      {
-        "lang": "any",
-        "rule": "Match log lines with level ERROR or FATAL",
-        "yes": [
-          "[09:41] ERROR db down",
-          "[09:42] FATAL out of memory"
-        ],
-        "no": [
-          "[09:43] INFO all good",
-          "[09:44] WARN error page served"
-        ],
-        "answer": "(ERROR|FATAL)"
-      },
-      {
-        "lang": "any",
-        "rule": "Match 24-hour times HH:MM",
-        "yes": [
-          "09:30",
-          "23:59"
-        ],
-        "no": [
-          "24:00",
-          "9:30",
-          "12:60"
-        ],
-        "answer": "^([01]\\d|2[0-3]):[0-5]\\d$"
-      },
-      {
-        "lang": "any",
-        "rule": "Match .js or .ts file names",
-        "yes": [
-          "app.js",
-          "index.ts"
-        ],
-        "no": [
-          "app.json",
-          "style.css",
-          "ts.config"
-        ],
-        "answer": "^\\w+\\.(js|ts)$"
-      },
-      {
-        "lang": "any",
-        "rule": "Match the whole word \"bug\"",
-        "yes": [
-          "found a bug",
-          "bug in prod"
-        ],
-        "no": [
-          "debugger",
-          "bugs everywhere"
-        ],
-        "answer": "\\bbug\\b"
-      },
-      {
-        "lang": "any",
-        "rule": "Match issue references like #42",
-        "yes": [
-          "fixes #42",
-          "closes #7"
-        ],
-        "no": [
-          "color #fff",
-          "issue 42"
-        ],
-        "answer": "#\\d+"
-      },
-      {
-        "lang": "any",
-        "rule": "Match IPv4-looking addresses",
-        "yes": [
-          "192.168.1.1",
-          "10.0.0.255"
-        ],
-        "no": [
-          "192.168.1",
-          "1.2.3.4.5",
-          "abc.def.ghi.jkl"
-        ],
-        "answer": "^(\\d{1,3}\\.){3}\\d{1,3}$"
-      }
-    ],
-    "merge": [
-      {
-        "lang": "javascript",
-        "file": "src/billing/fee.js",
-        "ours": {
-          "branch": "main · \"update GST to 18%\"",
-          "code": "const fee = price * 0.18;"
-        },
-        "theirs": {
-          "branch": "feature/round-fees · \"round to whole rupees\"",
-          "code": "const fee = Math.round(price * 0.12);"
-        },
-        "opts": [
-          "Keep ours: price * 0.18",
-          "Keep theirs: Math.round(price * 0.12)",
-          "Combine: Math.round(price * 0.18)"
-        ],
-        "a": 2,
-        "why": "Both changes are wanted: the new rate and the rounding."
-      },
-      {
-        "lang": "javascript",
-        "file": "src/app.ts",
-        "ours": {
-          "branch": "feature/logout · \"add logout\"",
-          "code": "import { login, logout } from \"./auth\";"
-        },
-        "theirs": {
-          "branch": "main · \"token refresh\"",
-          "code": "import { login, refreshToken } from \"./auth\";"
-        },
-        "opts": [
-          "Keep ours",
-          "Keep theirs",
-          "Combine: { login, logout, refreshToken }"
-        ],
-        "a": 2,
-        "why": "Each side added a different import; keep all three."
-      },
-      {
-        "lang": "any",
-        "file": "package.json",
-        "ours": {
-          "branch": "release/2.4 · \"bump version\"",
-          "code": "\"version\": \"2.4.0\","
-        },
-        "theirs": {
-          "branch": "hotfix/old · \"patch\"",
-          "code": "\"version\": \"2.3.9\","
-        },
-        "opts": [
-          "Keep ours: 2.4.0",
-          "Keep theirs: 2.3.9",
-          "Keep both lines"
-        ],
-        "a": 0,
-        "why": "Versions never go backwards, and duplicate keys break package.json."
-      },
-      {
-        "lang": "javascript",
-        "file": "src/config.js",
-        "ours": {
-          "branch": "feature/ui · \"local testing\"",
-          "code": "const API = \"http://localhost:3000\";"
-        },
-        "theirs": {
-          "branch": "main · \"use env config\"",
-          "code": "const API = process.env.API_URL;"
-        },
-        "opts": [
-          "Keep ours: localhost",
-          "Keep theirs: process.env.API_URL",
-          "Keep both lines"
-        ],
-        "a": 1,
-        "why": "A hard-coded localhost URL would break production."
-      },
-      {
-        "lang": "any",
-        "file": ".gitignore",
-        "ours": {
-          "branch": "main · \"ignore deps\"",
-          "code": "node_modules/"
-        },
-        "theirs": {
-          "branch": "feature/env · \"ignore secrets\"",
-          "code": ".env"
-        },
-        "opts": [
-          "Keep ours: node_modules/",
-          "Keep theirs: .env",
-          "Keep both lines"
-        ],
-        "a": 2,
-        "why": ".gitignore is a list; both entries belong."
-      },
-      {
-        "lang": "any",
-        "file": "src/styles/button.css",
-        "ours": {
-          "branch": "feature/dark · \"darker text\"",
-          "code": "  color: #333;"
-        },
-        "theirs": {
-          "branch": "main · \"migrate to design tokens\"",
-          "code": "  color: var(--text);"
-        },
-        "opts": [
-          "Keep ours: #333",
-          "Keep theirs: var(--text)",
-          "Keep both lines"
-        ],
-        "a": 1,
-        "why": "The token migration is the new standard; a hard-coded colour undoes it."
-      },
-      {
-        "lang": "javascript",
-        "file": "src/api/user.js",
-        "ours": {
-          "branch": "main · \"rename getUser to fetchUser\"",
-          "code": "function fetchUser(id) {"
-        },
-        "theirs": {
-          "branch": "feature/options · \"add opts param\"",
-          "code": "function getUser(id, opts) {"
-        },
-        "opts": [
-          "Keep ours: fetchUser(id)",
-          "Keep theirs: getUser(id, opts)",
-          "Combine: fetchUser(id, opts)"
-        ],
-        "a": 2,
-        "why": "Keep the new name and the new parameter."
-      },
-      {
-        "lang": "javascript",
-        "file": "src/payments/client.js",
-        "ours": {
-          "branch": "main · \"fix flaky payments\"",
-          "code": "  retries: 3,"
-        },
-        "theirs": {
-          "branch": "feature/timeout · \"add timeout\"",
-          "code": "  timeout: 5000,"
-        },
-        "opts": [
-          "Keep ours: retries",
-          "Keep theirs: timeout",
-          "Keep both lines"
-        ],
-        "a": 2,
-        "why": "They are different keys in the same object; you want both."
-      },
-      {
-        "lang": "python",
-        "file": "settings.py",
-        "ours": {
-          "branch": "main · \"prod hardening\"",
-          "code": "DEBUG = False"
-        },
-        "theirs": {
-          "branch": "feature/local · \"debug locally\"",
-          "code": "DEBUG = True"
-        },
-        "opts": [
-          "Keep ours: DEBUG = False",
-          "Keep theirs: DEBUG = True",
-          "Keep both lines"
-        ],
-        "a": 0,
-        "why": "Never ship DEBUG = True to production; it leaks stack traces."
-      },
-      {
-        "lang": "python",
-        "file": "app.py",
-        "ours": {
-          "branch": "main · \"add validation\"",
-          "code": "from utils import parse, validate"
-        },
-        "theirs": {
-          "branch": "feature/dates · \"date formatting\"",
-          "code": "from utils import parse, format_date"
-        },
-        "opts": [
-          "Keep ours",
-          "Keep theirs",
-          "Combine: parse, validate, format_date"
-        ],
-        "a": 2,
-        "why": "Each branch added a different import; keep all three."
-      },
-      {
-        "lang": "java",
-        "file": "App.java",
-        "ours": {
-          "branch": "main · \"use List\"",
-          "code": "import java.util.List;"
-        },
-        "theirs": {
-          "branch": "feature/cache · \"add cache map\"",
-          "code": "import java.util.Map;"
-        },
-        "opts": [
-          "Keep ours",
-          "Keep theirs",
-          "Keep both lines"
-        ],
-        "a": 2,
-        "why": "Both imports are needed; they do not conflict."
-      },
-      {
-        "lang": "java",
-        "file": "UserRepo.java",
-        "ours": {
-          "branch": "main · \"ids are long now\"",
-          "code": "public User findUser(long id) {"
-        },
-        "theirs": {
-          "branch": "feature/optional · \"return Optional\"",
-          "code": "public Optional<User> findUser(int id) {"
-        },
-        "opts": [
-          "Keep ours",
-          "Keep theirs",
-          "Combine: Optional<User> findUser(long id)"
-        ],
-        "a": 2,
-        "why": "Keep the long id from main and the Optional return type from the feature."
-      },
-      {
-        "lang": "java",
-        "file": "UserService.java",
-        "ours": {
-          "branch": "feature/debug · \"quick debug\"",
-          "code": "System.out.println(\"debug: \" + user);"
-        },
-        "theirs": {
-          "branch": "main · \"use logger, no personal data\"",
-          "code": "log.info(\"User loaded: {}\", user.getId());"
-        },
-        "opts": [
-          "Keep ours: println",
-          "Keep theirs: log.info",
-          "Keep both lines"
-        ],
-        "a": 1,
-        "why": "Use the logger and log only the id; println of the whole user leaks personal data."
-      },
-      {
-        "lang": "c",
-        "file": "main.c",
-        "ours": {
-          "branch": "main · \"printing\"",
-          "code": "#include <stdio.h>"
-        },
-        "theirs": {
-          "branch": "feature/alloc · \"use malloc\"",
-          "code": "#include <stdlib.h>"
-        },
-        "opts": [
-          "Keep ours",
-          "Keep theirs",
-          "Keep both lines"
-        ],
-        "a": 2,
-        "why": "Both headers are needed; includes never conflict."
-      },
-      {
-        "lang": "c",
-        "file": "copy.c",
-        "ours": {
-          "branch": "feature/fast · \"quick copy\"",
-          "code": "strcpy(dst, src);"
-        },
-        "theirs": {
-          "branch": "main · \"fix buffer overflow\"",
-          "code": "snprintf(dst, sizeof dst, \"%s\", src);"
-        },
-        "opts": [
-          "Keep ours: strcpy",
-          "Keep theirs: snprintf",
-          "Keep both lines"
-        ],
-        "a": 1,
-        "why": "strcpy can overflow dst; the bounded snprintf is the fix."
-      },
-      {
-        "lang": "c",
-        "file": "parse.c",
-        "ours": {
-          "branch": "main · \"make input const\"",
-          "code": "int parse(const char *s) {"
-        },
-        "theirs": {
-          "branch": "feature/base · \"add base param\"",
-          "code": "int parse(char *s, int base) {"
-        },
-        "opts": [
-          "Keep ours",
-          "Keep theirs",
-          "Combine: parse(const char *s, int base)"
-        ],
-        "a": 2,
-        "why": "Keep the const from main and the new base parameter."
-      },
-      {
-        "lang": "c",
-        "file": "cleanup.c",
-        "ours": {
-          "branch": "feature/leak · \"free buffer\"",
-          "code": "free(buf);"
-        },
-        "theirs": {
-          "branch": "main · \"avoid dangling pointer\"",
-          "code": "free(buf); buf = NULL;"
-        },
-        "opts": [
-          "Keep ours",
-          "Keep theirs",
-          "Keep both lines"
-        ],
-        "a": 1,
-        "why": "Theirs already frees and also clears the pointer. Keeping both would free twice."
-      }
-    ],
-    "prod": [
-      {
-        "lang": "any",
-        "alert": "checkout-api returning 503",
-        "log": "$ kubectl get pods -n checkout\ncheckout-api-7f9c   CrashLoopBackOff   restarts 14\nredis-0             Running            restarts 0\n$ kubectl logs checkout-api-7f9c --tail 3\nERROR ECONNREFUSED 10.0.4.12:6380\nFATAL cache unavailable, exiting\nnote: deploy #482 changed REDIS_PORT (redis listens on 6379)",
-        "commands": [
-          "kubectl delete pod redis-0",
-          "kubectl rollout undo deploy/checkout-api",
-          "kubectl scale deploy/checkout-api --replicas=0",
-          "rm -rf /var/log"
-        ],
-        "a": 1,
-        "why": "The bad deploy broke the port. Roll it back; redis itself is healthy."
-      },
-      {
-        "lang": "any",
-        "alert": "Writes failing: \"No space left on device\"",
-        "log": "$ df -h /\nFilesystem  Size  Used  Avail  Use%\n/dev/sda1    50G   50G     0   100%\n$ du -sh /var/log/* | sort -h | tail -1\n48G   /var/log/app.log   (still open by the app)",
-        "commands": [
-          "reboot",
-          "truncate -s 0 /var/log/app.log",
-          "chmod 777 /var/log",
-          "rm -rf /"
-        ],
-        "a": 1,
-        "why": "Truncating frees the space now. Deleting a file the app still holds open would not."
-      },
-      {
-        "lang": "any",
-        "alert": "New release will not start",
-        "log": "$ npm start\nError: listen EADDRINUSE: address already in use :::3000\n$ lsof -i :3000\nCOMMAND   PID   USER\nnode     4821   deploy   (old release, never stopped)",
-        "commands": [
-          "npm install",
-          "kill 4821",
-          "kill -9 1",
-          "sudo shutdown now"
-        ],
-        "a": 1,
-        "why": "Stop the stale process holding the port. PID 1 is init; never kill it."
-      },
-      {
-        "lang": "any",
-        "alert": "Deploy pipeline stuck",
-        "log": "$ ./deploy.sh\nbash: ./deploy.sh: Permission denied\n$ ls -l deploy.sh\n-rw-r--r--  1 ci  ci  812 deploy.sh",
-        "commands": [
-          "chmod +x deploy.sh",
-          "chmod 000 deploy.sh",
-          "sudo rm deploy.sh",
-          "mv deploy.sh deploy.txt"
-        ],
-        "a": 0,
-        "why": "The script just lacks the execute bit."
-      },
-      {
-        "lang": "any",
-        "alert": "Site shows 502 Bad Gateway",
-        "log": "$ tail -1 /var/log/nginx/error.log\nconnect() failed (111: Connection refused) while connecting\nto upstream, upstream: \"http://127.0.0.1:8000/\"\n$ systemctl status app\n● app.service  Active: inactive (dead) since 03:12",
-        "commands": [
-          "sudo systemctl restart nginx",
-          "sudo systemctl restart app",
-          "sudo rm /etc/nginx/nginx.conf",
-          "sudo ufw disable"
-        ],
-        "a": 1,
-        "why": "nginx is fine; the app behind it died. Restart the app."
-      },
-      {
-        "lang": "any",
-        "alert": "Browsers warn \"connection not private\"",
-        "log": "$ curl -sI https://shop.example.com\ncurl: (60) SSL certificate problem: certificate has expired\n$ sudo certbot certificates\n  Domains: shop.example.com\n  Expiry Date: 2 days ago (INVALID: EXPIRED)",
-        "commands": [
-          "curl -k https://shop.example.com",
-          "sudo certbot renew",
-          "sudo rm -rf /etc/letsencrypt",
-          "sudo ufw disable"
-        ],
-        "a": 1,
-        "why": "Renew the expired certificate. curl -k only hides the problem for you."
-      },
-      {
-        "lang": "any",
-        "alert": "Main is broken for the whole team",
-        "log": "$ git log --oneline -3\na1b2c3d (HEAD -> main, origin/main) WIP: delete payment module\n9f8e7d6 Add invoice export\n5c4b3a2 Fix login redirect\n(a1b2c3d is already pushed; 6 people have pulled it)",
-        "commands": [
-          "git push --force",
-          "git reset --hard HEAD~1",
-          "git revert a1b2c3d",
-          "rm -rf .git"
-        ],
-        "a": 2,
-        "why": "On a shared, pushed branch, revert adds an undo commit without rewriting history."
-      },
-      {
-        "lang": "any",
-        "alert": "CI fails at install step",
-        "log": "$ npm ci\nnpm ERR! `npm ci` can only install packages when your\npackage.json and package-lock.json are in sync.\nnpm ERR! Missing: zod@3.23.8 from lock file",
-        "commands": [
-          "npm install",
-          "npm ci --force",
-          "git push --force",
-          "rm -rf ~"
-        ],
-        "a": 0,
-        "why": "npm install updates the lock file to match package.json; commit it and CI passes."
-      }
-    ],
-    "dive": [
-      {
-        "lang": "any",
-        "ask": "Name a {git} command",
-        "strip": "^git\\s+",
-        "tiers": {
-          "common": "commit push pull add status clone checkout branch merge init log",
-          "uncommon": "rebase stash diff fetch reset tag cherry-pick remote switch restore show revert rm mv config",
-          "rare": "bisect reflog blame worktree submodule clean gc shortlog describe grep archive notes am apply",
-          "legendary": "rerere fsck filter-branch cat-file hash-object rev-parse ls-tree bundle range-diff sparse-checkout maintenance for-each-ref"
-        }
-      },
-      {
-        "lang": "any",
-        "ask": "Name an {HTTP status} code",
-        "strip": "\\D",
-        "tiers": {
-          "common": "200 404 500",
-          "uncommon": "201 204 301 302 400 401 403 502 503",
-          "rare": "202 304 307 308 405 409 410 422 429 504",
-          "legendary": "100 101 102 103 203 205 206 207 208 226 300 303 406 407 408 411 412 413 414 415 416 417 418 421 423 424 425 426 428 431 451 505 506 507 508 510 511"
-        }
-      },
-      {
-        "lang": "javascript",
-        "ask": "Name a {JavaScript array} method",
-        "strip": "^\\.|\\(\\)$|^Array\\.(prototype\\.)?",
-        "tiers": {
-          "common": "push pop map filter forEach reduce slice splice indexOf includes join concat sort",
-          "uncommon": "find some every shift unshift reverse flat findIndex fill keys isArray from",
-          "rare": "flatMap reduceRight lastIndexOf copyWithin entries values at findLast findLastIndex of",
-          "legendary": "toSorted toReversed toSpliced with fromAsync"
-        }
-      },
-      {
-        "lang": "any",
-        "ask": "Name a {Linux} command",
-        "strip": "^sudo\\s+",
-        "tiers": {
-          "common": "ls cd mkdir rm cp mv cat pwd echo touch grep",
-          "uncommon": "chmod chown find tar ssh curl ps kill top df du head tail less man wget ping",
-          "rare": "awk sed xargs htop lsof rsync crontab journalctl systemctl nc dig tee watch tmux strace",
-          "legendary": "nohup ionice nice renice tac rev shuf comm paste column mtr ldd lsblk dmesg fuser pv"
-        }
-      },
-      {
-        "lang": "any",
-        "ask": "Name a {Docker} command",
-        "strip": "^docker\\s+",
-        "tiers": {
-          "common": "run build ps pull push images stop start exec logs",
-          "uncommon": "rm rmi compose network volume inspect tag login restart kill",
-          "rare": "prune attach cp commit diff history save load stats top port rename",
-          "legendary": "buildx context manifest trust checkpoint swarm plugin events export import pause unpause wait update"
-        }
-      },
-      {
-        "lang": "python",
-        "ask": "Name a {Python} built-in function",
-        "strip": "\\(\\)$",
-        "tiers": {
-          "common": "print len range input int str list dict",
-          "uncommon": "type sum max min sorted open enumerate zip float abs round set tuple bool",
-          "rare": "map filter any all isinstance getattr hasattr reversed divmod hash id ord chr bin hex repr iter next pow format",
-          "legendary": "memoryview frozenset bytearray vars globals locals compile exec eval callable issubclass delattr setattr aiter anext breakpoint __import__ ascii oct slice super property staticmethod classmethod object complex bytes help dir"
-        }
-      },
-      {
-        "lang": "java",
-        "ask": "Name a {Java} keyword",
-        "strip": "",
-        "tiers": {
-          "common": "public class static void int if else return new for while",
-          "uncommon": "private protected final import package try catch throw extends implements interface boolean double long char this super",
-          "rare": "abstract synchronized volatile transient instanceof enum switch case default break continue throws finally do byte short float",
-          "legendary": "strictfp native assert goto const record sealed permits yield var non-sealed"
-        }
-      },
-      {
-        "lang": "java",
-        "ask": "Name a {Java String} method",
-        "strip": "^\\.|\\(\\)$",
-        "tiers": {
-          "common": "length charAt equals substring indexOf toUpperCase toLowerCase",
-          "uncommon": "trim split contains replace startsWith endsWith isEmpty equalsIgnoreCase compareTo",
-          "rare": "strip isBlank lines repeat chars matches format join valueOf concat lastIndexOf toCharArray intern",
-          "legendary": "codePointAt regionMatches translateEscapes stripIndent formatted describeConstable transform"
-        }
-      },
-      {
-        "lang": "c",
-        "ask": "Name a {C} keyword",
-        "strip": "",
-        "tiers": {
-          "common": "int char if else return for while void struct",
-          "uncommon": "float double long short unsigned signed const static sizeof switch case break continue do typedef enum",
-          "rare": "extern union volatile register goto default auto",
-          "legendary": "restrict inline _Bool _Complex _Imaginary _Alignas _Alignof _Atomic _Generic _Noreturn _Static_assert _Thread_local"
-        }
-      },
-      {
-        "lang": "c",
-        "ask": "Name a {C standard library} function",
-        "strip": "\\(\\)$",
-        "tiers": {
-          "common": "printf scanf malloc free strlen strcpy",
-          "uncommon": "calloc realloc fopen fclose fgets fprintf strcmp strcat memcpy memset puts getchar exit atoi sprintf",
-          "rare": "snprintf strncpy strtok qsort bsearch strtol fread fwrite fseek ftell perror memmove sscanf rand srand",
-          "legendary": "setjmp longjmp atexit strerror strspn strpbrk vsnprintf ungetc tmpfile signal raise abort fflush"
-        }
-      }
-    ]
+ "_help": "Codeshire question bank. Edit or replace this file to change questions. 'lang' must be one of the language ids below, or 'any' (shown for every language). 'a' is the index of the correct option, counting from 0. See QUESTIONS-GUIDE.md for every field.",
+ "languages": [
+  {
+   "id": "javascript",
+   "name": "JavaScript"
+  },
+  {
+   "id": "python",
+   "name": "Python"
+  },
+  {
+   "id": "java",
+   "name": "Java"
+  },
+  {
+   "id": "c",
+   "name": "C"
   }
+ ],
+ "questions": {
+  "output": [
+   {
+    "lang": "javascript",
+    "code": "const a = [1, 2, 3];\na[10] = 4;\nconsole.log(a.length);",
+    "opts": [
+     "4",
+     "11",
+     "10",
+     "RangeError"
+    ],
+    "a": 1,
+    "why": "Assigning index 10 makes the length 11; the gap is empty slots."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(0.1 + 0.2 === 0.3);",
+    "opts": [
+     "true",
+     "false",
+     "undefined",
+     "NaN"
+    ],
+    "a": 1,
+    "why": "Floating point: 0.1 + 0.2 is 0.30000000000000004."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(typeof null);",
+    "opts": [
+     "\"null\"",
+     "\"object\"",
+     "\"undefined\"",
+     "\"number\""
+    ],
+    "a": 1,
+    "why": "A legacy quirk: typeof null is \"object\"."
+   },
+   {
+    "lang": "javascript",
+    "code": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i));\n}",
+    "opts": [
+     "0 1 2",
+     "3 3 3",
+     "2 2 2",
+     "undefined ×3"
+    ],
+    "a": 1,
+    "why": "var is function-scoped, so every callback sees i = 3. let would print 0 1 2."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log([10, 1, 2].sort());",
+    "opts": [
+     "[1, 2, 10]",
+     "[1, 10, 2]",
+     "[10, 2, 1]",
+     "[2, 1, 10]"
+    ],
+    "a": 1,
+    "why": "Default sort compares strings: \"1\" < \"10\" < \"2\"."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(\"5\" - 2, \"5\" + 2);",
+    "opts": [
+     "3 52",
+     "3 7",
+     "NaN 52",
+     "52 3"
+    ],
+    "a": 0,
+    "why": "Minus converts to numbers; plus with a string concatenates."
+   },
+   {
+    "lang": "python",
+    "code": "print(3 * \"ab\")",
+    "opts": [
+     "ababab",
+     "3ab",
+     "TypeError",
+     "ab ab ab"
+    ],
+    "a": 0,
+    "why": "Multiplying a string repeats it."
+   },
+   {
+    "lang": "python",
+    "code": "print(bool([]), bool([0]))",
+    "opts": [
+     "False True",
+     "False False",
+     "True True",
+     "True False"
+    ],
+    "a": 0,
+    "why": "An empty list is falsy; any non-empty list is truthy, even [0]."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(1 < 2 < 3, 3 > 2 > 1);",
+    "opts": [
+     "true true",
+     "true false",
+     "false true",
+     "false false"
+    ],
+    "a": 1,
+    "why": "3 > 2 is true, and true > 1 is 1 > 1, which is false."
+   },
+   {
+    "lang": "python",
+    "code": "print(0.1 + 0.2 == 0.3, round(2.5))",
+    "opts": [
+     "False 2",
+     "False 3",
+     "True 3",
+     "True 2"
+    ],
+    "a": 0,
+    "why": "Float error again, and Python rounds halves to the nearest even number."
+   },
+   {
+    "lang": "javascript",
+    "code": "const x = { hp: 1 };\nconst y = x;\ny.hp = 2;\nconsole.log(x.hp);",
+    "opts": [
+     "1",
+     "2",
+     "undefined",
+     "ReferenceError"
+    ],
+    "a": 1,
+    "why": "Objects are shared by reference: x and y are the same object."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(typeof NaN);",
+    "opts": [
+     "\"NaN\"",
+     "\"undefined\"",
+     "\"number\"",
+     "\"object\""
+    ],
+    "a": 2,
+    "why": "NaN is a special value of the number type."
+   },
+   {
+    "lang": "python",
+    "code": "print(\"10\" + \"5\", int(\"10\") + 5)",
+    "opts": [
+     "105 15",
+     "15 15",
+     "105 105",
+     "TypeError"
+    ],
+    "a": 0,
+    "why": "Strings concatenate; once converted to int, they add."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log([\"1\", \"2\", \"3\"].map(parseInt));",
+    "opts": [
+     "[1, 2, 3]",
+     "[1, NaN, NaN]",
+     "[NaN, NaN, NaN]",
+     "[1, 2, NaN]"
+    ],
+    "a": 1,
+    "why": "map passes the index as parseInt's radix: parseInt(\"2\", 1) and parseInt(\"3\", 2) are NaN."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(!!\"false\", !!\"\");",
+    "opts": [
+     "false false",
+     "true false",
+     "false true",
+     "true true"
+    ],
+    "a": 1,
+    "why": "Any non-empty string is truthy, including \"false\"."
+   },
+   {
+    "lang": "python",
+    "code": "print(10 // 3, -7 // 2)",
+    "opts": [
+     "3 -4",
+     "3 -3",
+     "3.33 -3.5",
+     "3 -3.5"
+    ],
+    "a": 0,
+    "why": "// is floor division: it rounds down, so -3.5 becomes -4."
+   },
+   {
+    "lang": "python",
+    "code": "a = [1, 2, 3]\nb = a\nb.append(4)\nprint(len(a))",
+    "opts": [
+     "3",
+     "4",
+     "TypeError",
+     "None"
+    ],
+    "a": 1,
+    "why": "b = a copies the reference, not the list. Both names point to the same list."
+   },
+   {
+    "lang": "python",
+    "code": "print(\"abc\"[::-1])",
+    "opts": [
+     "abc",
+     "cba",
+     "a",
+     "IndexError"
+    ],
+    "a": 1,
+    "why": "A slice step of -1 walks the string backwards."
+   },
+   {
+    "lang": "python",
+    "code": "print([i * i for i in range(4)])",
+    "opts": [
+     "[1, 4, 9, 16]",
+     "[0, 1, 4, 9]",
+     "[0, 1, 2, 3]",
+     "[0, 2, 4, 6]"
+    ],
+    "a": 1,
+    "why": "range(4) is 0, 1, 2, 3; squared that is 0, 1, 4, 9."
+   },
+   {
+    "lang": "python",
+    "code": "print(type(1 / 2).__name__)",
+    "opts": [
+     "int",
+     "float",
+     "Fraction",
+     "decimal"
+    ],
+    "a": 1,
+    "why": "In Python 3, / always returns a float (0.5)."
+   },
+   {
+    "lang": "java",
+    "code": "String a = \"hi\";\nString b = \"hi\";\nSystem.out.println(a == b);",
+    "opts": [
+     "true",
+     "false",
+     "Compile error",
+     "NullPointerException"
+    ],
+    "a": 0,
+    "why": "Identical string literals are interned, so both point to the same object. With new String(\"hi\") it would be false; compare with equals()."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(10 / 4);",
+    "opts": [
+     "2.5",
+     "2",
+     "3",
+     "2.0"
+    ],
+    "a": 1,
+    "why": "int / int is integer division; the fraction is dropped."
+   },
+   {
+    "lang": "java",
+    "code": "int x = 5;\nSystem.out.println(x++ + ++x);",
+    "opts": [
+     "11",
+     "12",
+     "13",
+     "10"
+    ],
+    "a": 1,
+    "why": "x++ gives 5 (x becomes 6), then ++x makes it 7: 5 + 7 = 12."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(1 + 2 + \"3\" + 4 + 5);",
+    "opts": [
+     "15",
+     "3345",
+     "12345",
+     "339"
+    ],
+    "a": 1,
+    "why": "Left to right: 1 + 2 = 3, then everything after the string is concatenated: \"3\" + \"3\" + \"4\" + \"5\"."
+   },
+   {
+    "lang": "java",
+    "code": "Integer a = 127, b = 127;\nInteger c = 128, d = 128;\nSystem.out.println((a == b) + \" \" + (c == d));",
+    "opts": [
+     "true true",
+     "true false",
+     "false false",
+     "false true"
+    ],
+    "a": 1,
+    "why": "Integers from -128 to 127 are cached, so == compares the same object; 128 creates new objects. Use equals()."
+   },
+   {
+    "lang": "java",
+    "code": "char c = 'A';\nSystem.out.println(c + 1);",
+    "opts": [
+     "B",
+     "66",
+     "A1",
+     "65"
+    ],
+    "a": 1,
+    "why": "char + int is int arithmetic: 'A' is 65, so it prints 66. Cast to (char) to get B."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(0.1 + 0.2 == 0.3);",
+    "opts": [
+     "true",
+     "false",
+     "Compile error",
+     "0.3"
+    ],
+    "a": 1,
+    "why": "double uses binary floating point: 0.1 + 0.2 is 0.30000000000000004."
+   },
+   {
+    "lang": "java",
+    "code": "int[] arr = new int[3];\nSystem.out.println(arr[1]);",
+    "opts": [
+     "null",
+     "0",
+     "undefined",
+     "ArrayIndexOutOfBoundsException"
+    ],
+    "a": 1,
+    "why": "New int arrays are filled with 0."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", 7 / 2);",
+    "opts": [
+     "3.5",
+     "3",
+     "4",
+     "3.0"
+    ],
+    "a": 1,
+    "why": "int / int is integer division; the fraction is dropped."
+   },
+   {
+    "lang": "c",
+    "code": "int a[5] = {1, 2};\nprintf(\"%d\\n\", a[3]);",
+    "opts": [
+     "0",
+     "A garbage value",
+     "2",
+     "Compile error"
+    ],
+    "a": 0,
+    "why": "With an initializer list, the remaining elements are set to 0."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%zu\\n\", sizeof(char));",
+    "opts": [
+     "1",
+     "2",
+     "4",
+     "8"
+    ],
+    "a": 0,
+    "why": "sizeof(char) is 1 by definition, on every platform."
+   },
+   {
+    "lang": "c",
+    "code": "char s[] = \"hello\";\nprintf(\"%zu\\n\", sizeof(s));",
+    "opts": [
+     "5",
+     "6",
+     "8",
+     "4"
+    ],
+    "a": 1,
+    "why": "The array holds the 5 letters plus the terminating '\\0'."
+   },
+   {
+    "lang": "c",
+    "code": "int x = 5;\nint *p = &x;\n*p = 10;\nprintf(\"%d\\n\", x);",
+    "opts": [
+     "5",
+     "10",
+     "An address",
+     "Segmentation fault"
+    ],
+    "a": 1,
+    "why": "p points at x, so writing through *p changes x."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", -7 / 2);",
+    "opts": [
+     "-4",
+     "-3",
+     "-3.5",
+     "3"
+    ],
+    "a": 1,
+    "why": "Since C99, integer division truncates toward zero."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", 'A' + 1);",
+    "opts": [
+     "B",
+     "66",
+     "A1",
+     "65"
+    ],
+    "a": 1,
+    "why": "'A' is the int 65, and %d prints the number 66. Use %c to print B."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", 5 > 3 > 1);",
+    "opts": [
+     "1",
+     "0",
+     "true",
+     "Compile error"
+    ],
+    "a": 1,
+    "why": "5 > 3 is 1, and 1 > 1 is 0."
+   },
+   {
+    "lang": "c",
+    "code": "int a = 10, b = 3;\nprintf(\"%d %d\\n\", a % b, -a % b);",
+    "opts": [
+     "1 1",
+     "1 -1",
+     "1 2",
+     "-1 1"
+    ],
+    "a": 1,
+    "why": "Since C99, the result of % takes the sign of the left operand."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log([1, 2, 3].indexOf(\"2\"), [1, 2, 3].includes(2));",
+    "opts": [
+     "-1 false",
+     "1 false",
+     "1 true",
+     "-1 true"
+    ],
+    "a": 3,
+    "why": "indexOf uses strict equality, so the string \"2\" is not found."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(typeof [], Array.isArray([]));",
+    "opts": [
+     "object true",
+     "array false",
+     "object false",
+     "array true"
+    ],
+    "a": 0,
+    "why": "Arrays are objects to typeof; use Array.isArray to tell them apart."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(String(null) + undefined);",
+    "opts": [
+     "nullundefined",
+     "null",
+     "NaN",
+     "undefined"
+    ],
+    "a": 0,
+    "why": "String + undefined concatenates the text \"undefined\"."
+   },
+   {
+    "lang": "javascript",
+    "code": "const obj = { a: 1, b: { c: 2 } };\nconst copy = { ...obj };\ncopy.b.c = 9;\nconsole.log(obj.b.c);",
+    "opts": [
+     "TypeError",
+     "undefined",
+     "9",
+     "2"
+    ],
+    "a": 2,
+    "why": "Spread makes a shallow copy: the nested object is still shared."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log([0, 1, 2].find(n => n > 5));",
+    "opts": [
+     "null",
+     "[]",
+     "-1",
+     "undefined"
+    ],
+    "a": 3,
+    "why": "find returns undefined when nothing matches (findIndex returns -1)."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(\"10\" > \"9\", 10 > \"9\");",
+    "opts": [
+     "false false",
+     "true true",
+     "false true",
+     "true false"
+    ],
+    "a": 2,
+    "why": "Two strings compare character by character; with a number, the string is converted."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(Number.isNaN(\"abc\"), isNaN(\"abc\"));",
+    "opts": [
+     "true false",
+     "true true",
+     "false true",
+     "false false"
+    ],
+    "a": 2,
+    "why": "Number.isNaN does not coerce; the global isNaN converts \"abc\" to NaN first."
+   },
+   {
+    "lang": "javascript",
+    "code": "const nums = [1, 2, 3, 4];\nconsole.log(nums.filter(n => n % 2).reduce((a, b) => a + b, 10));",
+    "opts": [
+     "14",
+     "10",
+     "4",
+     "20"
+    ],
+    "a": 0,
+    "why": "The odd numbers 1 and 3, added to the start value 10."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log([1, 2, 3] + [4]);",
+    "opts": [
+     "[1,2,3,4]",
+     "1,2,34",
+     "1,2,3,4",
+     "TypeError"
+    ],
+    "a": 1,
+    "why": "+ turns both arrays into strings: \"1,2,3\" + \"4\"."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log([] == false);",
+    "opts": [
+     "undefined",
+     "false",
+     "true",
+     "TypeError"
+    ],
+    "a": 2,
+    "why": "Both sides coerce to the number 0, so loose equality is true."
+   },
+   {
+    "lang": "javascript",
+    "code": "let x = 1;\n{\n  let x = 2;\n}\nconsole.log(x);",
+    "opts": [
+     "SyntaxError",
+     "1",
+     "2",
+     "undefined"
+    ],
+    "a": 1,
+    "why": "let is block-scoped: the inner x is a different variable."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(Math.max());",
+    "opts": [
+     "NaN",
+     "0",
+     "-Infinity",
+     "Infinity"
+    ],
+    "a": 2,
+    "why": "With no arguments, max starts from -Infinity and finds nothing bigger."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(\"😀\".length);",
+    "opts": [
+     "2",
+     "undefined",
+     "1",
+     "4"
+    ],
+    "a": 0,
+    "why": "length counts UTF-16 code units, and this emoji needs two."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(null ?? \"x\", 0 || \"y\", 0 ?? \"z\");",
+    "opts": [
+     "x 0 z",
+     "null y 0",
+     "x y z",
+     "x y 0"
+    ],
+    "a": 3,
+    "why": "?? only skips null/undefined, while || skips every falsy value like 0."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(parseInt(\"08px\"), Number(\"08px\"));",
+    "opts": [
+     "0 NaN",
+     "8 8",
+     "NaN NaN",
+     "8 NaN"
+    ],
+    "a": 3,
+    "why": "parseInt reads digits until it hits junk; Number rejects the whole string."
+   },
+   {
+    "lang": "javascript",
+    "code": "const arr = [1, 2, 3];\narr.length = 1;\nconsole.log(arr);",
+    "opts": [
+     "[ 1 ]",
+     "[ 1, 2, 3 ]",
+     "[ 3 ]",
+     "TypeError"
+    ],
+    "a": 0,
+    "why": "Setting length truncates the array."
+   },
+   {
+    "lang": "javascript",
+    "code": "function f() {\n  return\n    42;\n}\nconsole.log(f());",
+    "opts": [
+     "undefined",
+     "42",
+     "null",
+     "SyntaxError"
+    ],
+    "a": 0,
+    "why": "A line break after return inserts a semicolon, so the function returns nothing."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(typeof function () {}, typeof class {});",
+    "opts": [
+     "function class",
+     "function object",
+     "object object",
+     "function function"
+    ],
+    "a": 3,
+    "why": "Classes are functions under the hood."
+   },
+   {
+    "lang": "javascript",
+    "code": "const s = new Set([1, 1, 2, \"2\"]);\nconsole.log(s.size);",
+    "opts": [
+     "1",
+     "4",
+     "3",
+     "2"
+    ],
+    "a": 2,
+    "why": "Sets use strict equality: 1 and \"2\" are different from 2."
+   },
+   {
+    "lang": "javascript",
+    "code": "const [x, ...rest] = [1, 2, 3];\nconsole.log(rest);",
+    "opts": [
+     "2",
+     "[ 2, 3 ]",
+     "[ 1, 2, 3 ]",
+     "[ 3 ]"
+    ],
+    "a": 1,
+    "why": "The rest element collects everything after x."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(0.1 * 3);",
+    "opts": [
+     "0.3",
+     "0.3000000000000001",
+     "0.30000000000000004",
+     "0.29999999999999999"
+    ],
+    "a": 2,
+    "why": "Binary floating point cannot store 0.1 exactly."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(Object.keys({ b: 1, 2: 1, a: 1, 1: 1 }).join());",
+    "opts": [
+     "1,2,b,a",
+     "b,2,a,1",
+     "a,b,1,2",
+     "1,2,a,b"
+    ],
+    "a": 0,
+    "why": "Integer-like keys come first in ascending order, then strings in insertion order."
+   },
+   {
+    "lang": "javascript",
+    "code": "const fn = (a, b = a * 2) => a + b;\nconsole.log(fn(3));",
+    "opts": [
+     "9",
+     "6",
+     "3",
+     "NaN"
+    ],
+    "a": 0,
+    "why": "Default parameters can use earlier ones: b = 6, so 3 + 6."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(\"b\" + \"a\" + +\"a\" + \"a\");",
+    "opts": [
+     "baNaNa",
+     "baaa",
+     "TypeError",
+     "ba0a"
+    ],
+    "a": 0,
+    "why": "+\"a\" is unary plus: NaN, which becomes the string \"NaN\"."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(Array(3).fill().map((_, i) => i * i));",
+    "opts": [
+     "[ , , ]",
+     "[ 0, 1, 4 ]",
+     "[ 1, 4, 9 ]",
+     "[ 0, 0, 0 ]"
+    ],
+    "a": 1,
+    "why": "fill() makes three real undefined slots, so map runs on each index."
+   },
+   {
+    "lang": "javascript",
+    "code": "console.log(1);\nsetTimeout(() => console.log(3));\nPromise.resolve().then(() => console.log(2));\nconsole.log(4);",
+    "opts": [
+     "1 3 2 4",
+     "1 4 2 3",
+     "1 2 3 4",
+     "1 4 3 2"
+    ],
+    "a": 1,
+    "why": "Sync code first, then microtasks (promises), then macrotasks (timers)."
+   },
+   {
+    "lang": "javascript",
+    "code": "const a = [1, 2, 3];\nconst b = a.reverse();\nconsole.log(a[0], a === b);",
+    "opts": [
+     "3 false",
+     "1 false",
+     "1 true",
+     "3 true"
+    ],
+    "a": 3,
+    "why": "reverse() reverses in place and returns the same array."
+   },
+   {
+    "lang": "python",
+    "code": "print([1, 2, 3][-1], \"hello\"[1:3])",
+    "opts": [
+     "1 el",
+     "3 el",
+     "3 ell",
+     "3 he"
+    ],
+    "a": 1,
+    "why": "Negative index counts from the end; slices stop before the end index."
+   },
+   {
+    "lang": "python",
+    "code": "a = [1, 2, 3, 4, 5]\nprint(a[::2])",
+    "opts": [
+     "[1, 3, 5]",
+     "[2, 4]",
+     "[5, 3, 1]",
+     "[1, 2]"
+    ],
+    "a": 0,
+    "why": "A step of 2 takes every second item from the start."
+   },
+   {
+    "lang": "python",
+    "code": "print(2 ** 3 ** 2)",
+    "opts": [
+     "512",
+     "64",
+     "36",
+     "12"
+    ],
+    "a": 0,
+    "why": "** is right-associative: 2 ** (3 ** 2) = 2 ** 9."
+   },
+   {
+    "lang": "python",
+    "code": "print(True + True)",
+    "opts": [
+     "True",
+     "2",
+     "1",
+     "TypeError"
+    ],
+    "a": 1,
+    "why": "bool is a subclass of int, and True is 1."
+   },
+   {
+    "lang": "python",
+    "code": "x = [[0] * 2] * 2\nx[0][0] = 1\nprint(x)",
+    "opts": [
+     "[[1, 0], [1, 0]]",
+     "[[1, 1], [1, 1]]",
+     "[[1, 0], [0, 0]]",
+     "[[1, 1], [0, 0]]"
+    ],
+    "a": 0,
+    "why": "* 2 copies the reference: both rows are the same list."
+   },
+   {
+    "lang": "python",
+    "code": "print(len({\"a\": 1, \"a\": 2}))",
+    "opts": [
+     "SyntaxError",
+     "0",
+     "2",
+     "1"
+    ],
+    "a": 3,
+    "why": "Duplicate keys overwrite each other; only one survives."
+   },
+   {
+    "lang": "python",
+    "code": "def f(x, items=[]):\n    items.append(x)\n    return items\n\nf(1)\nprint(f(2))",
+    "opts": [
+     "[1]",
+     "[2]",
+     "[1, 2]",
+     "None"
+    ],
+    "a": 2,
+    "why": "The default list is created once and shared between calls."
+   },
+   {
+    "lang": "python",
+    "code": "print(-7 % 3)",
+    "opts": [
+     "1",
+     "-1",
+     "2",
+     "-2"
+    ],
+    "a": 2,
+    "why": "Python's % takes the sign of the divisor: -7 = -3 * 3 + 2."
+   },
+   {
+    "lang": "python",
+    "code": "print(int(\"  42 \") + 1)",
+    "opts": [
+     "ValueError",
+     "43",
+     "421",
+     "42 1"
+    ],
+    "a": 1,
+    "why": "int() ignores surrounding whitespace."
+   },
+   {
+    "lang": "python",
+    "code": "print(sorted(\"bca\"))",
+    "opts": [
+     "['a', 'b', 'c']",
+     "'abc'",
+     "('a', 'b', 'c')",
+     "abc"
+    ],
+    "a": 0,
+    "why": "sorted() always returns a list, even for a string."
+   },
+   {
+    "lang": "python",
+    "code": "t = (1,)\nprint(type(t).__name__, len(t))",
+    "opts": [
+     "tuple 2",
+     "tuple 1",
+     "list 1",
+     "int 1"
+    ],
+    "a": 1,
+    "why": "The trailing comma makes it a one-item tuple."
+   },
+   {
+    "lang": "python",
+    "code": "print({1, 2, 3} & {2, 3, 4})",
+    "opts": [
+     "{1, 4}",
+     "{1, 2, 3, 4}",
+     "True",
+     "{2, 3}"
+    ],
+    "a": 3,
+    "why": "& on sets is intersection."
+   },
+   {
+    "lang": "python",
+    "code": "print(\" \".join(str(i) for i in range(1, 10, 3)))",
+    "opts": [
+     "1 4 7 10",
+     "3 6 9",
+     "1 3 6 9",
+     "1 4 7"
+    ],
+    "a": 3,
+    "why": "range(1, 10, 3) is 1, 4, 7; the stop value is excluded."
+   },
+   {
+    "lang": "python",
+    "code": "a = b = []\na.append(1)\nprint(b)",
+    "opts": [
+     "NameError",
+     "None",
+     "[1]",
+     "[]"
+    ],
+    "a": 2,
+    "why": "a and b name the same list object."
+   },
+   {
+    "lang": "python",
+    "code": "print(list(zip([1, 2, 3], \"ab\")))",
+    "opts": [
+     "[(1, 'a'), (2, 'b')]",
+     "[(1, 'a'), (2, 'b'), (3, None)]",
+     "ValueError",
+     "[1, 'a', 2, 'b']"
+    ],
+    "a": 0,
+    "why": "zip stops at the shortest input."
+   },
+   {
+    "lang": "python",
+    "code": "print(round(0.5), round(1.5))",
+    "opts": [
+     "0 1",
+     "1 1",
+     "0 2",
+     "1 2"
+    ],
+    "a": 2,
+    "why": "round() uses banker's rounding: ties go to the even number."
+   },
+   {
+    "lang": "python",
+    "code": "print(\"Hello\".find(\"z\"), \"Hello\".count(\"l\"))",
+    "opts": [
+     "None 2",
+     "-1 2",
+     "0 2",
+     "ValueError"
+    ],
+    "a": 1,
+    "why": "find() returns -1 when missing (index() would raise)."
+   },
+   {
+    "lang": "python",
+    "code": "print(any([]), all([]))",
+    "opts": [
+     "True True",
+     "False True",
+     "True False",
+     "False False"
+    ],
+    "a": 1,
+    "why": "all() of nothing is vacuously True; any() needs at least one True."
+   },
+   {
+    "lang": "python",
+    "code": "d = {\"x\": 1}\nprint(d.get(\"y\", 0) + d[\"x\"])",
+    "opts": [
+     "None",
+     "0",
+     "1",
+     "KeyError"
+    ],
+    "a": 2,
+    "why": "get() returns the default 0 for a missing key."
+   },
+   {
+    "lang": "python",
+    "code": "print([i for i in range(5) if i % 2][::-1])",
+    "opts": [
+     "[4, 2, 0]",
+     "[0, 2, 4]",
+     "[3, 1]",
+     "[1, 3]"
+    ],
+    "a": 2,
+    "why": "Odd numbers 1 and 3, then reversed."
+   },
+   {
+    "lang": "python",
+    "code": "x = 10\n\ndef f():\n    x = 5\n    return x\n\nf()\nprint(x)",
+    "opts": [
+     "None",
+     "10",
+     "5",
+     "UnboundLocalError"
+    ],
+    "a": 1,
+    "why": "Assigning inside f creates a local x; the global is untouched."
+   },
+   {
+    "lang": "python",
+    "code": "a, b = 1, 1.0\nprint(a == b, a is b)",
+    "opts": [
+     "False False",
+     "True False",
+     "False True",
+     "True True"
+    ],
+    "a": 1,
+    "why": "Equal values, but an int and a float are different objects."
+   },
+   {
+    "lang": "python",
+    "code": "print(type(3 / 1).__name__, 7 // 2.0)",
+    "opts": [
+     "float 3.5",
+     "int 3.0",
+     "int 3",
+     "float 3.0"
+    ],
+    "a": 3,
+    "why": "/ always gives a float, and // with a float operand gives a float."
+   },
+   {
+    "lang": "python",
+    "code": "s = \"codeshire\"\nprint(s[2:-2:2])",
+    "opts": [
+     "esr",
+     "dsir",
+     "deh",
+     "dsi"
+    ],
+    "a": 3,
+    "why": "Characters at indexes 2, 4 and 6: d, s, i."
+   },
+   {
+    "lang": "python",
+    "code": "nums = [3, 1, 2]\nnums.sort(reverse=True)\nprint(nums.pop())",
+    "opts": [
+     "2",
+     "3",
+     "None",
+     "1"
+    ],
+    "a": 3,
+    "why": "Sorted descending is [3, 2, 1]; pop() removes the last item."
+   },
+   {
+    "lang": "python",
+    "code": "print(f\"{7:03d}|{3.14159:.2f}\")",
+    "opts": [
+     "007|3.14",
+     "7|3.14",
+     "  7|3.14",
+     "007|3.141"
+    ],
+    "a": 0,
+    "why": "03d pads with zeros to width 3; .2f keeps two decimals."
+   },
+   {
+    "lang": "python",
+    "code": "print(\"-\".join(reversed(\"abc\")))",
+    "opts": [
+     "cba",
+     "c-b-a",
+     "a-b-c",
+     "-c-b-a"
+    ],
+    "a": 1,
+    "why": "reversed() yields c, b, a and join() puts \"-\" between them."
+   },
+   {
+    "lang": "java",
+    "code": "String s = \"abc\";\ns += s.length();\nSystem.out.println(s);",
+    "opts": [
+     "3",
+     "abc3",
+     "abc",
+     "Compile error"
+    ],
+    "a": 1,
+    "why": "+= on a String appends the int as text."
+   },
+   {
+    "lang": "java",
+    "code": "int x = 10;\nx = x++ + x--;\nSystem.out.println(x);",
+    "opts": [
+     "10",
+     "21",
+     "22",
+     "20"
+    ],
+    "a": 1,
+    "why": "x++ gives 10 (x becomes 11), x-- gives 11 (x becomes 10), then x is set to 21."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(true ? 1 : 2.0);",
+    "opts": [
+     "1.0",
+     "1",
+     "2.0",
+     "Compile error"
+    ],
+    "a": 0,
+    "why": "The ternary's int and double branches are promoted to a common type: double."
+   },
+   {
+    "lang": "java",
+    "code": "char c = 'A';\nc += 2;\nSystem.out.println(c);",
+    "opts": [
+     "67",
+     "C",
+     "A2",
+     "Compile error"
+    ],
+    "a": 1,
+    "why": "+= on a char adds to its code and keeps the char type."
+   },
+   {
+    "lang": "java",
+    "code": "int[] a = {1, 2, 3};\nint[] b = a;\nb[0] = 9;\nSystem.out.println(a[0]);",
+    "opts": [
+     "Compile error",
+     "1",
+     "0",
+     "9"
+    ],
+    "a": 3,
+    "why": "Arrays are objects; b and a refer to the same array."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(Integer.MAX_VALUE + 1);",
+    "opts": [
+     "2147483648",
+     "ArithmeticException",
+     "0",
+     "-2147483648"
+    ],
+    "a": 3,
+    "why": "int overflow wraps around silently."
+   },
+   {
+    "lang": "java",
+    "code": "String s = \"hello\";\ns.toUpperCase();\nSystem.out.println(s);",
+    "opts": [
+     "HELLO",
+     "null",
+     "Hello",
+     "hello"
+    ],
+    "a": 3,
+    "why": "Strings are immutable; the uppercase copy was thrown away."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(7 % -3);",
+    "opts": [
+     "-1",
+     "1",
+     "2",
+     "-2"
+    ],
+    "a": 1,
+    "why": "In Java, % takes the sign of the left operand."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(5 / 2.0);",
+    "opts": [
+     "2",
+     "2.5",
+     "2.0",
+     "3"
+    ],
+    "a": 1,
+    "why": "One double operand makes it floating-point division."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(\"abc\".substring(1, 2));",
+    "opts": [
+     "a",
+     "b",
+     "ab",
+     "bc"
+    ],
+    "a": 1,
+    "why": "substring(begin, end) excludes end: just index 1."
+   },
+   {
+    "lang": "java",
+    "code": "StringBuilder sb = new StringBuilder(\"ab\");\nsb.append(\"cd\").reverse();\nSystem.out.println(sb);",
+    "opts": [
+     "cdab",
+     "badc",
+     "dcba",
+     "abcd"
+    ],
+    "a": 2,
+    "why": "StringBuilder is mutable and its methods chain on the same object."
+   },
+   {
+    "lang": "java",
+    "code": "int i = 0;\ni = i++;\nSystem.out.println(i);",
+    "opts": [
+     "0",
+     "2",
+     "1",
+     "Compile error"
+    ],
+    "a": 0,
+    "why": "i++ returns the old value 0, which is then assigned back to i."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(10 == 10.0);",
+    "opts": [
+     "Compile error",
+     "false",
+     "true",
+     "10"
+    ],
+    "a": 2,
+    "why": "The int is widened to double before comparing."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println((int) 3.99);",
+    "opts": [
+     "Compile error",
+     "4",
+     "3",
+     "3.99"
+    ],
+    "a": 2,
+    "why": "Casting to int truncates toward zero."
+   },
+   {
+    "lang": "java",
+    "code": "String s = null;\nSystem.out.println(s + \"!\");",
+    "opts": [
+     "null!",
+     "NullPointerException",
+     "Compile error",
+     "!"
+    ],
+    "a": 0,
+    "why": "String concatenation turns null into \"null\"."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(Math.round(-2.5));",
+    "opts": [
+     "-2",
+     "-2.5",
+     "-3",
+     "2"
+    ],
+    "a": 0,
+    "why": "Math.round rounds half up (toward positive infinity): -2.5 becomes -2."
+   },
+   {
+    "lang": "java",
+    "code": "List<Integer> l = new ArrayList<>(List.of(1, 2, 3));\nl.remove(1);\nSystem.out.println(l);",
+    "opts": [
+     "[1, 2]",
+     "[2, 3]",
+     "[1, 3]",
+     "[1, 2, 3]"
+    ],
+    "a": 2,
+    "why": "remove(int) removes by index, not by value."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(\"a,b,,c,,\".split(\",\").length);",
+    "opts": [
+     "5",
+     "4",
+     "6",
+     "3"
+    ],
+    "a": 1,
+    "why": "split drops trailing empty strings but keeps the one in the middle."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(1.0 / 0);",
+    "opts": [
+     "ArithmeticException",
+     "0",
+     "Infinity",
+     "NaN"
+    ],
+    "a": 2,
+    "why": "Floating-point division by zero gives Infinity; only integer division throws."
+   },
+   {
+    "lang": "java",
+    "code": "byte b = (byte) 200;\nSystem.out.println(b);",
+    "opts": [
+     "56",
+     "127",
+     "-56",
+     "200"
+    ],
+    "a": 2,
+    "why": "byte holds -128..127; 200 wraps to 200 - 256."
+   },
+   {
+    "lang": "java",
+    "code": "boolean t = false;\nif (t = true) System.out.println(\"yes\");\nelse System.out.println(\"no\");",
+    "opts": [
+     "yes",
+     "no",
+     "Compile error",
+     "true"
+    ],
+    "a": 0,
+    "why": "= assigns true and the expression's value is true."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(\"Java\".charAt(2) + \"Code\".charAt(0));",
+    "opts": [
+     "vC",
+     "185",
+     "v C",
+     "Compile error"
+    ],
+    "a": 1,
+    "why": "char + char is int addition: 'v' (118) + 'C' (67)."
+   },
+   {
+    "lang": "java",
+    "code": "Map<String, Integer> m = new HashMap<>();\nm.put(\"a\", 1);\nm.put(\"a\", 2);\nSystem.out.println(m.size() + \" \" + m.get(\"a\"));",
+    "opts": [
+     "1 1",
+     "2 1",
+     "2 2",
+     "1 2"
+    ],
+    "a": 3,
+    "why": "put on an existing key replaces the value."
+   },
+   {
+    "lang": "java",
+    "code": "String a = \"hi\";\nString b = new String(\"hi\");\nSystem.out.println(a.equals(b) + \" \" + (a == b));",
+    "opts": [
+     "true true",
+     "true false",
+     "false true",
+     "false false"
+    ],
+    "a": 1,
+    "why": "Same characters, but new String creates a different object."
+   },
+   {
+    "lang": "java",
+    "code": "System.out.println(0.1f == 0.1);",
+    "opts": [
+     "0.1",
+     "true",
+     "Compile error",
+     "false"
+    ],
+    "a": 3,
+    "why": "0.1f is a less precise float; widened to double it is not equal to 0.1."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", (int)sizeof(\"abc\"));",
+    "opts": [
+     "4",
+     "1",
+     "8",
+     "3"
+    ],
+    "a": 0,
+    "why": "A string literal is a char array including its '\\0'."
+   },
+   {
+    "lang": "c",
+    "code": "int x = 7;\nx >>= 1;\nprintf(\"%d\\n\", x);",
+    "opts": [
+     "14",
+     "3",
+     "6",
+     "3.5"
+    ],
+    "a": 1,
+    "why": "Shifting right by one halves the number, dropping the remainder."
+   },
+   {
+    "lang": "c",
+    "code": "char str[] = \"ab\\0cd\";\nprintf(\"%zu\\n\", strlen(str));",
+    "opts": [
+     "6",
+     "4",
+     "5",
+     "2"
+    ],
+    "a": 3,
+    "why": "strlen stops at the first '\\0'."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", 017 + 0x1);",
+    "opts": [
+     "18",
+     "171",
+     "16",
+     "8"
+    ],
+    "a": 2,
+    "why": "017 is octal 15, and 0x1 is 1."
+   },
+   {
+    "lang": "c",
+    "code": "int x = 5;\nint y = x++ * 2;\nprintf(\"%d %d\\n\", x, y);",
+    "opts": [
+     "5 10",
+     "5 12",
+     "6 12",
+     "6 10"
+    ],
+    "a": 3,
+    "why": "x++ gives 5 to the multiplication, then x becomes 6."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", 10 % 3 * 2);",
+    "opts": [
+     "6",
+     "0",
+     "4",
+     "2"
+    ],
+    "a": 3,
+    "why": "% and * have the same precedence and run left to right: 1 * 2."
+   },
+   {
+    "lang": "c",
+    "code": "char s[] = \"hello\";\nprintf(\"%zu %zu\\n\", sizeof(s), strlen(s));",
+    "opts": [
+     "5 5",
+     "6 5",
+     "6 6",
+     "8 5"
+    ],
+    "a": 1,
+    "why": "sizeof counts the terminating '\\0'; strlen does not."
+   },
+   {
+    "lang": "c",
+    "code": "int a = 7, b = 2;\nprintf(\"%.1f\\n\", (float)a / b);",
+    "opts": [
+     "4.0",
+     "3.5",
+     "3.0",
+     "3"
+    ],
+    "a": 1,
+    "why": "The cast happens before the division, so it is floating point."
+   },
+   {
+    "lang": "c",
+    "code": "int i;\nfor (i = 0; i < 5; i++);\nprintf(\"%d\\n\", i);",
+    "opts": [
+     "0 1 2 3 4",
+     "5",
+     "4",
+     "0"
+    ],
+    "a": 1,
+    "why": "The ; ends the loop body. The loop just counts i up to 5."
+   },
+   {
+    "lang": "c",
+    "code": "unsigned int u = 0;\nu--;\nprintf(\"%u\\n\", u);",
+    "opts": [
+     "65535",
+     "0",
+     "-1",
+     "4294967295"
+    ],
+    "a": 3,
+    "why": "Unsigned arithmetic wraps around to the maximum value (32-bit int here)."
+   },
+   {
+    "lang": "c",
+    "code": "int arr[] = {10, 20, 30};\nint *p = arr;\np++;\nprintf(\"%d\\n\", *p + 1);",
+    "opts": [
+     "11",
+     "31",
+     "21",
+     "20"
+    ],
+    "a": 2,
+    "why": "p now points at arr[1] (20); then 1 is added to the value."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%x\\n\", 255);",
+    "opts": [
+     "255",
+     "0xff",
+     "FF",
+     "ff"
+    ],
+    "a": 3,
+    "why": "%x prints lowercase hex without a 0x prefix."
+   },
+   {
+    "lang": "c",
+    "code": "int x = 010;\nprintf(\"%d\\n\", x);",
+    "opts": [
+     "10",
+     "16",
+     "8",
+     "2"
+    ],
+    "a": 2,
+    "why": "A leading 0 makes the literal octal."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", 1 << 4 | 1);",
+    "opts": [
+     "17",
+     "2",
+     "32",
+     "16"
+    ],
+    "a": 0,
+    "why": "<< binds tighter than |: 16 | 1."
+   },
+   {
+    "lang": "c",
+    "code": "char c = 'a' + 25;\nprintf(\"%c\\n\", c);",
+    "opts": [
+     "122",
+     "{",
+     "y",
+     "z"
+    ],
+    "a": 3,
+    "why": "'a' + 25 is the 26th letter."
+   },
+   {
+    "lang": "c",
+    "code": "int a = 5;\nif (a = 0) printf(\"zero\\n\");\nelse printf(\"%d\\n\", a);",
+    "opts": [
+     "0",
+     "Compile error",
+     "5",
+     "zero"
+    ],
+    "a": 0,
+    "why": "= assigns 0, which is false, and a is now 0."
+   },
+   {
+    "lang": "c",
+    "code": "int x = 3;\nswitch (x) {\n  case 3: printf(\"three \");\n  case 4: printf(\"four \"); break;\n  default: printf(\"other\");\n}\nprintf(\"\\n\");",
+    "opts": [
+     "three",
+     "three four",
+     "three four other",
+     "four"
+    ],
+    "a": 1,
+    "why": "Without break, case 3 falls through into case 4."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%.3s\\n\", \"codeshire\");",
+    "opts": [
+     "cod",
+     "codeshire",
+     "shi",
+     "c"
+    ],
+    "a": 0,
+    "why": "A precision on %s limits how many characters are printed."
+   },
+   {
+    "lang": "c",
+    "code": "int n = 7;\nprintf(\"%d\\n\", n & 1 ? n * 3 : n / 2);",
+    "opts": [
+     "21",
+     "1",
+     "3",
+     "3.5"
+    ],
+    "a": 0,
+    "why": "n & 1 is 1 for odd numbers, so the first branch runs."
+   },
+   {
+    "lang": "c",
+    "code": "char *s = \"abc\";\nprintf(\"%c\\n\", *(s + 2));",
+    "opts": [
+     "An address",
+     "b",
+     "a",
+     "c"
+    ],
+    "a": 3,
+    "why": "*(s + 2) is the same as s[2]."
+   },
+   {
+    "lang": "c",
+    "code": "int a = 2, b = 3;\na ^= b; b ^= a; a ^= b;\nprintf(\"%d %d\\n\", a, b);",
+    "opts": [
+     "0 0",
+     "1 1",
+     "2 3",
+     "3 2"
+    ],
+    "a": 3,
+    "why": "The classic XOR swap."
+   },
+   {
+    "lang": "c",
+    "code": "struct P { int x; int y; } p = {1};\nprintf(\"%d\\n\", p.y);",
+    "opts": [
+     "1",
+     "0",
+     "Compile error",
+     "A garbage value"
+    ],
+    "a": 1,
+    "why": "Members without an initializer are zeroed."
+   },
+   {
+    "lang": "c",
+    "code": "printf(\"%d\\n\", strcmp(\"apple\", \"apricot\") < 0);",
+    "opts": [
+     "1",
+     "true",
+     "0",
+     "-1"
+    ],
+    "a": 0,
+    "why": "'p' < 'r' at index 2, so apple sorts first and the comparison is 1."
+   },
+   {
+    "lang": "c",
+    "code": "double d = 1 / 2;\nprintf(\"%.1f\\n\", d);",
+    "opts": [
+     "0",
+     "0.5",
+     "1.0",
+     "0.0"
+    ],
+    "a": 3,
+    "why": "1 / 2 is integer division (0) before it is stored in the double."
+   },
+   {
+    "lang": "c",
+    "code": "int i = 0;\nwhile (i++ < 3);\nprintf(\"%d\\n\", i);",
+    "opts": [
+     "2",
+     "4",
+     "0",
+     "3"
+    ],
+    "a": 1,
+    "why": "The test compares the old value; the last check (3 < 3) still increments i to 4."
+   },
+   {
+    "lang": "c",
+    "code": "int a[3] = {1, 2, 3};\nprintf(\"%d\\n\", 2[a]);",
+    "opts": [
+     "2",
+     "Compile error",
+     "1",
+     "3"
+    ],
+    "a": 3,
+    "why": "a[i] is *(a + i), so 2[a] is the same as a[2]."
+   }
+  ],
+  "bug": [
+   {
+    "lang": "javascript",
+    "file": "airlock.js",
+    "lines": [
+     "function cycleAirlock(door, pressure) {",
+     "  const SAFE = 101.3;",
+     "  door.close();",
+     "  if (pressure = SAFE) {",
+     "    door.unlock(\"inner\");",
+     "  }",
+     "}"
+    ],
+    "a": 3,
+    "why": "= assigns instead of comparing, so it always unlocks. Use ===."
+   },
+   {
+    "lang": "javascript",
+    "file": "sum.js",
+    "lines": [
+     "function sum(arr) {",
+     "  let total = 0;",
+     "  for (let i = 0; i <= arr.length; i++) {",
+     "    total += arr[i];",
+     "  }",
+     "  return total;",
+     "}"
+    ],
+    "a": 2,
+    "why": "<= reads one past the end (undefined), so total becomes NaN. Use <."
+   },
+   {
+    "lang": "javascript",
+    "file": "user.js",
+    "lines": [
+     "async function loadUser(id) {",
+     "  const res = fetch(`/api/users/${id}`);",
+     "  if (!res.ok) throw new Error(\"fail\");",
+     "  return res.json();",
+     "}"
+    ],
+    "a": 1,
+    "why": "Missing await: res is a Promise, so res.ok is undefined."
+   },
+   {
+    "lang": "python",
+    "file": "bag.py",
+    "lines": [
+     "def add_item(item, bag=[]):",
+     "    bag.append(item)",
+     "    return bag",
+     "",
+     "add_item(\"sword\")",
+     "add_item(\"shield\")  # bag has both!"
+    ],
+    "a": 0,
+    "why": "Mutable default arguments are shared across calls. Use bag=None."
+   },
+   {
+    "lang": "javascript",
+    "file": "last.js",
+    "lines": [
+     "function getLast(arr) {",
+     "  if (arr.length === 0) return null;",
+     "  return arr[arr.length];",
+     "}"
+    ],
+    "a": 2,
+    "why": "Zero-indexed: the last item is arr[arr.length - 1]."
+   },
+   {
+    "lang": "python",
+    "file": "parity.py",
+    "lines": [
+     "def is_even(n):",
+     "    return n % 2 == 1",
+     "",
+     "print(is_even(4))  # False?!"
+    ],
+    "a": 1,
+    "why": "Even numbers have remainder 0, not 1."
+   },
+   {
+    "lang": "javascript",
+    "file": "age.js",
+    "lines": [
+     "function isAdult(age) {",
+     "  if (age > 18) return true;",
+     "  return false;",
+     "}",
+     "isAdult(18); // should be true"
+    ],
+    "a": 1,
+    "why": "18 should count: use >= 18."
+   },
+   {
+    "lang": "javascript",
+    "file": "greet.js",
+    "lines": [
+     "function greet(user) {",
+     "  if (user.name == undefined) return \"Hi stranger\";",
+     "  return \"Hi \" + user.Name;",
+     "}"
+    ],
+    "a": 2,
+    "why": "Property names are case-sensitive: user.Name is undefined."
+   },
+   {
+    "lang": "python",
+    "file": "fact.py",
+    "lines": [
+     "def factorial(n):",
+     "    if n == 0:",
+     "        return 1",
+     "    return n * factorial(n)"
+    ],
+    "a": 3,
+    "why": "It never shrinks: call factorial(n - 1) or it recurses forever."
+   },
+   {
+    "lang": "javascript",
+    "file": "access.js",
+    "lines": [
+     "const user = await getUser();",
+     "if (user.role === \"admin\" || \"owner\") {",
+     "  grantAccess();",
+     "}"
+    ],
+    "a": 1,
+    "why": "\"owner\" alone is always truthy, so everyone gets access."
+   },
+   {
+    "lang": "any",
+    "file": "report.sql",
+    "lines": [
+     "SELECT name, COUNT(*)",
+     "FROM orders",
+     "WHERE COUNT(*) > 5",
+     "GROUP BY name;"
+    ],
+    "a": 2,
+    "why": "You cannot filter on an aggregate in WHERE; use HAVING after GROUP BY."
+   },
+   {
+    "lang": "python",
+    "file": "sort.py",
+    "lines": [
+     "nums = [3, 1, 2]",
+     "sorted_nums = nums.sort()",
+     "print(sorted_nums[0])"
+    ],
+    "a": 1,
+    "why": "list.sort() sorts in place and returns None. Use sorted(nums)."
+   },
+   {
+    "lang": "python",
+    "file": "score.py",
+    "lines": [
+     "count = 0",
+     "def add_point():",
+     "    count += 1",
+     "",
+     "add_point()  # UnboundLocalError"
+    ],
+    "a": 2,
+    "why": "Assigning to count inside the function makes it local. Declare global count (or pass it in)."
+   },
+   {
+    "lang": "python",
+    "file": "reader.py",
+    "lines": [
+     "with open(\"data.txt\") as f:",
+     "    lines = f.readlines()",
+     "for line in lines:",
+     "    if line == \"END\":",
+     "        break"
+    ],
+    "a": 3,
+    "why": "readlines() keeps the trailing \"\\n\", so line is \"END\\n\". Compare line.strip()."
+   },
+   {
+    "lang": "java",
+    "file": "Menu.java",
+    "lines": [
+     "String input = scanner.nextLine();",
+     "if (input == \"yes\") {",
+     "    startGame();",
+     "}"
+    ],
+    "a": 1,
+    "why": "== compares object references; strings read from input are new objects. Use \"yes\".equals(input)."
+   },
+   {
+    "lang": "java",
+    "file": "Scores.java",
+    "lines": [
+     "int[] scores = {90, 85, 70};",
+     "for (int i = 0; i <= scores.length; i++) {",
+     "    System.out.println(scores[i]);",
+     "}"
+    ],
+    "a": 1,
+    "why": "<= runs one past the last index and throws ArrayIndexOutOfBoundsException. Use <."
+   },
+   {
+    "lang": "java",
+    "file": "Names.java",
+    "lines": [
+     "List<String> names = List.of(\"Ana\", \"Bo\");",
+     "for (String n : names) {",
+     "    if (n.startsWith(\"B\")) names.remove(n);",
+     "}"
+    ],
+    "a": 2,
+    "why": "List.of is immutable (and removing while iterating breaks anyway). Use removeIf on a mutable list."
+   },
+   {
+    "lang": "java",
+    "file": "Counter.java",
+    "lines": [
+     "public class Counter {",
+     "    private int count;",
+     "    public void increment() {",
+     "        int count = this.count + 1;",
+     "    }",
+     "}"
+    ],
+    "a": 3,
+    "why": "This declares a new local variable that shadows the field, so the field never changes. Write this.count++."
+   },
+   {
+    "lang": "java",
+    "file": "Auth.java",
+    "lines": [
+     "String role = user.getRole(); // may be null",
+     "if (role.equals(\"admin\")) {",
+     "    grantAccess();",
+     "}"
+    ],
+    "a": 1,
+    "why": "Calling equals on a null throws NullPointerException. Write \"admin\".equals(role)."
+   },
+   {
+    "lang": "java",
+    "file": "Budget.java",
+    "lines": [
+     "long total = 0;",
+     "int big = 2_000_000_000;",
+     "int doubled = big * 2;",
+     "total += doubled;"
+    ],
+    "a": 2,
+    "why": "big * 2 overflows int before it ever reaches the long. Use long doubled = big * 2L."
+   },
+   {
+    "lang": "c",
+    "file": "fill.c",
+    "lines": [
+     "int arr[5];",
+     "for (int i = 0; i <= 5; i++) {",
+     "    arr[i] = i * 2;",
+     "}"
+    ],
+    "a": 1,
+    "why": "i <= 5 writes arr[5], one past the end: undefined behaviour. Use i < 5."
+   },
+   {
+    "lang": "c",
+    "file": "input.c",
+    "lines": [
+     "char line[256];",
+     "char buf[8];",
+     "fgets(line, sizeof line, stdin);",
+     "strcpy(buf, line);",
+     "puts(buf);"
+    ],
+    "a": 3,
+    "why": "A long line overflows the 8-byte buf. Use snprintf(buf, sizeof buf, \"%s\", line)."
+   },
+   {
+    "lang": "c",
+    "file": "check.c",
+    "lines": [
+     "int x = 5;",
+     "if (x = 0) {",
+     "    puts(\"zero\");",
+     "}"
+    ],
+    "a": 1,
+    "why": "= assigns 0, so the condition is always false. Use ==."
+   },
+   {
+    "lang": "c",
+    "file": "heap.c",
+    "lines": [
+     "int *p = malloc(sizeof(int) * 10);",
+     "p[0] = 42;",
+     "free(p);",
+     "printf(\"%d\\n\", p[0]);"
+    ],
+    "a": 3,
+    "why": "Reading p after free() is a use-after-free: undefined behaviour."
+   },
+   {
+    "lang": "c",
+    "file": "greet.c",
+    "lines": [
+     "char *greet(void) {",
+     "    char msg[] = \"hello\";",
+     "    return msg;",
+     "}"
+    ],
+    "a": 2,
+    "why": "msg lives on the stack and dies when the function returns, so the pointer dangles."
+   },
+   {
+    "lang": "c",
+    "file": "ratio.c",
+    "lines": [
+     "int a = 3, b = 0;",
+     "if (b != 0 && a / b > 1) puts(\"ok\");",
+     "if (a / b > 1 && b != 0) puts(\"ok\");"
+    ],
+    "a": 2,
+    "why": "The division runs before the zero check. && short-circuits left to right, so check b first."
+   },
+   {
+    "lang": "c",
+    "file": "compare.c",
+    "lines": [
+     "char s1[] = \"yes\";",
+     "char s2[] = \"yes\";",
+     "if (s1 == s2) {",
+     "    puts(\"same\");",
+     "}"
+    ],
+    "a": 2,
+    "why": "== compares the arrays' addresses. Use strcmp(s1, s2) == 0."
+   },
+   {
+    "lang": "c",
+    "file": "price.c",
+    "lines": [
+     "double price = 9.99;",
+     "printf(\"%d\\n\", price);"
+    ],
+    "a": 1,
+    "why": "%d expects an int; passing a double is undefined behaviour. Use %f or %.2f."
+   },
+   {
+    "lang": "javascript",
+    "file": "average.js",
+    "lines": [
+     "function average(nums) {",
+     "  let sum = 0;",
+     "  for (const n of nums) sum += n;",
+     "  return sum / nums.lenght;",
+     "}"
+    ],
+    "a": 3,
+    "why": "\"lenght\" is a typo, so it is undefined and the result is NaN. Use nums.length."
+   },
+   {
+    "lang": "javascript",
+    "file": "button.js",
+    "lines": [
+     "const btn = document.querySelector(\"#start\");",
+     "let count = 0;",
+     "btn.addEventListener(\"click\", tick());",
+     "function tick() { count++; }"
+    ],
+    "a": 2,
+    "why": "tick() runs once immediately and passes undefined as the handler. Pass tick, without the parentheses."
+   },
+   {
+    "lang": "javascript",
+    "file": "cart.js",
+    "lines": [
+     "// Return a NEW array; never change the original cart",
+     "function addItem(cart, item) {",
+     "  const next = cart;",
+     "  next.push(item);",
+     "  return next;",
+     "}"
+    ],
+    "a": 2,
+    "why": "This copies the reference, not the array, so push changes the original. Use const next = [...cart]."
+   },
+   {
+    "lang": "javascript",
+    "file": "load.js",
+    "lines": [
+     "async function load(url) {",
+     "  const res = await fetch(url);",
+     "  if (!res.ok) throw new Error(res.status);",
+     "  const data = res.json();",
+     "  return data.items;",
+     "}"
+    ],
+    "a": 3,
+    "why": "res.json() returns a Promise. Without await, data.items is undefined."
+   },
+   {
+    "lang": "javascript",
+    "file": "counter.js",
+    "lines": [
+     "class Counter {",
+     "  constructor() { this.n = 0; }",
+     "  start() {",
+     "    setInterval(function () {",
+     "      this.n++;",
+     "    }, 1000);",
+     "  }",
+     "}"
+    ],
+    "a": 3,
+    "why": "A regular function gets its own this, so this.n is not the counter's. Use an arrow function."
+   },
+   {
+    "lang": "javascript",
+    "file": "prices.js",
+    "lines": [
+     "const prices = [40, 5, 100];",
+     "prices.sort();",
+     "console.log(\"cheapest:\", prices[0]);"
+    ],
+    "a": 1,
+    "why": "The default sort compares strings, giving [100, 40, 5]. Use prices.sort((a, b) => a - b)."
+   },
+   {
+    "lang": "javascript",
+    "file": "roles.js",
+    "lines": [
+     "function isAdmin(user) {",
+     "  return user.roles == [\"admin\"];",
+     "}"
+    ],
+    "a": 1,
+    "why": "Arrays are compared by reference, so this is always false. Use user.roles.includes(\"admin\")."
+   },
+   {
+    "lang": "javascript",
+    "file": "total.js",
+    "lines": [
+     "const qty = document.querySelector(\"#qty\").value;",
+     "const total = qty + 5;",
+     "console.log(`Total: ${total}`);"
+    ],
+    "a": 1,
+    "why": "Input values are strings, so \"3\" + 5 is \"35\". Convert first: Number(qty) + 5."
+   },
+   {
+    "lang": "javascript",
+    "file": "size.js",
+    "lines": [
+     "function sizeName(n) {",
+     "  let name;",
+     "  switch (n) {",
+     "    case 1: name = \"small\";",
+     "    case 2: name = \"medium\"; break;",
+     "    default: name = \"large\";",
+     "  }",
+     "  return name;",
+     "}"
+    ],
+    "a": 3,
+    "why": "No break after case 1, so it falls through and 1 becomes \"medium\"."
+   },
+   {
+    "lang": "javascript",
+    "file": "settings.js",
+    "lines": [
+     "const saved = localStorage.getItem(\"settings\");",
+     "const settings = saved;",
+     "console.log(settings.theme);"
+    ],
+    "a": 1,
+    "why": "localStorage only stores strings. Parse it: JSON.parse(saved)."
+   },
+   {
+    "lang": "javascript",
+    "file": "banned.js",
+    "lines": [
+     "const banned = [\"root\", \"admin\"];",
+     "function isBanned(name) {",
+     "  return banned.indexOf(name) > 0;",
+     "}"
+    ],
+    "a": 2,
+    "why": "\"root\" is at index 0, so > 0 misses it. Use !== -1 or banned.includes(name)."
+   },
+   {
+    "lang": "javascript",
+    "file": "find.js",
+    "lines": [
+     "function findUser(users, id) {",
+     "  users.forEach(u => {",
+     "    if (u.id === id) return u;",
+     "  });",
+     "  return null;",
+     "}"
+    ],
+    "a": 2,
+    "why": "return inside forEach only leaves the callback, so the function always returns null. Use users.find()."
+   },
+   {
+    "lang": "javascript",
+    "file": "check.js",
+    "lines": [
+     "const n = Number(input);",
+     "if (n === NaN) {",
+     "  throw new Error(\"not a number\");",
+     "}"
+    ],
+    "a": 1,
+    "why": "NaN never equals anything, not even itself. Use Number.isNaN(n)."
+   },
+   {
+    "lang": "javascript",
+    "file": "xmas.js",
+    "lines": [
+     "const d = new Date(2026, 12, 25);",
+     "console.log(\"Christmas:\", d.toDateString());"
+    ],
+    "a": 0,
+    "why": "Months are 0-based: 12 rolls over to January 2027. December is 11."
+   },
+   {
+    "lang": "javascript",
+    "file": "names.js",
+    "lines": [
+     "const users = [{ name: \"Ana\" }, { name: \"Raj\" }];",
+     "const names = users.map(u => { name: u.name });",
+     "console.log(names);"
+    ],
+    "a": 1,
+    "why": "Braces after => start a function body, not an object, so every item is undefined. Wrap it: u => ({ name: u.name })."
+   },
+   {
+    "lang": "javascript",
+    "file": "retry.js",
+    "lines": [
+     "for (let i = 0; i < 3; i++) {",
+     "  try {",
+     "    await send();",
+     "    break;",
+     "  } catch (e) {",
+     "    console.warn(\"retrying\", i);",
+     "  }",
+     "}",
+     "throw new Error(\"all retries failed\");"
+    ],
+    "a": 8,
+    "why": "This throws even after a successful send, because break only leaves the loop. Return on success, or check a flag before throwing."
+   },
+   {
+    "lang": "python",
+    "file": "rename.py",
+    "lines": [
+     "name = \"codeshire\"",
+     "name[0] = \"C\"",
+     "print(name)"
+    ],
+    "a": 1,
+    "why": "Strings are immutable; item assignment raises TypeError. Use name = \"C\" + name[1:]."
+   },
+   {
+    "lang": "python",
+    "file": "total.py",
+    "lines": [
+     "total = 0",
+     "for price in [\"10\", \"20\", \"5\"]:",
+     "    total += price",
+     "print(total)"
+    ],
+    "a": 2,
+    "why": "Adding an int and a str raises TypeError. Use total += int(price)."
+   },
+   {
+    "lang": "python",
+    "file": "scores.py",
+    "lines": [
+     "scores = {\"a\": 1, \"b\": 0, \"c\": 3}",
+     "for k in scores:",
+     "    if scores[k] == 0:",
+     "        del scores[k]"
+    ],
+    "a": 3,
+    "why": "Changing a dict while iterating it raises RuntimeError. Loop over list(scores) instead."
+   },
+   {
+    "lang": "python",
+    "file": "status.py",
+    "lines": [
+     "def is_done(status):",
+     "    return status is \"done\""
+    ],
+    "a": 1,
+    "why": "is checks identity, not equality, and may be False for equal strings. Use ==."
+   },
+   {
+    "lang": "python",
+    "file": "countdown.py",
+    "lines": [
+     "def countdown(n):",
+     "    for i in range(n, 0):",
+     "        print(i)",
+     "    print(\"liftoff\")"
+    ],
+    "a": 1,
+    "why": "range(n, 0) is empty because the default step is +1. Use range(n, 0, -1)."
+   },
+   {
+    "lang": "python",
+    "file": "negatives.py",
+    "lines": [
+     "def has_negative(nums):",
+     "    for n in nums:",
+     "        if n < 0:",
+     "            return True",
+     "        return False"
+    ],
+    "a": 4,
+    "why": "The return False is inside the loop, so it only checks the first number. Dedent it."
+   },
+   {
+    "lang": "python",
+    "file": "log.py",
+    "lines": [
+     "with open(\"log.txt\") as f:",
+     "    lines = f.read()",
+     "for line in lines:",
+     "    print(line.strip())"
+    ],
+    "a": 1,
+    "why": "read() returns one string, so the loop walks characters. Use f.readlines() or iterate over f."
+   },
+   {
+    "lang": "python",
+    "file": "grid.py",
+    "lines": [
+     "grid = [[0] * 3] * 3",
+     "grid[0][0] = 1",
+     "print(grid)"
+    ],
+    "a": 0,
+    "why": "All three rows are the same list, so every row changes. Use [[0] * 3 for _ in range(3)]."
+   },
+   {
+    "lang": "python",
+    "file": "greet.py",
+    "lines": [
+     "def greet(name):",
+     "    return \"Hello, {name}!\"",
+     "print(greet(\"Pip\"))"
+    ],
+    "a": 1,
+    "why": "Without the f prefix, {name} is printed literally. Use f\"Hello, {name}!\"."
+   },
+   {
+    "lang": "python",
+    "file": "words.py",
+    "lines": [
+     "words = [\"pear\", \"Apple\", \"fig\"]",
+     "words = words.sort(key=len)",
+     "print(words[0])"
+    ],
+    "a": 1,
+    "why": "list.sort() returns None, so words becomes None. Call words.sort(key=len) on its own line."
+   },
+   {
+    "lang": "python",
+    "file": "handlers.py",
+    "lines": [
+     "handlers = [lambda: i for i in range(3)]",
+     "print([h() for h in handlers])  # want [0, 1, 2]"
+    ],
+    "a": 0,
+    "why": "The lambdas look up i when called, after the loop ended: [2, 2, 2]. Use lambda i=i: i."
+   },
+   {
+    "lang": "python",
+    "file": "average.py",
+    "lines": [
+     "def average(nums):",
+     "    return sum(nums) // len(nums)",
+     "print(average([1, 2]))"
+    ],
+    "a": 1,
+    "why": "// is floor division and drops the .5. Use / for the true average."
+   },
+   {
+    "lang": "python",
+    "file": "team.py",
+    "lines": [
+     "class Team:",
+     "    members = []",
+     "    def add(self, name):",
+     "        self.members.append(name)"
+    ],
+    "a": 1,
+    "why": "A class attribute list is shared by every Team. Create it in __init__: self.members = []."
+   },
+   {
+    "lang": "python",
+    "file": "dog.py",
+    "lines": [
+     "class Dog:",
+     "    def __init__(self, name):",
+     "        self.name = name",
+     "    def speak():",
+     "        return self.name + \" says woof\""
+    ],
+    "a": 3,
+    "why": "Instance methods need self as their first parameter, or calling d.speak() raises TypeError."
+   },
+   {
+    "lang": "python",
+    "file": "fib.py",
+    "lines": [
+     "def fib(n):",
+     "    if n == 1:",
+     "        return n",
+     "    return fib(n - 1) + fib(n - 2)"
+    ],
+    "a": 1,
+    "why": "fib(2) calls fib(0), which never reaches the base case and recurses forever. Use n <= 1."
+   },
+   {
+    "lang": "python",
+    "file": "counts.py",
+    "lines": [
+     "counts = {}",
+     "for word in [\"a\", \"b\", \"a\"]:",
+     "    counts[word] += 1",
+     "print(counts)"
+    ],
+    "a": 2,
+    "why": "The first time a word appears it has no key: KeyError. Use counts[word] = counts.get(word, 0) + 1."
+   },
+   {
+    "lang": "java",
+    "file": "Rate.java",
+    "lines": [
+     "int passed = 7, total = 10;",
+     "double rate = passed / total * 100;",
+     "System.out.println(rate + \"%\");"
+    ],
+    "a": 1,
+    "why": "passed / total is integer division (0) before it becomes a double. Use passed * 100.0 / total."
+   },
+   {
+    "lang": "java",
+    "file": "Clean.java",
+    "lines": [
+     "for (String n : names) {",
+     "    if (n.isEmpty()) names.remove(n);",
+     "}"
+    ],
+    "a": 1,
+    "why": "Removing from a list while a for-each loop iterates it throws ConcurrentModificationException. Use names.removeIf(String::isEmpty)."
+   },
+   {
+    "lang": "java",
+    "file": "Days.java",
+    "lines": [
+     "switch (day) {",
+     "    case 6: label = \"Saturday\";",
+     "    case 7: label = \"Sunday\"; break;",
+     "    default: label = \"Weekday\";",
+     "}"
+    ],
+    "a": 1,
+    "why": "Missing break: Saturday falls through and becomes \"Sunday\"."
+   },
+   {
+    "lang": "java",
+    "file": "Quit.java",
+    "lines": [
+     "String cmd = scanner.nextLine();",
+     "if (cmd.equals('q')) {",
+     "    System.exit(0);",
+     "}"
+    ],
+    "a": 1,
+    "why": "'q' is a Character, and a String never equals a Character. Use \"q\"."
+   },
+   {
+    "lang": "java",
+    "file": "Reverse.java",
+    "lines": [
+     "for (int i = arr.length; i >= 0; i--) {",
+     "    System.out.println(arr[i]);",
+     "}"
+    ],
+    "a": 0,
+    "why": "arr[arr.length] is out of bounds. Start at arr.length - 1."
+   },
+   {
+    "lang": "java",
+    "file": "Score.java",
+    "lines": [
+     "Integer a = 1000, b = 1000;",
+     "if (a == b) {",
+     "    System.out.println(\"same score\");",
+     "}"
+    ],
+    "a": 1,
+    "why": "== compares Integer objects, and 1000 is not cached. Use a.equals(b)."
+   },
+   {
+    "lang": "java",
+    "file": "Player.java",
+    "lines": [
+     "public class Player {",
+     "    private String name;",
+     "    public void Player(String name) {",
+     "        this.name = name;",
+     "    }",
+     "}"
+    ],
+    "a": 2,
+    "why": "void turns the constructor into an ordinary method, so name is never set by new Player(\"x\")."
+   },
+   {
+    "lang": "java",
+    "file": "Title.java",
+    "lines": [
+     "String title = \"codeshire\";",
+     "title.toUpperCase();",
+     "System.out.println(title);"
+    ],
+    "a": 1,
+    "why": "Strings are immutable; the result is thrown away. Use title = title.toUpperCase()."
+   },
+   {
+    "lang": "java",
+    "file": "Money.java",
+    "lines": [
+     "double total = 0.1 + 0.2;",
+     "if (total == 0.3) {",
+     "    System.out.println(\"exact\");",
+     "}"
+    ],
+    "a": 1,
+    "why": "Floating-point sums are not exact. Compare with a tolerance, or use BigDecimal for money."
+   },
+   {
+    "lang": "java",
+    "file": "Backup.java",
+    "lines": [
+     "int[] backup = scores;",
+     "scores[0] = 0;",
+     "System.out.println(backup[0]);  // expect the old score"
+    ],
+    "a": 0,
+    "why": "This copies the reference, so backup sees the change. Use scores.clone()."
+   },
+   {
+    "lang": "java",
+    "file": "Grade.java",
+    "lines": [
+     "char grade = 'A';",
+     "String msg = grade + 1 + \" is next\";",
+     "System.out.println(msg);"
+    ],
+    "a": 1,
+    "why": "char + int is int arithmetic, so this prints \"66 is next\". Use (char) (grade + 1)."
+   },
+   {
+    "lang": "java",
+    "file": "Loop.java",
+    "lines": [
+     "for (byte b = 0; b < 200; b++) {",
+     "    process(b);",
+     "}"
+    ],
+    "a": 0,
+    "why": "A byte maxes out at 127 and wraps to -128, so b < 200 is always true: an infinite loop."
+   },
+   {
+    "lang": "java",
+    "file": "Stock.java",
+    "lines": [
+     "Map<String, Integer> stock = new HashMap<>();",
+     "int apples = stock.get(\"apple\");",
+     "System.out.println(apples);"
+    ],
+    "a": 1,
+    "why": "get returns null for a missing key, and unboxing null throws NullPointerException. Use getOrDefault(\"apple\", 0)."
+   },
+   {
+    "lang": "java",
+    "file": "Balance.java",
+    "lines": [
+     "if (balance < 0); {",
+     "    System.out.println(\"Overdrawn!\");",
+     "}"
+    ],
+    "a": 0,
+    "why": "The ; ends the if, so the block always runs."
+   },
+   {
+    "lang": "java",
+    "file": "Point.java",
+    "lines": [
+     "class Point {",
+     "    int x, y;",
+     "    public boolean equals(Point other) {",
+     "        return x == other.x && y == other.y;",
+     "    }",
+     "}"
+    ],
+    "a": 2,
+    "why": "This overloads equals instead of overriding equals(Object), so collections never call it."
+   },
+   {
+    "lang": "java",
+    "file": "Odd.java",
+    "lines": [
+     "static boolean isOdd(int n) {",
+     "    return n % 2 == 1;",
+     "}"
+    ],
+    "a": 1,
+    "why": "For negative odd numbers n % 2 is -1. Use n % 2 != 0."
+   },
+   {
+    "lang": "c",
+    "file": "age.c",
+    "lines": [
+     "int age;",
+     "scanf(\"%d\", age);",
+     "printf(\"%d\\n\", age);"
+    ],
+    "a": 1,
+    "why": "scanf needs the variable's address: &age."
+   },
+   {
+    "lang": "c",
+    "file": "dup.c",
+    "lines": [
+     "const char *name = \"codeshire\";",
+     "char *copy = malloc(strlen(name));",
+     "strcpy(copy, name);"
+    ],
+    "a": 1,
+    "why": "strlen does not count the '\\0'; strcpy writes one byte past the buffer. Allocate strlen(name) + 1."
+   },
+   {
+    "lang": "c",
+    "file": "clear.c",
+    "lines": [
+     "void clear(int *arr) {",
+     "    memset(arr, 0, sizeof(arr));",
+     "}"
+    ],
+    "a": 1,
+    "why": "sizeof(arr) is the size of a pointer, not the array. Pass the length in and use n * sizeof *arr."
+   },
+   {
+    "lang": "c",
+    "file": "avg.c",
+    "lines": [
+     "int a = 3, b = 4;",
+     "float avg = (a + b) / 2;",
+     "printf(\"%.1f\\n\", avg);"
+    ],
+    "a": 1,
+    "why": "(a + b) / 2 is integer division, giving 3.0. Use (a + b) / 2.0f."
+   },
+   {
+    "lang": "c",
+    "file": "wait.c",
+    "lines": [
+     "int i = 0;",
+     "while (i < 10);",
+     "{",
+     "    i++;",
+     "}"
+    ],
+    "a": 1,
+    "why": "The ; is the loop body, so it spins forever without changing i."
+   },
+   {
+    "lang": "c",
+    "file": "calc.c",
+    "lines": [
+     "switch (op) {",
+     "    case '+': r = a + b;",
+     "    case '-': r = a - b; break;",
+     "}"
+    ],
+    "a": 1,
+    "why": "No break: '+' falls through and the result is a - b."
+   },
+   {
+    "lang": "c",
+    "file": "answer.c",
+    "lines": [
+     "int c = getchar();",
+     "if (c == \"y\") {",
+     "    puts(\"yes\");",
+     "}"
+    ],
+    "a": 1,
+    "why": "\"y\" is a string (a pointer). Compare a char with 'y'."
+   },
+   {
+    "lang": "c",
+    "file": "free.c",
+    "lines": [
+     "char *buf = malloc(64);",
+     "use(buf);",
+     "free(buf);",
+     "free(buf);"
+    ],
+    "a": 3,
+    "why": "Freeing the same pointer twice is undefined behaviour. Set buf = NULL after the first free."
+   },
+   {
+    "lang": "c",
+    "file": "trunc.c",
+    "lines": [
+     "char dst[4];",
+     "strncpy(dst, \"codeshire\", sizeof dst);",
+     "printf(\"%s\\n\", dst);"
+    ],
+    "a": 1,
+    "why": "When the source is too long, strncpy does not add a '\\0', so printf reads past dst. Use snprintf(dst, sizeof dst, \"%s\", src)."
+   },
+   {
+    "lang": "c",
+    "file": "square.c",
+    "lines": [
+     "#define SQUARE(x) x * x",
+     "int r = SQUARE(2 + 3);",
+     "printf(\"%d\\n\", r);"
+    ],
+    "a": 0,
+    "why": "The macro expands to 2 + 3 * 2 + 3 = 11. Parenthesize: ((x) * (x))."
+   },
+   {
+    "lang": "c",
+    "file": "down.c",
+    "lines": [
+     "for (unsigned int i = n - 1; i >= 0; i--) {",
+     "    printf(\"%u\\n\", i);",
+     "}"
+    ],
+    "a": 0,
+    "why": "An unsigned value is always >= 0, so the loop never ends. Use for (unsigned i = n; i-- > 0; )."
+   },
+   {
+    "lang": "c",
+    "file": "sum.c",
+    "lines": [
+     "int sum;",
+     "for (int i = 0; i < 3; i++) sum += i;",
+     "printf(\"%d\\n\", sum);"
+    ],
+    "a": 0,
+    "why": "sum is never initialized, so it starts with garbage. Use int sum = 0;."
+   },
+   {
+    "lang": "c",
+    "file": "grow.c",
+    "lines": [
+     "int *a = malloc(4 * sizeof *a);",
+     "realloc(a, 8 * sizeof *a);",
+     "a[7] = 1;"
+    ],
+    "a": 1,
+    "why": "realloc may move the block; ignoring its return leaves a pointing at freed or too-small memory. Use a = realloc(a, ...) with a NULL check."
+   },
+   {
+    "lang": "c",
+    "file": "args.c",
+    "lines": [
+     "int main(int argc, char **argv) {",
+     "    printf(\"file: %s\\n\", argv[argc]);",
+     "    return 0;",
+     "}"
+    ],
+    "a": 1,
+    "why": "argv[argc] is always NULL. The last argument is argv[argc - 1]."
+   },
+   {
+    "lang": "c",
+    "file": "score.c",
+    "lines": [
+     "int score = 90;",
+     "printf(\"Score: %s\\n\", score);"
+    ],
+    "a": 1,
+    "why": "%s expects a char *; passing an int is undefined behaviour. Use %d."
+   },
+   {
+    "lang": "c",
+    "file": "echo.c",
+    "lines": [
+     "int c;",
+     "while (c = getchar() != EOF) {",
+     "    putchar(c);",
+     "}"
+    ],
+    "a": 1,
+    "why": "!= binds tighter than =, so c becomes 1 or 0. Write (c = getchar()) != EOF."
+   }
+  ],
+  "regex": [
+   {
+    "lang": "any",
+    "rule": "Match only stable release tags",
+    "yes": [
+     "v1.2.3",
+     "v10.0.1"
+    ],
+    "no": [
+     "v1.2",
+     "v2.0.0-beta",
+     "1.2.3"
+    ],
+    "answer": "^v\\d+\\.\\d+\\.\\d+$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match Indian PIN codes (6 digits, no leading 0)",
+    "yes": [
+     "560001",
+     "110011"
+    ],
+    "no": [
+     "012345",
+     "56001",
+     "5600011"
+    ],
+    "answer": "^[1-9]\\d{5}$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match hex colours like #fff or #A1B2C3",
+    "yes": [
+     "#fff",
+     "#A1B2C3"
+    ],
+    "no": [
+     "#ggg",
+     "fff",
+     "#12345"
+    ],
+    "answer": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match log lines with level ERROR or FATAL",
+    "yes": [
+     "[09:41] ERROR db down",
+     "[09:42] FATAL out of memory"
+    ],
+    "no": [
+     "[09:43] INFO all good",
+     "[09:44] WARN error page served"
+    ],
+    "answer": "(ERROR|FATAL)"
+   },
+   {
+    "lang": "any",
+    "rule": "Match 24-hour times HH:MM",
+    "yes": [
+     "09:30",
+     "23:59"
+    ],
+    "no": [
+     "24:00",
+     "9:30",
+     "12:60"
+    ],
+    "answer": "^([01]\\d|2[0-3]):[0-5]\\d$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match .js or .ts file names",
+    "yes": [
+     "app.js",
+     "index.ts"
+    ],
+    "no": [
+     "app.json",
+     "style.css",
+     "ts.config"
+    ],
+    "answer": "^\\w+\\.(js|ts)$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match the whole word \"bug\"",
+    "yes": [
+     "found a bug",
+     "bug in prod"
+    ],
+    "no": [
+     "debugger",
+     "bugs everywhere"
+    ],
+    "answer": "\\bbug\\b"
+   },
+   {
+    "lang": "any",
+    "rule": "Match issue references like #42",
+    "yes": [
+     "fixes #42",
+     "closes #7"
+    ],
+    "no": [
+     "color #fff",
+     "issue 42"
+    ],
+    "answer": "#\\d+"
+   },
+   {
+    "lang": "any",
+    "rule": "Match IPv4-looking addresses",
+    "yes": [
+     "192.168.1.1",
+     "10.0.0.255"
+    ],
+    "no": [
+     "192.168.1",
+     "1.2.3.4.5",
+     "abc.def.ghi.jkl"
+    ],
+    "answer": "^(\\d{1,3}\\.){3}\\d{1,3}$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match years 1900 to 2099",
+    "yes": [
+     "1999",
+     "2026",
+     "1900"
+    ],
+    "no": [
+     "1899",
+     "2100",
+     "999",
+     "20266"
+    ],
+    "answer": "^(19|20)\\d{2}$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match lowercase slugs like my-post-1",
+    "yes": [
+     "my-post",
+     "hello",
+     "a-1-b"
+    ],
+    "no": [
+     "My-Post",
+     "-start",
+     "end-",
+     "two--dash"
+    ],
+    "answer": "^[a-z0-9]+(-[a-z0-9]+)*$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match versions like 1.2.3 with an optional v",
+    "yes": [
+     "1.2.3",
+     "v0.10.0",
+     "v12.0.1"
+    ],
+    "no": [
+     "1.2",
+     "v1.2.3.4",
+     "1.x.3"
+    ],
+    "answer": "^v?\\d+\\.\\d+\\.\\d+$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match Indian mobile numbers (10 digits, starting 6 to 9)",
+    "yes": [
+     "9876543210",
+     "6000000000"
+    ],
+    "no": [
+     "5876543210",
+     "987654321",
+     "98765432101"
+    ],
+    "answer": "^[6-9]\\d{9}$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match simple email addresses",
+    "yes": [
+     "a@b.co",
+     "dev.ops@code-shire.io"
+    ],
+    "no": [
+     "@b.co",
+     "a@b",
+     "a b@c.com",
+     "a@@b.com"
+    ],
+    "answer": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match exactly GET, POST, PUT or DELETE",
+    "yes": [
+     "GET",
+     "DELETE",
+     "PUT"
+    ],
+    "no": [
+     "get",
+     "PATCH",
+     "GETS",
+     "POST /x"
+    ],
+    "answer": "^(GET|POST|PUT|DELETE)$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match TODO comments in // or # style",
+    "yes": [
+     "// TODO: fix",
+     "# TODO later",
+     "  // TODO"
+    ],
+    "no": [
+     "// todo",
+     "// DONE",
+     "TODOS",
+     "x = 1 // TODO"
+    ],
+    "answer": "^\\s*(//|#)\\s*TODO\\b"
+   },
+   {
+    "lang": "any",
+    "rule": "Match US ZIP codes 12345 or 12345-6789",
+    "yes": [
+     "12345",
+     "12345-6789"
+    ],
+    "no": [
+     "1234",
+     "123456",
+     "12345-678"
+    ],
+    "answer": "^\\d{5}(-\\d{4})?$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match .png, .jpg or .jpeg file names",
+    "yes": [
+     "cat.png",
+     "a.b.jpeg",
+     "x.jpg"
+    ],
+    "no": [
+     "cat.gif",
+     "png",
+     "cat.png.bak",
+     "cat.jpgx"
+    ],
+    "answer": "^.+\\.(png|jpe?g)$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match passwords: 8+ characters with a digit and an uppercase letter",
+    "yes": [
+     "Passw0rdX",
+     "ABCdef12"
+    ],
+    "no": [
+     "password1",
+     "PASSWORDS",
+     "Pass1"
+    ],
+    "answer": "^(?=.*\\d)(?=.*[A-Z]).{8,}$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match git commit hashes (7 to 40 lowercase hex)",
+    "yes": [
+     "a1b2c3d",
+     "9fceb02d0ae598e95dc970b74767f19372d61af8"
+    ],
+    "no": [
+     "a1b2c3",
+     "g1b2c3d4",
+     "A1B2C3D"
+    ],
+    "answer": "^[0-9a-f]{7,40}$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match snake_case identifiers",
+    "yes": [
+     "user_id",
+     "max_retry_count",
+     "x"
+    ],
+    "no": [
+     "userId",
+     "_private",
+     "trailing_",
+     "double__under"
+    ],
+    "answer": "^[a-z]+(_[a-z]+)*$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match one word starting with a capital letter",
+    "yes": [
+     "Codeshire",
+     "A",
+     "Pip"
+    ],
+    "no": [
+     "codeshire",
+     "Code shire",
+     "9Lives"
+    ],
+    "answer": "^[A-Z][a-zA-Z]*$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match dates YYYY-MM-DD with months 01 to 12",
+    "yes": [
+     "2026-11-11",
+     "1999-01-31"
+    ],
+    "no": [
+     "2026-13-01",
+     "26-11-11",
+     "2026/11/11",
+     "2026-00-10"
+    ],
+    "answer": "^\\d{4}-(0[1-9]|1[0-2])-\\d{2}$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match log lines with a 5xx status code",
+    "yes": [
+     "GET /api 503",
+     "POST /pay 500 12ms"
+    ],
+    "no": [
+     "GET / 200",
+     "GET /x 404",
+     "took 5000ms"
+    ],
+    "answer": "\\b5\\d{2}\\b"
+   },
+   {
+    "lang": "any",
+    "rule": "Match rgb(r, g, b) with 1 to 3 digit numbers",
+    "yes": [
+     "rgb(255, 0, 12)",
+     "rgb(1,2,3)"
+    ],
+    "no": [
+     "rgb(1, 2)",
+     "rgba(1,2,3,0.5)",
+     "rgb(1000,0,0)"
+    ],
+    "answer": "^rgb\\(\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*,\\s*\\d{1,3}\\s*\\)$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match Python def lines",
+    "yes": [
+     "def main():",
+     "def add(a, b):"
+    ],
+    "no": [
+     "define x",
+     "async def run():",
+     "def 2x():"
+    ],
+    "answer": "^def [a-zA-Z_]\\w*\\(.*\\):$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match the same letter three times, like aaa or ZZZ",
+    "yes": [
+     "aaa",
+     "ZZZ"
+    ],
+    "no": [
+     "aab",
+     "aaaa",
+     "111"
+    ],
+    "answer": "^([a-zA-Z])\\1\\1$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match rupee prices like ₹99 or ₹1,299.50",
+    "yes": [
+     "₹99",
+     "₹1,299",
+     "₹1,299.50"
+    ],
+    "no": [
+     "99",
+     "₹1,29",
+     "₹.50",
+     "₹99.5"
+    ],
+    "answer": "^₹\\d{1,3}(,\\d{3})*(\\.\\d{2})?$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match MAC addresses like 00:1A:2b:3C:4d:5E",
+    "yes": [
+     "00:1A:2b:3C:4d:5E",
+     "ff:ff:ff:ff:ff:ff"
+    ],
+    "no": [
+     "00:1A:2B:3C:4D",
+     "00-1A-2B-3C-4D-5E",
+     "00:1G:2B:3C:4D:5E"
+    ],
+    "answer": "^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match even whole numbers",
+    "yes": [
+     "0",
+     "42",
+     "1000"
+    ],
+    "no": [
+     "7",
+     "135",
+     "4a"
+    ],
+    "answer": "^\\d*[02468]$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match Docker images with a tag, like nginx:1.25",
+    "yes": [
+     "nginx:1.25",
+     "ghcr.io/org/app:latest",
+     "redis:7-alpine"
+    ],
+    "no": [
+     "nginx",
+     "Nginx:1",
+     "nginx:",
+     ":latest"
+    ],
+    "answer": "^[a-z0-9.\\/-]+:[\\w.-]+$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match JWT-shaped tokens: three parts joined by dots",
+    "yes": [
+     "eyJhbGc.eyJzdWIi.SflKxw",
+     "a.b.c"
+    ],
+    "no": [
+     "a.b",
+     "a.b.c.d",
+     "a..c",
+     "a.b.c d"
+    ],
+    "answer": "^[\\w-]+\\.[\\w-]+\\.[\\w-]+$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match Roman numerals I to X",
+    "yes": [
+     "I",
+     "IV",
+     "VIII",
+     "X"
+    ],
+    "no": [
+     "IIII",
+     "VX",
+     "IL",
+     "VIIII"
+    ],
+    "answer": "^(I{1,3}|IV|VI{0,3}|IX|X)$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match https URLs only",
+    "yes": [
+     "https://codeshire.dev",
+     "https://a.b/c?d=1"
+    ],
+    "no": [
+     "http://x.com",
+     "https:/x.com",
+     "https:// x",
+     "ftp://x"
+    ],
+    "answer": "^https:\\/\\/\\S+$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match lines that do NOT mention password",
+    "yes": [
+     "user=dev",
+     "token=abc"
+    ],
+    "no": [
+     "password=123",
+     "my password is",
+     "old_password=1"
+    ],
+    "answer": "^(?!.*password).*$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match hashtags that start with a letter, like #Code_2026",
+    "yes": [
+     "#codeshire",
+     "#Code_2026"
+    ],
+    "no": [
+     "#2026",
+     "codeshire",
+     "#code-shire",
+     "#"
+    ],
+    "answer": "^#[A-Za-z]\\w*$"
+   },
+   {
+    "lang": "any",
+    "rule": "Match 12-hour times like 9am, 12pm or 11:30am",
+    "yes": [
+     "9am",
+     "12pm",
+     "11:30am"
+    ],
+    "no": [
+     "13pm",
+     "9:60am",
+     "09am",
+     "9 am"
+    ],
+    "answer": "^(1[0-2]|[1-9])(:[0-5]\\d)?(am|pm)$"
+   }
+  ],
+  "merge": [
+   {
+    "lang": "javascript",
+    "file": "src/billing/fee.js",
+    "ours": {
+     "branch": "main · \"update GST to 18%\"",
+     "code": "const fee = price * 0.18;"
+    },
+    "theirs": {
+     "branch": "feature/round-fees · \"round to whole rupees\"",
+     "code": "const fee = Math.round(price * 0.12);"
+    },
+    "opts": [
+     "Keep ours: price * 0.18",
+     "Keep theirs: Math.round(price * 0.12)",
+     "Combine: Math.round(price * 0.18)"
+    ],
+    "a": 2,
+    "why": "Both changes are wanted: the new rate and the rounding."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/app.ts",
+    "ours": {
+     "branch": "feature/logout · \"add logout\"",
+     "code": "import { login, logout } from \"./auth\";"
+    },
+    "theirs": {
+     "branch": "main · \"token refresh\"",
+     "code": "import { login, refreshToken } from \"./auth\";"
+    },
+    "opts": [
+     "Keep ours",
+     "Keep theirs",
+     "Combine: { login, logout, refreshToken }"
+    ],
+    "a": 2,
+    "why": "Each side added a different import; keep all three."
+   },
+   {
+    "lang": "any",
+    "file": "package.json",
+    "ours": {
+     "branch": "release/2.4 · \"bump version\"",
+     "code": "\"version\": \"2.4.0\","
+    },
+    "theirs": {
+     "branch": "hotfix/old · \"patch\"",
+     "code": "\"version\": \"2.3.9\","
+    },
+    "opts": [
+     "Keep ours: 2.4.0",
+     "Keep theirs: 2.3.9",
+     "Keep both lines"
+    ],
+    "a": 0,
+    "why": "Versions never go backwards, and duplicate keys break package.json."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/config.js",
+    "ours": {
+     "branch": "feature/ui · \"local testing\"",
+     "code": "const API = \"http://localhost:3000\";"
+    },
+    "theirs": {
+     "branch": "main · \"use env config\"",
+     "code": "const API = process.env.API_URL;"
+    },
+    "opts": [
+     "Keep ours: localhost",
+     "Keep theirs: process.env.API_URL",
+     "Keep both lines"
+    ],
+    "a": 1,
+    "why": "A hard-coded localhost URL would break production."
+   },
+   {
+    "lang": "any",
+    "file": ".gitignore",
+    "ours": {
+     "branch": "main · \"ignore deps\"",
+     "code": "node_modules/"
+    },
+    "theirs": {
+     "branch": "feature/env · \"ignore secrets\"",
+     "code": ".env"
+    },
+    "opts": [
+     "Keep ours: node_modules/",
+     "Keep theirs: .env",
+     "Keep both lines"
+    ],
+    "a": 2,
+    "why": ".gitignore is a list; both entries belong."
+   },
+   {
+    "lang": "any",
+    "file": "src/styles/button.css",
+    "ours": {
+     "branch": "feature/dark · \"darker text\"",
+     "code": "  color: #333;"
+    },
+    "theirs": {
+     "branch": "main · \"migrate to design tokens\"",
+     "code": "  color: var(--text);"
+    },
+    "opts": [
+     "Keep ours: #333",
+     "Keep theirs: var(--text)",
+     "Keep both lines"
+    ],
+    "a": 1,
+    "why": "The token migration is the new standard; a hard-coded colour undoes it."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/api/user.js",
+    "ours": {
+     "branch": "main · \"rename getUser to fetchUser\"",
+     "code": "function fetchUser(id) {"
+    },
+    "theirs": {
+     "branch": "feature/options · \"add opts param\"",
+     "code": "function getUser(id, opts) {"
+    },
+    "opts": [
+     "Keep ours: fetchUser(id)",
+     "Keep theirs: getUser(id, opts)",
+     "Combine: fetchUser(id, opts)"
+    ],
+    "a": 2,
+    "why": "Keep the new name and the new parameter."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/payments/client.js",
+    "ours": {
+     "branch": "main · \"fix flaky payments\"",
+     "code": "  retries: 3,"
+    },
+    "theirs": {
+     "branch": "feature/timeout · \"add timeout\"",
+     "code": "  timeout: 5000,"
+    },
+    "opts": [
+     "Keep ours: retries",
+     "Keep theirs: timeout",
+     "Keep both lines"
+    ],
+    "a": 2,
+    "why": "They are different keys in the same object; you want both."
+   },
+   {
+    "lang": "python",
+    "file": "settings.py",
+    "ours": {
+     "branch": "main · \"prod hardening\"",
+     "code": "DEBUG = False"
+    },
+    "theirs": {
+     "branch": "feature/local · \"debug locally\"",
+     "code": "DEBUG = True"
+    },
+    "opts": [
+     "Keep ours: DEBUG = False",
+     "Keep theirs: DEBUG = True",
+     "Keep both lines"
+    ],
+    "a": 0,
+    "why": "Never ship DEBUG = True to production; it leaks stack traces."
+   },
+   {
+    "lang": "python",
+    "file": "app.py",
+    "ours": {
+     "branch": "main · \"add validation\"",
+     "code": "from utils import parse, validate"
+    },
+    "theirs": {
+     "branch": "feature/dates · \"date formatting\"",
+     "code": "from utils import parse, format_date"
+    },
+    "opts": [
+     "Keep ours",
+     "Keep theirs",
+     "Combine: parse, validate, format_date"
+    ],
+    "a": 2,
+    "why": "Each branch added a different import; keep all three."
+   },
+   {
+    "lang": "java",
+    "file": "App.java",
+    "ours": {
+     "branch": "main · \"use List\"",
+     "code": "import java.util.List;"
+    },
+    "theirs": {
+     "branch": "feature/cache · \"add cache map\"",
+     "code": "import java.util.Map;"
+    },
+    "opts": [
+     "Keep ours",
+     "Keep theirs",
+     "Keep both lines"
+    ],
+    "a": 2,
+    "why": "Both imports are needed; they do not conflict."
+   },
+   {
+    "lang": "java",
+    "file": "UserRepo.java",
+    "ours": {
+     "branch": "main · \"ids are long now\"",
+     "code": "public User findUser(long id) {"
+    },
+    "theirs": {
+     "branch": "feature/optional · \"return Optional\"",
+     "code": "public Optional<User> findUser(int id) {"
+    },
+    "opts": [
+     "Keep ours",
+     "Keep theirs",
+     "Combine: Optional<User> findUser(long id)"
+    ],
+    "a": 2,
+    "why": "Keep the long id from main and the Optional return type from the feature."
+   },
+   {
+    "lang": "java",
+    "file": "UserService.java",
+    "ours": {
+     "branch": "feature/debug · \"quick debug\"",
+     "code": "System.out.println(\"debug: \" + user);"
+    },
+    "theirs": {
+     "branch": "main · \"use logger, no personal data\"",
+     "code": "log.info(\"User loaded: {}\", user.getId());"
+    },
+    "opts": [
+     "Keep ours: println",
+     "Keep theirs: log.info",
+     "Keep both lines"
+    ],
+    "a": 1,
+    "why": "Use the logger and log only the id; println of the whole user leaks personal data."
+   },
+   {
+    "lang": "c",
+    "file": "main.c",
+    "ours": {
+     "branch": "main · \"printing\"",
+     "code": "#include <stdio.h>"
+    },
+    "theirs": {
+     "branch": "feature/alloc · \"use malloc\"",
+     "code": "#include <stdlib.h>"
+    },
+    "opts": [
+     "Keep ours",
+     "Keep theirs",
+     "Keep both lines"
+    ],
+    "a": 2,
+    "why": "Both headers are needed; includes never conflict."
+   },
+   {
+    "lang": "c",
+    "file": "copy.c",
+    "ours": {
+     "branch": "feature/fast · \"quick copy\"",
+     "code": "strcpy(dst, src);"
+    },
+    "theirs": {
+     "branch": "main · \"fix buffer overflow\"",
+     "code": "snprintf(dst, sizeof dst, \"%s\", src);"
+    },
+    "opts": [
+     "Keep ours: strcpy",
+     "Keep theirs: snprintf",
+     "Keep both lines"
+    ],
+    "a": 1,
+    "why": "strcpy can overflow dst; the bounded snprintf is the fix."
+   },
+   {
+    "lang": "c",
+    "file": "parse.c",
+    "ours": {
+     "branch": "main · \"make input const\"",
+     "code": "int parse(const char *s) {"
+    },
+    "theirs": {
+     "branch": "feature/base · \"add base param\"",
+     "code": "int parse(char *s, int base) {"
+    },
+    "opts": [
+     "Keep ours",
+     "Keep theirs",
+     "Combine: parse(const char *s, int base)"
+    ],
+    "a": 2,
+    "why": "Keep the const from main and the new base parameter."
+   },
+   {
+    "lang": "c",
+    "file": "cleanup.c",
+    "ours": {
+     "branch": "feature/leak · \"free buffer\"",
+     "code": "free(buf);"
+    },
+    "theirs": {
+     "branch": "main · \"avoid dangling pointer\"",
+     "code": "free(buf); buf = NULL;"
+    },
+    "opts": [
+     "Keep ours",
+     "Keep theirs",
+     "Keep both lines"
+    ],
+    "a": 1,
+    "why": "Theirs already frees and also clears the pointer. Keeping both would free twice."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/cart.js",
+    "ours": {
+     "branch": "main · \"rename total → subtotal\"",
+     "code": "const subtotal = items.reduce((s, i) => s + i.price, 0);"
+    },
+    "theirs": {
+     "branch": "feature/qty · \"multiply by quantity\"",
+     "code": "const total = items.reduce((s, i) => s + i.price * i.qty, 0);"
+    },
+    "opts": [
+     "Keep ours: subtotal without quantity",
+     "Keep theirs: total with quantity",
+     "Combine: const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0);"
+    ],
+    "a": 2,
+    "why": "Keep both intents: the new name and the quantity fix."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/routes.js",
+    "ours": {
+     "branch": "main · \"add /health route\"",
+     "code": "app.get(\"/health\", health);"
+    },
+    "theirs": {
+     "branch": "feature/metrics · \"add /metrics route\"",
+     "code": "app.get(\"/metrics\", metrics);"
+    },
+    "opts": [
+     "Keep theirs only",
+     "Keep ours only",
+     "Keep both routes, one after the other"
+    ],
+    "a": 2,
+    "why": "Two independent additions that landed on the same line. Keep both."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/config.js",
+    "ours": {
+     "branch": "main · \"HOTFIX: disable retries, they caused duplicate charges\"",
+     "code": "retries: 0,"
+    },
+    "theirs": {
+     "branch": "feature/resilience · \"retry failed requests 3 times\"",
+     "code": "retries: 3,"
+    },
+    "opts": [
+     "Keep ours: retries: 0",
+     "Keep theirs: retries: 3",
+     "Combine: retries: 1"
+    ],
+    "a": 0,
+    "why": "The hotfix exists because retries double-charged customers. Keep it until payments are idempotent."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/i18n.js",
+    "ours": {
+     "branch": "main · \"fix typo: Welcom → Welcome\"",
+     "code": "greeting: \"Welcome back\","
+    },
+    "theirs": {
+     "branch": "feature/names · \"personal greeting\"",
+     "code": "greeting: \"Welcom back, {name}\","
+    },
+    "opts": [
+     "Keep theirs: \"Welcom back, {name}\"",
+     "Keep ours: \"Welcome back\"",
+     "Combine: greeting: \"Welcome back, {name}\","
+    ],
+    "a": 2,
+    "why": "Keep the typo fix and the new placeholder."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/api.js",
+    "ours": {
+     "branch": "main · \"migrate from axios to fetch (axios removed)\"",
+     "code": "const res = await fetch(url);"
+    },
+    "theirs": {
+     "branch": "feature/auth · \"send auth header\"",
+     "code": "const res = await axios.get(url, { headers: { Authorization: token } });"
+    },
+    "opts": [
+     "Keep ours: fetch without auth",
+     "Combine: const res = await fetch(url, { headers: { Authorization: token } });",
+     "Keep theirs: axios with auth"
+    ],
+    "a": 1,
+    "why": "axios is gone from main, but the auth header is still needed. Port it to fetch."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/posts.js",
+    "ours": {
+     "branch": "main · \"sort newest first\"",
+     "code": "posts.sort((a, b) => b.date - a.date);"
+    },
+    "theirs": {
+     "branch": "feature/pins · \"pinned posts on top\"",
+     "code": "posts.sort((a, b) => b.pinned - a.pinned);"
+    },
+    "opts": [
+     "Combine: posts.sort((a, b) => b.pinned - a.pinned || b.date - a.date);",
+     "Keep theirs: pinned first",
+     "Keep ours: newest first"
+    ],
+    "a": 0,
+    "why": "Sort by pinned, and break ties by date. || falls back when the first comparison is 0."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/pay.js",
+    "ours": {
+     "branch": "main · \"log payment id\"",
+     "code": "logger.info(\"payment ok\", { id });"
+    },
+    "theirs": {
+     "branch": "debug/card-bug · \"temporary debug\"",
+     "code": "console.log(\"DEBUG payment\", card);"
+    },
+    "opts": [
+     "Keep ours: logger.info with the id",
+     "Keep both lines",
+     "Keep theirs: console.log with the card"
+    ],
+    "a": 0,
+    "why": "The debug line prints full card details. Never merge it."
+   },
+   {
+    "lang": "javascript",
+    "file": "src/date.js",
+    "ours": {
+     "branch": "main · \"use UTC dates\"",
+     "code": "const today = new Date().toISOString().slice(0, 10);"
+    },
+    "theirs": {
+     "branch": "feature/cache · \"rename to dateKey\"",
+     "code": "const dateKey = new Date().toLocaleDateString();"
+    },
+    "opts": [
+     "Keep theirs: dateKey in local time",
+     "Keep ours: today in UTC",
+     "Combine: const dateKey = new Date().toISOString().slice(0, 10);"
+    ],
+    "a": 2,
+    "why": "Keep the new name and the UTC fix."
+   },
+   {
+    "lang": "python",
+    "file": "app/models.py",
+    "ours": {
+     "branch": "main · \"rename email → email_address\"",
+     "code": "email_address = models.EmailField()"
+    },
+    "theirs": {
+     "branch": "feature/unique · \"emails must be unique\"",
+     "code": "email = models.EmailField(unique=True)"
+    },
+    "opts": [
+     "Keep ours: email_address, not unique",
+     "Combine: email_address = models.EmailField(unique=True)",
+     "Keep theirs: email, unique"
+    ],
+    "a": 1,
+    "why": "The rename and the constraint are both wanted."
+   },
+   {
+    "lang": "python",
+    "file": "requirements.txt",
+    "ours": {
+     "branch": "main · \"security: upgrade requests\"",
+     "code": "requests==2.32.3"
+    },
+    "theirs": {
+     "branch": "feature/proxy · \"pin requests for the old proxy\"",
+     "code": "requests==2.19.0"
+    },
+    "opts": [
+     "Keep theirs: requests==2.19.0",
+     "Keep both lines",
+     "Keep ours: requests==2.32.3"
+    ],
+    "a": 2,
+    "why": "Downgrading brings back known vulnerabilities, and pip rejects two pins. Fix the proxy instead."
+   },
+   {
+    "lang": "python",
+    "file": "utils.py",
+    "ours": {
+     "branch": "main · \"handle empty list\"",
+     "code": "return sum(xs) / len(xs) if xs else 0"
+    },
+    "theirs": {
+     "branch": "feature/format · \"round to 2 decimals\"",
+     "code": "return round(sum(xs) / len(xs), 2)"
+    },
+    "opts": [
+     "Keep ours: no rounding",
+     "Combine: return round(sum(xs) / len(xs), 2) if xs else 0",
+     "Keep theirs: crashes on []"
+    ],
+    "a": 1,
+    "why": "Rounding plus the empty-list guard."
+   },
+   {
+    "lang": "python",
+    "file": "settings.py",
+    "ours": {
+     "branch": "main · \"production: DEBUG off\"",
+     "code": "DEBUG = False"
+    },
+    "theirs": {
+     "branch": "feature/local · \"easier local dev\"",
+     "code": "DEBUG = True"
+    },
+    "opts": [
+     "Keep ours: DEBUG = False",
+     "Keep theirs: DEBUG = True",
+     "Keep both lines"
+    ],
+    "a": 0,
+    "why": "DEBUG in production leaks stack traces and settings. Use an env var for local dev."
+   },
+   {
+    "lang": "python",
+    "file": "cli.py",
+    "ours": {
+     "branch": "main · \"add --verbose\"",
+     "code": "parser.add_argument(\"--verbose\", action=\"store_true\")"
+    },
+    "theirs": {
+     "branch": "feature/dry · \"add --dry-run\"",
+     "code": "parser.add_argument(\"--dry-run\", action=\"store_true\")"
+    },
+    "opts": [
+     "Keep theirs only",
+     "Keep both arguments",
+     "Keep ours only"
+    ],
+    "a": 1,
+    "why": "Two independent flags."
+   },
+   {
+    "lang": "python",
+    "file": "views.py",
+    "ours": {
+     "branch": "main · \"paginate items\"",
+     "code": "items = Item.objects.all()[offset:offset + 20]"
+    },
+    "theirs": {
+     "branch": "feature/active · \"hide inactive items\"",
+     "code": "items = Item.objects.filter(active=True)"
+    },
+    "opts": [
+     "Keep ours: paginated, inactive included",
+     "Keep theirs: filtered, no pagination",
+     "Combine: items = Item.objects.filter(active=True)[offset:offset + 20]"
+    ],
+    "a": 2,
+    "why": "Filter first, then slice the page."
+   },
+   {
+    "lang": "python",
+    "file": "tax.py",
+    "ours": {
+     "branch": "main · \"GST is now 18%\"",
+     "code": "RATE = 0.18"
+    },
+    "theirs": {
+     "branch": "feature/docs · \"comment the rate\"",
+     "code": "RATE = 0.12  # GST"
+    },
+    "opts": [
+     "Keep theirs: RATE = 0.12  # GST",
+     "Keep ours: RATE = 0.18",
+     "Combine: RATE = 0.18  # GST"
+    ],
+    "a": 2,
+    "why": "New rate plus the comment."
+   },
+   {
+    "lang": "python",
+    "file": "greet.py",
+    "ours": {
+     "branch": "main · \"use f-strings\"",
+     "code": "msg = f\"Hi {name}\""
+    },
+    "theirs": {
+     "branch": "feature/hindi · \"greet in Hindi\"",
+     "code": "msg = \"Namaste %s\" % name"
+    },
+    "opts": [
+     "Combine: msg = f\"Namaste {name}\"",
+     "Keep ours: Hi",
+     "Keep theirs: % formatting"
+    ],
+    "a": 0,
+    "why": "Keep the new wording in the new style."
+   },
+   {
+    "lang": "java",
+    "file": "Order.java",
+    "ours": {
+     "branch": "main · \"use BigDecimal for money\"",
+     "code": "BigDecimal total = price.multiply(qty);"
+    },
+    "theirs": {
+     "branch": "feature/sale · \"10% discount\"",
+     "code": "double total = price * qty * 0.9;"
+    },
+    "opts": [
+     "Combine: BigDecimal total = price.multiply(qty).multiply(new BigDecimal(\"0.9\"));",
+     "Keep theirs: double math",
+     "Keep ours: no discount"
+    ],
+    "a": 0,
+    "why": "Apply the discount, but keep money in BigDecimal."
+   },
+   {
+    "lang": "java",
+    "file": "App.java",
+    "ours": {
+     "branch": "main · \"import List\"",
+     "code": "import java.util.List;"
+    },
+    "theirs": {
+     "branch": "feature/cache · \"import Map\"",
+     "code": "import java.util.Map;"
+    },
+    "opts": [
+     "Keep theirs only",
+     "Keep both imports",
+     "Keep ours only"
+    ],
+    "a": 1,
+    "why": "Both imports are used."
+   },
+   {
+    "lang": "java",
+    "file": "SecurityConfig.java",
+    "ours": {
+     "branch": "main · \"security: enable CSRF\"",
+     "code": "http.csrf(Customizer.withDefaults());"
+    },
+    "theirs": {
+     "branch": "feature/tests · \"disable CSRF so tests pass\"",
+     "code": "http.csrf(csrf -> csrf.disable());"
+    },
+    "opts": [
+     "Keep theirs: CSRF disabled",
+     "Keep ours: CSRF enabled",
+     "Keep both lines"
+    ],
+    "a": 1,
+    "why": "Fix the tests (send the token), don't turn off protection."
+   },
+   {
+    "lang": "java",
+    "file": "Player.java",
+    "ours": {
+     "branch": "main · \"rename hp → health\"",
+     "code": "private int health = 100;"
+    },
+    "theirs": {
+     "branch": "feature/balance · \"start with 120 hp\"",
+     "code": "private int hp = 120;"
+    },
+    "opts": [
+     "Keep ours: health = 100",
+     "Keep theirs: hp = 120",
+     "Combine: private int health = 120;"
+    ],
+    "a": 2,
+    "why": "New name and new value."
+   },
+   {
+    "lang": "java",
+    "file": "Retry.java",
+    "ours": {
+     "branch": "main · \"exponential backoff\"",
+     "code": "Thread.sleep(base * (1L << attempt));"
+    },
+    "theirs": {
+     "branch": "feature/cap · \"cap delay at 30s\"",
+     "code": "Thread.sleep(Math.min(base * attempt, 30_000));"
+    },
+    "opts": [
+     "Combine: Thread.sleep(Math.min(base * (1L << attempt), 30_000));",
+     "Keep ours: no cap",
+     "Keep theirs: linear backoff"
+    ],
+    "a": 0,
+    "why": "Exponential growth, capped."
+   },
+   {
+    "lang": "java",
+    "file": "Strings.java",
+    "ours": {
+     "branch": "main · \"null-safe\"",
+     "code": "return s == null ? \"\" : s.trim();"
+    },
+    "theirs": {
+     "branch": "feature/lower · \"also lowercase\"",
+     "code": "return s.trim().toLowerCase();"
+    },
+    "opts": [
+     "Combine: return s == null ? \"\" : s.trim().toLowerCase();",
+     "Keep theirs: throws on null",
+     "Keep ours: no lowercasing"
+    ],
+    "a": 0,
+    "why": "Both changes together."
+   },
+   {
+    "lang": "java",
+    "file": "Version.java",
+    "ours": {
+     "branch": "main · \"release 2.0.0\"",
+     "code": "public static final String VERSION = \"2.0.0\";"
+    },
+    "theirs": {
+     "branch": "old/hotfix · \"bump to 1.9.1\"",
+     "code": "public static final String VERSION = \"1.9.1\";"
+    },
+    "opts": [
+     "Keep theirs: 1.9.1",
+     "Combine: 2.0.1",
+     "Keep ours: 2.0.0"
+    ],
+    "a": 2,
+    "why": "main already released 2.0.0; versions must not go backwards."
+   },
+   {
+    "lang": "java",
+    "file": "Orders.java",
+    "ours": {
+     "branch": "main · \"use enhanced for\"",
+     "code": "for (Order o : orders) process(o);"
+    },
+    "theirs": {
+     "branch": "feature/cancel · \"skip cancelled orders\"",
+     "code": "for (int i = 0; i < orders.size(); i++) if (!orders.get(i).cancelled()) process(orders.get(i));"
+    },
+    "opts": [
+     "Keep ours: processes cancelled orders",
+     "Combine: for (Order o : orders) if (!o.cancelled()) process(o);",
+     "Keep theirs: index loop"
+    ],
+    "a": 1,
+    "why": "The cleaner loop plus the new check."
+   },
+   {
+    "lang": "c",
+    "file": "buffer.c",
+    "ours": {
+     "branch": "main · \"bigger buffer\"",
+     "code": "char buf[1024];"
+    },
+    "theirs": {
+     "branch": "feature/rename · \"buf → line\"",
+     "code": "char line[256];"
+    },
+    "opts": [
+     "Keep theirs: line[256]",
+     "Combine: char line[1024];",
+     "Keep ours: buf[1024]"
+    ],
+    "a": 1,
+    "why": "New name, bigger size."
+   },
+   {
+    "lang": "c",
+    "file": "main.c",
+    "ours": {
+     "branch": "main · \"use bool\"",
+     "code": "#include <stdbool.h>"
+    },
+    "theirs": {
+     "branch": "feature/ints · \"use fixed-width ints\"",
+     "code": "#include <stdint.h>"
+    },
+    "opts": [
+     "Keep ours only",
+     "Keep theirs only",
+     "Keep both includes"
+    ],
+    "a": 2,
+    "why": "Both headers are needed."
+   },
+   {
+    "lang": "c",
+    "file": "read.c",
+    "ours": {
+     "branch": "main · \"check fopen\"",
+     "code": "if (!f) return -1;"
+    },
+    "theirs": {
+     "branch": "feature/log · \"log the error\"",
+     "code": "if (!f) perror(\"open\");"
+    },
+    "opts": [
+     "Combine: if (!f) { perror(\"open\"); return -1; }",
+     "Keep ours: no message",
+     "Keep theirs: logs but keeps going"
+    ],
+    "a": 0,
+    "why": "Report it and stop."
+   },
+   {
+    "lang": "c",
+    "file": "alloc.c",
+    "ours": {
+     "branch": "main · \"use calloc (overflow-safe, zeroed)\"",
+     "code": "int *a = calloc(n, sizeof *a);"
+    },
+    "theirs": {
+     "branch": "feature/sentinel · \"one extra slot\"",
+     "code": "int *a = malloc((n + 1) * sizeof *a);"
+    },
+    "opts": [
+     "Combine: int *a = calloc(n + 1, sizeof *a);",
+     "Keep ours: no extra slot",
+     "Keep theirs: malloc, not zeroed"
+    ],
+    "a": 0,
+    "why": "calloc and the extra slot."
+   },
+   {
+    "lang": "c",
+    "file": "config.h",
+    "ours": {
+     "branch": "main · \"security: no debug shell in release\"",
+     "code": "#define ENABLE_DEBUG_SHELL 0"
+    },
+    "theirs": {
+     "branch": "feature/support · \"debug shell for support\"",
+     "code": "#define ENABLE_DEBUG_SHELL 1"
+    },
+    "opts": [
+     "Keep both lines",
+     "Keep theirs: 1",
+     "Keep ours: 0"
+    ],
+    "a": 2,
+    "why": "A debug shell in release builds is a backdoor."
+   },
+   {
+    "lang": "c",
+    "file": "loop.c",
+    "ours": {
+     "branch": "main · \"size_t index\"",
+     "code": "for (size_t i = 0; i < len; i++)"
+    },
+    "theirs": {
+     "branch": "feature/reverse · \"iterate backwards\"",
+     "code": "for (int i = len - 1; i >= 0; i--)"
+    },
+    "opts": [
+     "Keep theirs: int index",
+     "Combine: for (size_t i = len; i-- > 0; )",
+     "Combine: for (size_t i = len - 1; i >= 0; i--)"
+    ],
+    "a": 1,
+    "why": "size_t can never be negative, so i >= 0 loops forever. i-- > 0 is the safe idiom."
+   },
+   {
+    "lang": "c",
+    "file": "error.c",
+    "ours": {
+     "branch": "main · \"errors to stderr\"",
+     "code": "fprintf(stderr, \"error: %s\\n\", msg);"
+    },
+    "theirs": {
+     "branch": "feature/codes · \"print error codes\"",
+     "code": "printf(\"error %d: %s\\n\", code, msg);"
+    },
+    "opts": [
+     "Combine: fprintf(stderr, \"error %d: %s\\n\", code, msg);",
+     "Keep theirs: stdout",
+     "Keep ours: no code"
+    ],
+    "a": 0,
+    "why": "Code included, still on stderr."
+   },
+   {
+    "lang": "any",
+    "file": "Dockerfile",
+    "ours": {
+     "branch": "main · \"slim image\"",
+     "code": "FROM python:3.12-slim"
+    },
+    "theirs": {
+     "branch": "feature/upgrade · \"Python 3.13\"",
+     "code": "FROM python:3.13"
+    },
+    "opts": [
+     "Combine: FROM python:3.13-slim",
+     "Keep theirs: full 3.13",
+     "Keep ours: 3.12-slim"
+    ],
+    "a": 0,
+    "why": "New version, slim variant."
+   },
+   {
+    "lang": "any",
+    "file": "README.md",
+    "ours": {
+     "branch": "main · \"fix install command\"",
+     "code": "npm install codeshire"
+    },
+    "theirs": {
+     "branch": "feature/global · \"install globally\"",
+     "code": "npm instal -g codeshire"
+    },
+    "opts": [
+     "Combine: npm install -g codeshire",
+     "Keep ours: no -g",
+     "Keep theirs: typo stays"
+    ],
+    "a": 0,
+    "why": "Typo fix plus the flag."
+   },
+   {
+    "lang": "any",
+    "file": "docker-compose.yml",
+    "ours": {
+     "branch": "main · \"expose app on 8080\"",
+     "code": "- \"8080:80\""
+    },
+    "theirs": {
+     "branch": "feature/admin · \"expose admin on 9090\"",
+     "code": "- \"9090:9090\""
+    },
+    "opts": [
+     "Keep both port mappings",
+     "Keep ours only",
+     "Keep theirs only"
+    ],
+    "a": 0,
+    "why": "Two services, two ports."
+   },
+   {
+    "lang": "any",
+    "file": "migrations/0042.sql",
+    "ours": {
+     "branch": "main · \"index email\"",
+     "code": "CREATE INDEX idx_users_email ON users(email);"
+    },
+    "theirs": {
+     "branch": "feature/reports · \"index created_at\"",
+     "code": "CREATE INDEX idx_users_created ON users(created_at);"
+    },
+    "opts": [
+     "Keep ours only",
+     "Keep theirs only",
+     "Keep both indexes"
+    ],
+    "a": 2,
+    "why": "Independent indexes."
+   }
+  ],
+  "prod": [
+   {
+    "lang": "any",
+    "alert": "checkout-api returning 503",
+    "log": "$ kubectl get pods -n checkout\ncheckout-api-7f9c   CrashLoopBackOff   restarts 14\nredis-0             Running            restarts 0\n$ kubectl logs checkout-api-7f9c --tail 3\nERROR ECONNREFUSED 10.0.4.12:6380\nFATAL cache unavailable, exiting\nnote: deploy #482 changed REDIS_PORT (redis listens on 6379)",
+    "commands": [
+     "kubectl delete pod redis-0",
+     "kubectl rollout undo deploy/checkout-api",
+     "kubectl scale deploy/checkout-api --replicas=0",
+     "rm -rf /var/log"
+    ],
+    "a": 1,
+    "why": "The bad deploy broke the port. Roll it back; redis itself is healthy."
+   },
+   {
+    "lang": "any",
+    "alert": "Writes failing: \"No space left on device\"",
+    "log": "$ df -h /\nFilesystem  Size  Used  Avail  Use%\n/dev/sda1    50G   50G     0   100%\n$ du -sh /var/log/* | sort -h | tail -1\n48G   /var/log/app.log   (still open by the app)",
+    "commands": [
+     "reboot",
+     "truncate -s 0 /var/log/app.log",
+     "chmod 777 /var/log",
+     "rm -rf /"
+    ],
+    "a": 1,
+    "why": "Truncating frees the space now. Deleting a file the app still holds open would not."
+   },
+   {
+    "lang": "any",
+    "alert": "New release will not start",
+    "log": "$ npm start\nError: listen EADDRINUSE: address already in use :::3000\n$ lsof -i :3000\nCOMMAND   PID   USER\nnode     4821   deploy   (old release, never stopped)",
+    "commands": [
+     "npm install",
+     "kill 4821",
+     "kill -9 1",
+     "sudo shutdown now"
+    ],
+    "a": 1,
+    "why": "Stop the stale process holding the port. PID 1 is init; never kill it."
+   },
+   {
+    "lang": "any",
+    "alert": "Deploy pipeline stuck",
+    "log": "$ ./deploy.sh\nbash: ./deploy.sh: Permission denied\n$ ls -l deploy.sh\n-rw-r--r--  1 ci  ci  812 deploy.sh",
+    "commands": [
+     "chmod +x deploy.sh",
+     "chmod 000 deploy.sh",
+     "sudo rm deploy.sh",
+     "mv deploy.sh deploy.txt"
+    ],
+    "a": 0,
+    "why": "The script just lacks the execute bit."
+   },
+   {
+    "lang": "any",
+    "alert": "Site shows 502 Bad Gateway",
+    "log": "$ tail -1 /var/log/nginx/error.log\nconnect() failed (111: Connection refused) while connecting\nto upstream, upstream: \"http://127.0.0.1:8000/\"\n$ systemctl status app\n● app.service  Active: inactive (dead) since 03:12",
+    "commands": [
+     "sudo systemctl restart nginx",
+     "sudo systemctl restart app",
+     "sudo rm /etc/nginx/nginx.conf",
+     "sudo ufw disable"
+    ],
+    "a": 1,
+    "why": "nginx is fine; the app behind it died. Restart the app."
+   },
+   {
+    "lang": "any",
+    "alert": "Browsers warn \"connection not private\"",
+    "log": "$ curl -sI https://shop.example.com\ncurl: (60) SSL certificate problem: certificate has expired\n$ sudo certbot certificates\n  Domains: shop.example.com\n  Expiry Date: 2 days ago (INVALID: EXPIRED)",
+    "commands": [
+     "curl -k https://shop.example.com",
+     "sudo certbot renew",
+     "sudo rm -rf /etc/letsencrypt",
+     "sudo ufw disable"
+    ],
+    "a": 1,
+    "why": "Renew the expired certificate. curl -k only hides the problem for you."
+   },
+   {
+    "lang": "any",
+    "alert": "Main is broken for the whole team",
+    "log": "$ git log --oneline -3\na1b2c3d (HEAD -> main, origin/main) WIP: delete payment module\n9f8e7d6 Add invoice export\n5c4b3a2 Fix login redirect\n(a1b2c3d is already pushed; 6 people have pulled it)",
+    "commands": [
+     "git push --force",
+     "git reset --hard HEAD~1",
+     "git revert a1b2c3d",
+     "rm -rf .git"
+    ],
+    "a": 2,
+    "why": "On a shared, pushed branch, revert adds an undo commit without rewriting history."
+   },
+   {
+    "lang": "any",
+    "alert": "CI fails at install step",
+    "log": "$ npm ci\nnpm ERR! `npm ci` can only install packages when your\npackage.json and package-lock.json are in sync.\nnpm ERR! Missing: zod@3.23.8 from lock file",
+    "commands": [
+     "npm install",
+     "npm ci --force",
+     "git push --force",
+     "rm -rf ~"
+    ],
+    "a": 0,
+    "why": "npm install updates the lock file to match package.json; commit it and CI passes."
+   },
+   {
+    "lang": "any",
+    "alert": "API latency 30s, database CPU at 100%",
+    "log": "$ psql -c \"SELECT query, mean_ms FROM slow_queries LIMIT 1\"\nSELECT * FROM orders WHERE user_id = $1 | 9124 ms\nSeq Scan on orders (rows=48,201,113)\nnote: migration 0091_orders_user_idx never ran",
+    "commands": [
+     "kubectl scale deploy/api --replicas=20",
+     "kubectl rollout restart deploy/api",
+     "psql -c \"CREATE INDEX CONCURRENTLY idx_orders_user ON orders(user_id);\"",
+     "psql -c \"DROP TABLE orders;\""
+    ],
+    "a": 2,
+    "why": "Every lookup scans 48M rows. Add the missing index; CONCURRENTLY avoids locking writes."
+   },
+   {
+    "lang": "any",
+    "alert": "ml-api pods keep restarting after release",
+    "log": "$ kubectl describe pod ml-api-5d8f\nLast State: Terminated  Reason: OOMKilled\nLimits: memory 128Mi\nnote: release 2.4 loads a 400 MB model at startup",
+    "commands": [
+     "kubectl rollout restart deploy/ml-api",
+     "kubectl scale deploy/ml-api --replicas=10",
+     "kubectl delete pod ml-api-5d8f",
+     "kubectl set resources deploy/ml-api --limits=memory=1Gi"
+    ],
+    "a": 3,
+    "why": "The new model cannot fit in 128Mi. Restarting or adding replicas just OOMs again."
+   },
+   {
+    "lang": "any",
+    "alert": "Nightly cron jobs never ran",
+    "log": "$ systemctl status cron\n● cron.service - Regular background program processing daemon\n   Loaded: loaded (disabled)\n   Active: inactive (dead) since the reboot at 01:12",
+    "commands": [
+     "crontab -r",
+     "systemctl restart nginx",
+     "reboot",
+     "systemctl enable --now cron"
+    ],
+    "a": 3,
+    "why": "cron was disabled, so it did not come back after the reboot. enable --now starts it and keeps it on."
+   },
+   {
+    "lang": "any",
+    "alert": "Every image on the site returns 403",
+    "log": "$ tail -1 /var/log/nginx/error.log\nopen() \"/var/www/img/logo.png\" failed (13: Permission denied)\n$ ls -l /var/www/img | head -2\n-rw------- 1 root root 20412 logo.png\nnote: deploy script ran chmod 600 on img/",
+    "commands": [
+     "rm -rf /var/www/img",
+     "systemctl stop nginx",
+     "chmod -R 777 /",
+     "chmod -R a+r /var/www/img"
+    ],
+    "a": 3,
+    "why": "nginx cannot read files only root can read. Give read permission back, and nothing more."
+   },
+   {
+    "lang": "any",
+    "alert": "Logins fail: too many database connections",
+    "log": "FATAL: sorry, too many clients already\npostgres max_connections = 100\napp: 4 replicas x DB_POOL_SIZE=50 = 200 connections\nnote: replicas raised from 2 to 4 yesterday",
+    "commands": [
+     "kubectl scale deploy/app --replicas=10",
+     "psql -c \"DROP DATABASE app;\"",
+     "kubectl set env deploy/app DB_POOL_SIZE=20",
+     "kubectl delete pod postgres-0"
+    ],
+    "a": 2,
+    "why": "4 x 20 = 80 fits under the limit. More replicas would make it worse."
+   },
+   {
+    "lang": "any",
+    "alert": "Payments return 401 after secret rotation",
+    "log": "payments: POST /charges -> 401 Unauthorized (invalid API key)\n$ kubectl get secret payments-key -o jsonpath='{.metadata.creationTimestamp}'\n2026-11-11T08:02:00Z\n$ kubectl get pods -l app=payments\npayments-7c9  Running  AGE 3d",
+    "commands": [
+     "kubectl delete secret payments-key",
+     "git revert HEAD",
+     "kubectl scale deploy/payments --replicas=0",
+     "kubectl rollout restart deploy/payments"
+    ],
+    "a": 3,
+    "why": "The pods read the env var at startup, 3 days ago. Restart them to pick up the rotated key."
+   },
+   {
+    "lang": "any",
+    "alert": "api.codeshire.dev does not resolve",
+    "log": "$ dig api.codeshire.dev +short\n(no answer, NXDOMAIN)\n$ git log --oneline -1 infra/dns.tf\n4f2a91c remove unused records (#77)\nnote: #77 deleted the api record by mistake",
+    "commands": [
+     "terraform destroy",
+     "git revert 4f2a91c && terraform apply",
+     "dig api.codeshire.dev",
+     "systemctl restart systemd-resolved"
+    ],
+    "a": 1,
+    "why": "The DNS record was deleted in code. Revert the change and apply it again."
+   },
+   {
+    "lang": "any",
+    "alert": "Node service won't start: EADDRINUSE",
+    "log": "Error: listen EADDRINUSE: address already in use :::3000\n$ lsof -i :3000\nnode  4242  deploy  LISTEN  (started by the previous deploy)",
+    "commands": [
+     "reboot",
+     "kill 4242",
+     "kill -9 1",
+     "npm install"
+    ],
+    "a": 1,
+    "why": "A leftover process still holds the port. Stop that one process (PID 1 is init!)."
+   },
+   {
+    "lang": "any",
+    "alert": "Job queue backlog: 2M messages",
+    "log": "$ kubectl get deploy worker\nNAME     READY   UP-TO-DATE\nworker   0/0     0\nnote: change #120 set autoscaler minReplicas: 0",
+    "commands": [
+     "rabbitmqctl purge_queue jobs",
+     "kubectl delete deploy worker",
+     "kubectl rollout restart deploy/rabbitmq",
+     "kubectl scale deploy/worker --replicas=5"
+    ],
+    "a": 3,
+    "why": "Nothing is consuming. Start workers; purging would throw away 2M real jobs."
+   },
+   {
+    "lang": "any",
+    "alert": "Cache errors: OOM command not allowed",
+    "log": "$ redis-cli INFO memory | grep -E 'used_memory_human|maxmemory'\nused_memory_human:4.00G\nmaxmemory_human:4.00G\nmaxmemory_policy:noeviction\nnote: this Redis is only a cache",
+    "commands": [
+     "redis-cli CONFIG SET maxmemory-policy allkeys-lru",
+     "redis-cli SHUTDOWN",
+     "redis-cli FLUSHALL",
+     "kubectl delete pod redis-0"
+    ],
+    "a": 0,
+    "why": "For a cache, evicting the least-recently-used keys is right. FLUSHALL empties everything and stampedes the database."
+   },
+   {
+    "lang": "any",
+    "alert": "Containers crash: exec format error",
+    "log": "standard_init_linux.go:228: exec user process caused: exec format error\n$ docker inspect app:1.4 --format '{{.Architecture}}'\narm64\nnote: cluster nodes are amd64; image built on a laptop",
+    "commands": [
+     "chmod +x /app/start.sh",
+     "kubectl delete node node-1",
+     "docker buildx build --platform linux/amd64 -t app:1.4 --push .",
+     "systemctl restart docker"
+    ],
+    "a": 2,
+    "why": "The image was built for the wrong CPU. Rebuild it for amd64."
+   },
+   {
+    "lang": "any",
+    "alert": "Users logged out every few minutes",
+    "log": "web: 3 replicas behind a round-robin load balancer\nSESSION_STORE=memory\nnote: sticky sessions were removed in #210",
+    "commands": [
+     "kubectl set env deploy/web SESSION_STORE=redis",
+     "kubectl rollout restart deploy/web",
+     "redis-cli FLUSHALL",
+     "kubectl scale deploy/web --replicas=1"
+    ],
+    "a": 0,
+    "why": "Each replica only knows its own sessions. Put sessions in a shared store."
+   },
+   {
+    "lang": "any",
+    "alert": "2FA codes rejected for every user",
+    "log": "$ timedatectl\n      System clock synchronized: no\n                    NTP service: inactive\n$ date -u\nWed Nov 11 07:42:10 UTC 2026   (4 minutes ahead)",
+    "commands": [
+     "rm /etc/localtime",
+     "timedatectl set-ntp true",
+     "date -s 'tomorrow'",
+     "systemctl restart sshd"
+    ],
+    "a": 1,
+    "why": "Time-based codes need an accurate clock. Turn NTP back on."
+   },
+   {
+    "lang": "any",
+    "alert": "Nightly database backup fails",
+    "log": "pg_dump: error: could not open output file \"/backups/db.sql\": Permission denied\n$ ls -ld /backups\ndrwxr-xr-x 2 root root 4096 /backups\nnote: the job runs as user postgres",
+    "commands": [
+     "chmod -R 777 /",
+     "rm -rf /backups",
+     "chown postgres:postgres /backups",
+     "systemctl disable backup.timer"
+    ],
+    "a": 2,
+    "why": "Let the backup user own its folder, without opening it to everyone."
+   },
+   {
+    "lang": "any",
+    "alert": "Users still see the old frontend after deploy",
+    "log": "$ curl -sI https://codeshire.dev/ | grep -iE 'cache-control|x-cache'\ncache-control: max-age=31536000\nx-cache: Hit from cloudfront\nnote: index.html was uploaded with a 1-year cache",
+    "commands": [
+     "aws cloudfront create-invalidation --distribution-id E123 --paths /index.html",
+     "kubectl rollout restart deploy/web",
+     "aws s3 rb s3://codeshire-web --force",
+     "npm run build"
+    ],
+    "a": 0,
+    "why": "The CDN keeps serving the cached page. Invalidate it (and give index.html a short cache)."
+   },
+   {
+    "lang": "any",
+    "alert": "API 500: column \"nickname\" does not exist",
+    "log": "ERROR: column users.nickname does not exist\nnote: deploy #300 shipped code that needs migration 0057\nnote: the migrate step was skipped in the pipeline",
+    "commands": [
+     "git push --force",
+     "python manage.py migrate",
+     "psql -c \"DROP TABLE users;\"",
+     "python manage.py flush"
+    ],
+    "a": 1,
+    "why": "The code is ahead of the schema. Run the pending migration."
+   },
+   {
+    "lang": "any",
+    "alert": "chat pods' memory grows until they crash",
+    "log": "(node) MaxListenersExceededWarning: 11 message listeners added\nheap: 210MB -> 980MB in 6h\nnote: release 5.2 adds ws.on('message') inside the request handler",
+    "commands": [
+     "kubectl delete pods -l app=chat",
+     "kubectl rollout undo deploy/chat",
+     "kubectl scale deploy/chat --replicas=0",
+     "kubectl set resources deploy/chat --limits=memory=8Gi"
+    ],
+    "a": 1,
+    "why": "A leak from the last release. Roll back now and fix the listener; more memory only delays the crash."
+   },
+   {
+    "lang": "any",
+    "alert": "Emails stopped sending",
+    "log": "postfix/smtp: connect to smtp.provider.com:25: Connection timed out\nnote: cloud provider blocks outbound port 25\nnote: provider accepts submissions on 587",
+    "commands": [
+     "rm -rf /var/spool/postfix",
+     "systemctl restart postfix",
+     "postconf -e 'relayhost = [smtp.provider.com]:587' && postfix reload",
+     "ufw disable"
+    ],
+    "a": 2,
+    "why": "Port 25 is blocked. Relay through the submission port instead."
+   },
+   {
+    "lang": "any",
+    "alert": "Deploy stuck: ImagePullBackOff",
+    "log": "Failed to pull image \"registry.codeshire.dev/api:v2.3\": manifest unknown\n$ crane ls registry.codeshire.dev/api | tail -2\nv2.2.4\nv2.3.0",
+    "commands": [
+     "systemctl restart kubelet",
+     "docker system prune -a",
+     "kubectl delete namespace prod",
+     "helm upgrade api ./chart --set image.tag=v2.3.0"
+    ],
+    "a": 3,
+    "why": "The tag in the chart is wrong (v2.3 vs v2.3.0). Point it at the real tag."
+   },
+   {
+    "lang": "any",
+    "alert": "Error rate jumped to 40% at 14:02",
+    "log": "14:01:44 flag new_checkout enabled for 100% of users\n14:02:03 TypeError in NewCheckout.submit (x8,412)\nold checkout: 0 errors",
+    "commands": [
+     "flagctl enable new_checkout --percent=100",
+     "flagctl disable new_checkout",
+     "kubectl rollout undo deploy/db",
+     "kubectl scale deploy/checkout --replicas=50"
+    ],
+    "a": 1,
+    "why": "The flag flip caused it. Turning the flag off is the fastest, safest rollback."
+   },
+   {
+    "lang": "any",
+    "alert": "Load balancer marks every instance unhealthy",
+    "log": "$ curl -s -o /dev/null -w '%{http_code}' http://10.0.1.5/healthz\n404\nnote: PR #88 renamed the endpoint to /health\ntarget group health check path: /healthz",
+    "commands": [
+     "kubectl scale deploy/web --replicas=20",
+     "aws elbv2 modify-target-group --target-group-arn $TG --health-check-path /health",
+     "aws elbv2 delete-target-group --target-group-arn $TG",
+     "aws ec2 reboot-instances --instance-ids $ALL"
+    ],
+    "a": 1,
+    "why": "The app is fine; the health check asks the old path. Point it at /health."
+   }
+  ],
+  "dive": [
+   {
+    "lang": "any",
+    "ask": "Name a {git} command",
+    "strip": "^git\\s+",
+    "tiers": {
+     "common": "commit push pull add status clone checkout branch merge init log",
+     "uncommon": "rebase stash diff fetch reset tag cherry-pick remote switch restore show revert rm mv config",
+     "rare": "bisect reflog blame worktree submodule clean gc shortlog describe grep archive notes am apply",
+     "legendary": "rerere fsck filter-branch cat-file hash-object rev-parse ls-tree bundle range-diff sparse-checkout maintenance for-each-ref"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name an {HTTP status} code",
+    "strip": "\\D",
+    "tiers": {
+     "common": "200 404 500",
+     "uncommon": "201 204 301 302 400 401 403 502 503",
+     "rare": "202 304 307 308 405 409 410 422 429 504",
+     "legendary": "100 101 102 103 203 205 206 207 208 226 300 303 406 407 408 411 412 413 414 415 416 417 418 421 423 424 425 426 428 431 451 505 506 507 508 510 511"
+    }
+   },
+   {
+    "lang": "javascript",
+    "ask": "Name a {JavaScript array} method",
+    "strip": "^\\.|\\(\\)$|^Array\\.(prototype\\.)?",
+    "tiers": {
+     "common": "push pop map filter forEach reduce slice splice indexOf includes join concat sort",
+     "uncommon": "find some every shift unshift reverse flat findIndex fill keys isArray from",
+     "rare": "flatMap reduceRight lastIndexOf copyWithin entries values at findLast findLastIndex of",
+     "legendary": "toSorted toReversed toSpliced with fromAsync"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a {Linux} command",
+    "strip": "^sudo\\s+",
+    "tiers": {
+     "common": "ls cd mkdir rm cp mv cat pwd echo touch grep",
+     "uncommon": "chmod chown find tar ssh curl ps kill top df du head tail less man wget ping",
+     "rare": "awk sed xargs htop lsof rsync crontab journalctl systemctl nc dig tee watch tmux strace",
+     "legendary": "nohup ionice nice renice tac rev shuf comm paste column mtr ldd lsblk dmesg fuser pv"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a {Docker} command",
+    "strip": "^docker\\s+",
+    "tiers": {
+     "common": "run build ps pull push images stop start exec logs",
+     "uncommon": "rm rmi compose network volume inspect tag login restart kill",
+     "rare": "prune attach cp commit diff history save load stats top port rename",
+     "legendary": "buildx context manifest trust checkpoint swarm plugin events export import pause unpause wait update"
+    }
+   },
+   {
+    "lang": "python",
+    "ask": "Name a {Python} built-in function",
+    "strip": "\\(\\)$",
+    "tiers": {
+     "common": "print len range input int str list dict",
+     "uncommon": "type sum max min sorted open enumerate zip float abs round set tuple bool",
+     "rare": "map filter any all isinstance getattr hasattr reversed divmod hash id ord chr bin hex repr iter next pow format",
+     "legendary": "memoryview frozenset bytearray vars globals locals compile exec eval callable issubclass delattr setattr aiter anext breakpoint __import__ ascii oct slice super property staticmethod classmethod object complex bytes help dir"
+    }
+   },
+   {
+    "lang": "java",
+    "ask": "Name a {Java} keyword",
+    "strip": "",
+    "tiers": {
+     "common": "public class static void int if else return new for while",
+     "uncommon": "private protected final import package try catch throw extends implements interface boolean double long char this super",
+     "rare": "abstract synchronized volatile transient instanceof enum switch case default break continue throws finally do byte short float",
+     "legendary": "strictfp native assert goto const record sealed permits yield var non-sealed"
+    }
+   },
+   {
+    "lang": "java",
+    "ask": "Name a {Java String} method",
+    "strip": "^\\.|\\(\\)$",
+    "tiers": {
+     "common": "length charAt equals substring indexOf toUpperCase toLowerCase",
+     "uncommon": "trim split contains replace startsWith endsWith isEmpty equalsIgnoreCase compareTo",
+     "rare": "strip isBlank lines repeat chars matches format join valueOf concat lastIndexOf toCharArray intern",
+     "legendary": "codePointAt regionMatches translateEscapes stripIndent formatted describeConstable transform"
+    }
+   },
+   {
+    "lang": "c",
+    "ask": "Name a {C} keyword",
+    "strip": "",
+    "tiers": {
+     "common": "int char if else return for while void struct",
+     "uncommon": "float double long short unsigned signed const static sizeof switch case break continue do typedef enum",
+     "rare": "extern union volatile register goto default auto",
+     "legendary": "restrict inline _Bool _Complex _Imaginary _Alignas _Alignof _Atomic _Generic _Noreturn _Static_assert _Thread_local"
+    }
+   },
+   {
+    "lang": "c",
+    "ask": "Name a {C standard library} function",
+    "strip": "\\(\\)$",
+    "tiers": {
+     "common": "printf scanf malloc free strlen strcpy",
+     "uncommon": "calloc realloc fopen fclose fgets fprintf strcmp strcat memcpy memset puts getchar exit atoi sprintf",
+     "rare": "snprintf strncpy strtok qsort bsearch strtol fread fwrite fseek ftell perror memmove sscanf rand srand",
+     "legendary": "setjmp longjmp atexit strerror strspn strpbrk vsnprintf ungetc tmpfile signal raise abort fflush"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name an {SQL} keyword",
+    "strip": "",
+    "tiers": {
+     "common": "select from where insert update delete join into values",
+     "uncommon": "group order having distinct union limit offset create alter",
+     "rare": "coalesce returning lateral window partition over intersect except",
+     "legendary": "merge recursive pivot unnest tablesample grouping"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name an {HTML} tag",
+    "strip": "^<|/?>$",
+    "tiers": {
+     "common": "div span p a img ul li h1 button input form",
+     "uncommon": "section article nav header footer table label select textarea main",
+     "rare": "details summary dialog template picture figure figcaption datalist",
+     "legendary": "slot output meter progress wbr bdi ruby kbd samp"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a {CSS} property",
+    "strip": "",
+    "tiers": {
+     "common": "color margin padding display width height border font-size background",
+     "uncommon": "flex grid position z-index opacity transform transition gap overflow",
+     "rare": "clip-path aspect-ratio isolation contain will-change mix-blend-mode backdrop-filter",
+     "legendary": "font-variant-numeric hanging-punctuation scroll-snap-type text-underline-offset overscroll-behavior paint-order"
+    }
+   },
+   {
+    "lang": "python",
+    "ask": "Name a {Python} keyword",
+    "strip": "",
+    "tiers": {
+     "common": "if else for while def return import class in",
+     "uncommon": "elif try except finally with lambda yield pass break continue",
+     "rare": "nonlocal global assert del async await",
+     "legendary": "match case"
+    }
+   },
+   {
+    "lang": "javascript",
+    "ask": "Name a {JavaScript} keyword",
+    "strip": "",
+    "tiers": {
+     "common": "let const var function return if else for",
+     "uncommon": "class new this typeof instanceof async await try catch switch",
+     "rare": "yield delete void debugger finally",
+     "legendary": "with enum implements package protected"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a {Kubernetes} resource kind",
+    "strip": "^kubectl\\s+get\\s+",
+    "tiers": {
+     "common": "pod deployment service namespace",
+     "uncommon": "configmap secret ingress node job cronjob statefulset daemonset",
+     "rare": "replicaset persistentvolumeclaim serviceaccount networkpolicy horizontalpodautoscaler",
+     "legendary": "poddisruptionbudget priorityclass mutatingwebhookconfiguration customresourcedefinition limitrange"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a {Linux signal}",
+    "strip": "^SIG",
+    "tiers": {
+     "common": "kill term int hup",
+     "uncommon": "stop cont quit usr1 usr2 alrm",
+     "rare": "chld pipe tstp winch segv abrt",
+     "legendary": "ttin ttou xcpu xfsz vtalrm prof sys trap"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name an {HTTP} method",
+    "strip": "",
+    "tiers": {
+     "common": "get post",
+     "uncommon": "put delete patch",
+     "rare": "head options",
+     "legendary": "trace connect"
+    }
+   },
+   {
+    "lang": "java",
+    "ask": "Name a {Java} collection type",
+    "strip": "^java\\.util\\.",
+    "tiers": {
+     "common": "list arraylist map hashmap set hashset",
+     "uncommon": "linkedlist treemap treeset queue deque arraydeque linkedhashmap",
+     "rare": "priorityqueue vector stack hashtable enummap enumset",
+     "legendary": "weakhashmap identityhashmap concurrentskiplistmap copyonwritearraylist navigablemap bitset"
+    }
+   },
+   {
+    "lang": "c",
+    "ask": "Name a {printf} conversion",
+    "strip": "^%",
+    "tiers": {
+     "common": "d s c f",
+     "uncommon": "i u x lf p",
+     "rare": "zu ld lu e g o",
+     "legendary": "a n hhd lld td"
+    }
+   },
+   {
+    "lang": "python",
+    "ask": "Name a {Python} standard library module",
+    "strip": "^import\\s+",
+    "tiers": {
+     "common": "os sys math random json re",
+     "uncommon": "datetime collections itertools functools pathlib subprocess",
+     "rare": "heapq bisect contextlib dataclasses typing argparse logging",
+     "legendary": "zoneinfo graphlib tomllib secrets weakref atexit sched"
+    }
+   },
+   {
+    "lang": "javascript",
+    "ask": "Name a {JavaScript string} method",
+    "strip": "^\\.|\\(\\)$",
+    "tiers": {
+     "common": "slice split replace includes trim touppercase tolowercase indexof",
+     "uncommon": "startswith endswith padstart padend repeat substring charat",
+     "rare": "at replaceall matchall codepointat normalize localecompare",
+     "legendary": "iswellformed towellformed"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a well-known {port number}",
+    "strip": "\\D",
+    "tiers": {
+     "common": "80 443 22",
+     "uncommon": "21 25 53 3306 5432 8080",
+     "rare": "6379 27017 3389 110 143 9200",
+     "legendary": "11211 5672 2181 9092 6443 179"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a {Linux} top-level directory",
+    "strip": "^/|/$",
+    "tiers": {
+     "common": "home etc var tmp usr bin",
+     "uncommon": "opt dev proc root boot lib sbin",
+     "rare": "srv mnt media run sys",
+     "legendary": "lost+found snap lib64"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name an {npm} command",
+    "strip": "^npm\\s+",
+    "tiers": {
+     "common": "install run test start init",
+     "uncommon": "ci update uninstall publish audit outdated",
+     "rare": "link pack prune dedupe ls view version",
+     "legendary": "exec doctor explain fund shrinkwrap rebuild query"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name an {SQL} aggregate function",
+    "strip": "\\(.*\\)$",
+    "tiers": {
+     "common": "count sum avg min max",
+     "uncommon": "group_concat string_agg array_agg",
+     "rare": "stddev variance bool_and bool_or every",
+     "legendary": "percentile_cont percentile_disc mode json_agg bit_and"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a {data structure}",
+    "strip": "",
+    "tiers": {
+     "common": "array list stack queue tree graph",
+     "uncommon": "heap trie deque set map hashmap hashtable",
+     "rare": "b-tree red-black avl skiplist bloom",
+     "legendary": "fenwick rope treap splay quadtree"
+    }
+   },
+   {
+    "lang": "any",
+    "ask": "Name a {sorting} algorithm",
+    "strip": "\\s*sort$",
+    "tiers": {
+     "common": "bubble quick merge insertion selection",
+     "uncommon": "heap counting radix bucket shell",
+     "rare": "tim intro comb cocktail gnome",
+     "legendary": "bitonic pancake bogo strand cycle smooth"
+    }
+   },
+   {
+    "lang": "python",
+    "ask": "Name a {Python} dunder method",
+    "strip": "^__|__$",
+    "tiers": {
+     "common": "init str repr len",
+     "uncommon": "eq lt add getitem iter next call enter exit",
+     "rare": "hash contains setitem bool",
+     "legendary": "init_subclass class_getitem missing set_name getattr"
+    }
+   },
+   {
+    "lang": "c",
+    "ask": "Name a {C} standard header",
+    "strip": "^#include\\s*<?|\\.h>?$|>$",
+    "tiers": {
+     "common": "stdio stdlib string",
+     "uncommon": "math ctype time stdbool stdint",
+     "rare": "limits assert errno signal stddef setjmp",
+     "legendary": "stdatomic threads tgmath uchar wchar iso646 stdalign"
+    }
+   }
+  ]
+ }
 }

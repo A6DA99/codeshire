@@ -1,18 +1,38 @@
-# Codeshire: Farm Defense
+# Codeshire: The Six Shards
 
-**A pixel-art coding game that runs in your browser.** Orcs are marching on Farmer Tom's island.
-You are the only soldier on the dock, and your sword only swings when your code is right.
+**A pixel-art coding adventure that runs in your browser.** The Source Crystal has shattered into six
+shards and monsters roam Codeshire. Leave Farmer Tom's farm and walk the world map through six regions,
+each with its own ally, enemies, boss and story. Your sword only swings when your code is right.
 
-Each orc that reaches you brings a programming challenge. Answer correctly before the timer runs
-out and you strike; answer wrong (or too slowly) and you lose a heart. Survive four seasons and
-defeat the Orc Chief to save the farm.
-
+- **Story mode:** 6 chapters on one world map. Each chapter is one challenge type, with 3 stages and a boss.
+  Clear a chapter and a new road opens: your soldier walks there by himself, and the clouds over that
+  region clear.
+- **Quick battle:** the original four seasons on the farm, for any single challenge type or Mixed.
 - **Languages:** JavaScript, Python, Java, C, or all of them mixed
-- **6 challenge types** plus a Mixed mode
-- **4 levels** (Spring → Summer → Autumn → Winter), each with its own art and weather
-- No accounts, no database, no saved progress: lose, and you start again
+- **382 questions** across 6 challenge types
+- Story progress is saved in the browser (localStorage) only. No accounts, no server state.
 
-![Codeshire landing page](docs/screenshots/landing.png)
+![World map](docs/screenshots/worldmap.png)
+
+## The story: six chapters
+
+| # | Region | Challenge | Ally | Boss | Prize |
+|---|---|---|---|---|---|
+| 1 | The Whispering Woods | Guess the Output | Elara the Ranger | Grukk the Riddle-Warlord | Emerald Shard |
+| 2 | The Bugged Catacombs | Spot the Bug | Merlo the Compiler Mage | Ogg the Off-by-One Ogre | Sapphire Shard |
+| 3 | Slimewater Crossing | Regex Defuse | Pip the Ferry Kid | Queen Glob of the Shallows | Aquamarine Shard |
+| 4 | The Forked Kingdom | Merge Conflict | Sir Branchwell | Rebasius the Necromancer | Amethyst Shard |
+| 5 | Mount Prod | Prod Is Down | Brakka Forgebeard | Cascade, the Forge Horror | Ruby Shard |
+| 6 | The Abyssal Stack | Stack Dive | Vessa the Stackwalker | Null, Demon of the Stack | Obsidian Shard |
+
+A prologue on Tom's farm starts the journey and an epilogue brings every ally home. Each chapter has an
+intro, a line or two before every stage, a boss taunt and an outro. All story text lives in
+`assets/js/story.js`, so you can rewrite it without touching the engine.
+
+In a chapter you fight 3 to 4 foes per stage. Clearing a stage gives back a heart, then you walk on to
+the next camp. The boss needs 3 correct answers (Null needs 4). You earn 1 to 3 stars based on hearts left.
+
+![Boss fight in the Whispering Woods](docs/screenshots/adventure.png)
 
 ---
 
@@ -98,7 +118,7 @@ client-side.
 ### Project structure
 
 ```
-index.php          the page (PHP 7.4 – 8.3)
+index.php          the page (PHP 7.4 – 8.3): landing, menu, world map, game
 suggest.php        receives suggestions from the form
 questions.json     ★ all questions + the language list
 QUESTIONS-GUIDE.md how to write and edit questions
@@ -107,8 +127,10 @@ includes/
   bootstrap.php    shared helpers (not web-accessible)
 assets/
   css/app.css      styles
-  js/app.js        the game
-  img/             sprites (farm, soldier, orc, seasonal tiles)
+  js/app.js        the game engine: battles, six biomes, dialogue, effects, progress
+  js/worldmap.js   the world map (terrain, regions, road, clouds, walking soldier)
+  js/story.js      ★ story text: cast, prologue, six chapters, epilogue
+  img/             sprites from all packs; img/fx/ effects; img/clouds/ map clouds
   fonts/           self-hosted fonts + their OFL licences
 404.html, robots.txt, favicon.png
 docs/screenshots/  images used in this README
@@ -175,11 +197,18 @@ to gain. If a global leaderboard is ever added, answers must be checked on the s
 
 All sources are also listed on the site's **Suggestions & credits** page.
 
-- Farm art: “Farm RPG: Tiny Asset Pack” (free 16x16), https://maevedevs.itch.io/farm-rpg.
+- Farm art: "Farm RPG: Tiny Asset Pack" (free 16x16), https://maevedevs.itch.io/farm-rpg.
   Summer/autumn/winter tiles are recolours of the free spring pack.
-- Characters: “Tiny RPG Character Asset Pack (Free Soldier & Orc)” by Zerie,
-  https://zerie.itch.io/tiny-rpg-character-asset-pack
+- Characters: "Tiny RPG Character Asset Pack 01 (Free Soldier & Orc)" and "02 (Free Demon & Blood Monster)"
+  by Zerie, https://zerie.itch.io/tiny-rpg-character-asset-pack
+- "pixel_16_woods v2 (free)": Whispering Woods trees and props.
+- "0x72 Dungeon Tileset II" by 0x72, https://0x72.itch.io/dungeontileset-ii (catacombs, abyss, allies, minions).
+- "Cute Fantasy RPG (free)" by Kenmi, https://kenmi-art.itch.io/cute-fantasy-rpg. **The free version allows
+  non-commercial use only and forbids redistribution**, so keep Codeshire non-commercial or buy the paid pack.
+- "Super Pixel Effects Gigapack (free)": Pixel Art Assets - Will Tice / unTied Games. Bundling in a game is allowed
+  with attribution; the pack itself may not be redistributed.
+- Map clouds: from the supplied "Demo" cloud set (add its creator's credit if it came from an asset pack).
 - Fonts: Pixelify Sans, Space Grotesk, JetBrains Mono (SIL Open Font License, included).
 
-Neither art pack shipped a licence file. Check each creator's itch.io page for credit and
-commercial-use terms before releasing publicly. Codeshire itself: all rights reserved.
+Check each creator's page for credit and commercial-use terms before releasing publicly.
+Codeshire itself: all rights reserved.

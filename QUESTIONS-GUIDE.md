@@ -43,7 +43,8 @@ Every question has a `lang`: one of the ids above, or `"any"` to show it for **e
 (good for regex, servers/devops, git, SQL).
 
 If a language has no questions for a challenge type, that card is greyed out for that language.
-Aim for **at least 6 questions per type per language** so a game (13 orcs) doesn't repeat too much.
+Aim for **at least 15 questions per type per language**: one story chapter asks about 14 questions of a single type
+(3 stages of foes plus a boss), and Quick battle asks 13. The bank currently has 382 questions.
 
 ### JSON gotchas
 

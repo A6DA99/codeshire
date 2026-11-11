@@ -209,3 +209,95 @@ pre.code{margin:0;padding:14px 16px;background:var(--bg);border:1px solid var(--
   .ghud .lbl{display:none}
   .chipx{font-size:13px;padding:3px 7px}
 }
+
+/* ---------- adventure: landing ---------- */
+.mapwrap{border-radius:16px;overflow:hidden;border:2px solid var(--line);background:#2a7fd0;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.mapwrap canvas{width:100%;height:auto;aspect-ratio:576/352;cursor:pointer}
+.agrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.agrid .scard span{line-height:1.4}
+
+/* ---------- select: story card ---------- */
+.ccard.adv{flex-direction:row;align-items:center;gap:16px;min-height:0;background:linear-gradient(100deg,#2a1f05,#16220C 45%,#121821 80%);border-color:#7a6418}
+.ccard.adv:hover{border-color:var(--gold)}
+.ccard.adv .ico{color:var(--gold)}
+
+/* ---------- world map view ---------- */
+#map{height:100vh;height:100dvh;display:flex;flex-direction:column;gap:8px;padding:8px;background:radial-gradient(ellipse at 50% 0%, #16305a 0%, #070d1c 70%)}
+.maptitle{font-size:22px;color:var(--gold)}
+.shards{display:flex;gap:6px;align-items:center}
+.gem{width:16px;height:20px;clip-path:polygon(50% 0,100% 35%,80% 100%,20% 100%,0 35%);background:#2a3443;opacity:.8}
+.gem.on{opacity:1;filter:drop-shadow(0 0 4px rgba(255,255,255,.4))}
+.gem.on.g0{background:#3ddc6a}.gem.on.g1{background:#3d7bf0}.gem.on.g2{background:#5fe3e0}.gem.on.g3{background:#b05af0}.gem.on.g4{background:#f04848}.gem.on.g5{background:#555a6e;outline:1px solid #c38bff}
+.mapbody{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:8px}
+.mapview{position:relative;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:14px;border:2px solid var(--line);background:#2a7fd0;overflow:hidden;padding:6px}
+.mapview canvas{max-width:100%;max-height:calc(100% - 26px);width:auto;height:auto;aspect-ratio:576/352;object-fit:contain}
+.maphint{margin:0;font-family:'Pixelify Sans',sans-serif;font-size:13px;color:#e8f2ff;text-shadow:0 1px 0 #0a2c55}
+.maptoast{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:rgba(10,14,22,.92);border:2px solid var(--gold);color:var(--gold);font-family:'Pixelify Sans',sans-serif;font-size:17px;padding:8px 16px;border-radius:10px;white-space:nowrap;max-width:94%;overflow:hidden;text-overflow:ellipsis}
+.maptoast.pop{animation:toast .5s ease-out}
+@keyframes toast{from{transform:translate(-50%,-14px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
+.mapside{min-height:0;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.chdetail{display:flex;flex-direction:column;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.chdetail .badge{align-self:flex-start}
+.chdetail h3{margin:0;font-size:26px;color:var(--leaf);line-height:1.1}
+.chdetail p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.45}
+.facts{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:13.5px}
+.facts li{display:flex;gap:8px}.facts span{color:var(--muted);min-width:52px}
+.chlist{display:flex;flex-direction:column;gap:6px}
+.chrow{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;border:2px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;text-align:left}
+.chrow:hover:not(:disabled){border-color:var(--sky)}
+.chrow.sel{border-color:var(--lime);background:#16220C}
+.chrow:disabled{opacity:.5;cursor:not-allowed}
+.chrow .num{font-family:'Pixelify Sans',sans-serif;font-size:20px;width:26px;height:26px;border-radius:7px;background:#1A2232;display:flex;align-items:center;justify-content:center;color:var(--gold);flex:none}
+.chrow .t{flex:1;display:flex;flex-direction:column;min-width:0}
+.chrow .t strong{font-family:'Pixelify Sans',sans-serif;font-size:16px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chrow .t em{font-style:normal;font-size:12px;color:var(--muted)}
+.chrow .st{font-size:13px;color:var(--gold);white-space:nowrap}
+.mapfoot{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.mapfoot .btn{font-size:13px;min-height:34px}
+
+/* ---------- dialogue ---------- */
+.dlg{position:absolute;left:10px;right:10px;bottom:10px;display:flex;gap:12px;align-items:flex-start;background:rgba(10,14,22,.94);border:2px solid #3A4656;border-radius:14px;padding:10px 12px;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.4);z-index:3}
+.dlg canvas{width:64px;height:64px;border-radius:10px;border:2px solid #2a3647;flex:none}
+.dtext{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.dtext strong{font-family:'Pixelify Sans',sans-serif;font-size:18px}
+.dtext p{margin:0;font-size:15.5px;line-height:1.45;min-height:44px;color:#E6EDF3}
+.dbtns{display:flex;flex-direction:column;gap:6px;align-items:flex-end;flex:none}
+.dbtns .btn{min-height:34px;font-size:13px}
+.dcount{font-size:11px;color:var(--muted)}
+.ocard .stars{font-size:30px;color:var(--gold);letter-spacing:4px;margin:0}
+
+/* ---------- story panel ---------- */
+.storyp{display:flex;flex-direction:column;gap:10px}
+.storyp .badge{align-self:flex-start}
+.storyp h2{margin:0;font-size:28px;color:var(--leaf);line-height:1.1}
+.storyp p{margin:0;color:var(--muted);line-height:1.45}
+.route{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;counter-reset:st}
+.route li{counter-increment:st;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-family:'Pixelify Sans',sans-serif;font-size:16px;color:var(--muted)}
+.route li::before{content:counter(st);width:22px;height:22px;border-radius:6px;background:#1A2232;display:flex;align-items:center;justify-content:center;font-size:13px}
+.route li.cur{border-color:var(--lime);color:var(--text)} .route li.cur::before{background:var(--lime);color:#0B0F14}
+.route li.done{color:#6f8a4a;text-decoration:line-through} .route li.done::before{content:'✓';background:#2a3d14;color:var(--lime)}
+
+@media (max-width:900px){
+  .mapbody{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+  .mapview canvas{max-height:none;width:100%}
+  .agrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .agrid{grid-template-columns:minmax(0,1fr)}
+  .ccard.adv{flex-direction:column;align-items:flex-start}
+  .dlg{left:6px;right:6px;bottom:6px;padding:8px;gap:8px}
+  .dlg canvas{width:44px;height:44px}
+  .dtext strong{font-size:15px} .dtext p{font-size:13.5px;min-height:36px}
+  .maptoast{font-size:14px}
+}
+.gview .dlg canvas{position:static;inset:auto;width:64px;height:64px}
+.mapview canvas{width:min(100%, calc((100dvh - 150px) * 576 / 352));max-height:none;height:auto}
+#game.scene .ghud .stats{visibility:hidden}
+@media (max-width:560px){ .gview .dlg canvas{width:44px;height:44px} }
+@media (max-width:900px){ .mapview canvas{width:100%} }
+/* the pixel font has a broken "fi" ligature */
+html,body,button,input{font-variant-ligatures:none;font-feature-settings:"liga" 0,"clig" 0}
+@media (max-width:560px){
+  #game.talking .gbody{grid-template-columns:minmax(0,1fr)}
+  #game.talking .panel{display:none}
+}
